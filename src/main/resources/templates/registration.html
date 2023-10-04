@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>customer-registration</title>
+</head>
+<body>
+    <div class="customer-registration">
+        <form th:action="@{/customer-insert}">
+        <div class="customer-form">
+            <div class="first-name">
+                <span>苗字</span><br>
+                <input type="text" name="first-name" id="first-name">
+            </div>
+            <div class="last-name">
+                <span>名前</span><br>
+                <input type="text" name="last-name" id="last-name">
+            </div>
+            <div class="date-of-birth">
+                <span>生年月日</span><br>
+                <input type="date" name="birth-date" id="birth-date">
+            </div>
+            <div class="email">
+                <span>メールアドレス</span><br>
+                <input type="text" name="email" id="email">
+            </div>
+            <div class="password">
+                <span>パスワード</span><br>
+                <input type="password" name="password" id="password">
+            </div>
+        </div>
+        <div class="customer-registration-button">
+            <button>会員登録</button>
+        </div>
+    </form>
+    </div>
+    
+</body>
+</html>
