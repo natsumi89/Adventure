@@ -1,0 +1,29 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.productsList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.product-container {
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.left-product-content, .right-product-content {
+    flex: 1;
+    box-sizing: border-box;
+}
+
+.right-product-content img {
+    width: 100%;   /* これにより、親コンテナのサイズに合わせて画像がスケーリングされます */
+    max-width: 100px; /* これは画像の最大幅を指定します。1/10のサイズに調整したい場合、この値を適切に調整してください */
+    height: auto; /* これにより、画像は元のアスペクト比を保持しつつ、指定されたwidthに合わせてリサイズされます */
+    display: block;
+}

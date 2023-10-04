@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>食の冒険 - 地域別特産品を巡る旅</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header>
+    <h1>食の冒険</h1>
+    <nav>
+        <ul>
+            <li><a href="#regions">地域を探す</a></li>
+            <li><a href="#popular">人気商品</a></li>
+            <li><a href="#events">イベント情報</a></li>
+            <li><a href="#profile">マイページ</a></li>
+            <li><a href="#cart">カート</a></li>
+            <li><a href="#login">ログイン</a></li>
+        </ul>
+    </nav>
+    <div class="login-name">
+        <span>ようこそ:</span>
+        <span th:text="${userName}">さん</span>
+    </div>
+</header>
+
+<section id="regions">
+    <h2>地域を探す</h2>
+    <!-- 地図APIによる地域選択機能をここに表示 -->
+</section>
+
+<section id="popular">
+    <h2>人気商品</h2>
+    <!-- 人気商品のリストをここに表示 -->
+    <div class="productsList">
+        <span th:each="product:${productsList}">
+            <div class="product-container">
+                <div class="left-product-content">
+                    <p class="product-name"><span th:text="${product.productName}"></span>:</p>
+                    <p class="product-price"><span th:text="${product.price}"></span></p>
+                    <p class="product-description"><span th:text="${product.description}"></span></p>
+                </div>
+                <div class="right-product-content">
+                    <img th:src="@{${product.imageUrl}}" alt="Product Image" />
+                </div>
+            </div>
+        </span>
+    </div>
+    
+</section>
+
+<section id="events">
+    <h2>イベント情報</h2>
+    <!-- 地域の料理教室やイベント情報をここに表示 -->
+</section>
+
+<section id="profile">
+    <form th:action="@{/login}" method="get">
+    <button>マイページ</button>
+    </form>
+    <!-- ユーザープロフィールや購入履歴をここに表示 -->
+</section>
+
+<section id="cart">
+    <h2>カート</h2>
+    <!-- カート内の商品リストをここに表示 -->
+</section>
+
+<footer>
+    <p>&copy; 2023 食の冒険. All rights reserved.</p>
+</footer>
+
+<script src="scripts.js"></script>
+</body>
+</html>
