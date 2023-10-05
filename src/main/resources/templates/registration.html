@@ -8,19 +8,19 @@
 </head>
 <body>
     <div class="customer-registration">
-        <form th:action="@{/customer-insert}">
+        <form th:action="@{/customer-insert}" method="post">
         <div class="customer-form">
-            <div class="first-name">
-                <span>苗字</span><br>
-                <input type="text" name="first-name" id="first-name">
-            </div>
             <div class="last-name">
-                <span>名前</span><br>
-                <input type="text" name="last-name" id="last-name">
+                <span>姓</span><br>
+                <input type="text" name="lastName" id="lastName">
+            </div>
+            <div class="first-name">
+                <span>名</span><br>
+                <input type="text" name="firstName" id="firstName">
             </div>
             <div class="date-of-birth">
                 <span>生年月日</span><br>
-                <input type="date" name="birth-date" id="birth-date">
+                <input type="date" name="birthDate" id="birthDate">
             </div>
             <div class="email">
                 <span>メールアドレス</span><br>
@@ -29,6 +29,10 @@
             <div class="password">
                 <span>パスワード</span><br>
                 <input type="password" name="password" id="password">
+            </div>
+            <div class="re-password">
+                <span>確認用パスワード</span><br>
+                <input type="password" name="re-password" id="re-password">
             </div>
         </div>
         <div class="customer-registration-button">

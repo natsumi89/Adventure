@@ -1,8 +1,12 @@
 package com.example.Adventure.domain;
 
+import java.sql.Date;
+
 public class Users {
     private Integer userId;
-    private String userName;
+    private String lastName;
+    private String firstName;
+    private Date birthDate;
     private String email;
     private String password;
 
@@ -14,12 +18,28 @@ public class Users {
         this.userId = userId;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
     }
 
     public String getEmail() {
