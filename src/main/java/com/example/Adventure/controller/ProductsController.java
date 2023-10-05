@@ -25,17 +25,18 @@ public class ProductsController {
 
     }
 
-    @GetMapping("/detail/{product_id}")
-    public String detail(@PathVariable("product_id") Integer product_id,Model model) {
+    @GetMapping("/showDetail/{product_id}")
+    public String detail(@PathVariable("product_id") Integer product_id, Model model) {
         Products products = productsService.load(product_id);
+        model.addAttribute("product", products);
         return "merchandise-detail";
-
     }
 
-//    @GetMapping("/save/{product_id}")
-//    public String save(@PathVariable("product_id")Integer product_id,Model model) {
-//        Products products = productsService.save(product_id);
-//        return ":/redirect/top";
-//    }
+
+    @GetMapping("/back")
+    public String back() {
+        return "redirect:/top/products";
+    }
+
 
 }
