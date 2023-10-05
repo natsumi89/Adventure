@@ -23,6 +23,7 @@ public class ProductsRepository {
         products.setProducerId(rs.getInt("producer_id"));
         products.setProductName(rs.getString("product_name"));
         products.setDescription(rs.getString("description"));
+        products.setPrice(rs.getInt("price"));
         products.setImageUrl(rs.getString("image_url"));
 
 

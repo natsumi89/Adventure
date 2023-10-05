@@ -23,7 +23,13 @@
 
 .right-product-content img {
     width: 100%;   /* これにより、親コンテナのサイズに合わせて画像がスケーリングされます */
-    max-width: 100px; /* これは画像の最大幅を指定します。1/10のサイズに調整したい場合、この値を適切に調整してください */
+    max-width: 150px;
     height: auto; /* これにより、画像は元のアスペクト比を保持しつつ、指定されたwidthに合わせてリサイズされます */
+    display: block;
+}
+
+.product-detail .product-detail-content-right img {
+    width: 20%;
+    height: auto;
     display: block;
 }

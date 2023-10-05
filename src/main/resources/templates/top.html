@@ -29,18 +29,22 @@
     <h2>人気商品</h2>
     <!-- 人気商品のリストをここに表示 -->
     <div class="productsList">
-        <span th:each="product:${productsList}">
+        <div th:each="product:${productsList}">
             <div class="product-container">
                 <div class="left-product-content">
+                    <a href="merchandise-infoes.html" th:href="@{/top/showDetail/}+${product.productId}">
                     <p class="product-name"><span th:text="${product.productName}"></span>:</p>
-                    <p class="product-price"><span th:text="${product.price}"></span></p>
+                    </a>
+                    <p class="product-price"><span th:text="${product.price}"></span>円</p>
                     <p class="product-description"><span th:text="${product.description}"></span></p>
                 </div>
                 <div class="right-product-content">
- 　　　　　　　　　<img th:src="@{/img/{imageName}(imageName=${product.imageUrl})}" alt="Product Image"/>
+                    <a href="merchandise-infoes.html" th:href="@{/top/showDetail/}+${product.productId}">
+                        <img th:src="@{/img/{imageName}(imageName=${product.imageUrl})}" alt="Product Image"/>
+                    </a>
                 </div>
             </div>
-        </span>
+        </div>
     </div>
 
 </section>
