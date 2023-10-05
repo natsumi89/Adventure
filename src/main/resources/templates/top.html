@@ -14,15 +14,10 @@
             <li><a href="#regions">地域を探す</a></li>
             <li><a href="#popular">人気商品</a></li>
             <li><a href="#events">イベント情報</a></li>
-            <li><a href="#profile">マイページ</a></li>
             <li><a href="#cart">カート</a></li>
             <li><a href="#login">ログイン</a></li>
         </ul>
     </nav>
-    <div class="login-name">
-        <span>ようこそ:</span>
-        <span th:text="${userName}">さん</span>
-    </div>
 </header>
 
 <section id="regions">
@@ -42,12 +37,12 @@
                     <p class="product-description"><span th:text="${product.description}"></span></p>
                 </div>
                 <div class="right-product-content">
-                    <img th:src="@{${product.imageUrl}}" alt="Product Image" />
+ 　　　　　　　　　<img th:src="@{/img/{imageName}(imageName=${product.imageUrl})}" alt="Product Image"/>
                 </div>
             </div>
         </span>
     </div>
-    
+
 </section>
 
 <section id="events">
@@ -55,12 +50,29 @@
     <!-- 地域の料理教室やイベント情報をここに表示 -->
 </section>
 
-<section id="profile">
-    <form th:action="@{/login}" method="get">
-    <button>マイページ</button>
-    </form>
-    <!-- ユーザープロフィールや購入履歴をここに表示 -->
-</section>
+<div th:if="${session.lastName == null}">
+    <section id="login">
+        <form th:action="@{/login}" method="get">
+            <button>ログイン</button>
+        </form>
+        <!-- ユーザープロフィールや購入履歴をここに表示 -->
+    </section>
+</div>
+
+<div th:unless="${session.lastName == empty}">
+    <div class="login-name">
+        <span>ようこそ</span>
+        <span th:text="${session.lastName}"></span>
+        <span>さん!</span>
+    </div>
+    <section id="logout">
+        <form th:action="@{/logout}" method="get">
+            <button>ログアウト</button>
+        </form>
+
+        <!-- ユーザープロフィールや購入履歴をここに表示 -->
+    </section>
+</div>
 
 <section id="cart">
     <h2>カート</h2>

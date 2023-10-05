@@ -37,10 +37,14 @@ public class UsersController {
             return "redirect:/top/products";
         }
 
-        session.setAttribute("email",users.getEmail());
-        session.setAttribute("userName",users.getUserName());
+        session.setAttribute("email",authenticatedUser.getEmail());
+        session.setAttribute("lastName",authenticatedUser.getLastName());
+
+        System.out.println("Authenticated User: " + authenticatedUser);
 
         return "redirect:/top/products";
+
+
     }
 
     @GetMapping("/customer-registration")
@@ -52,13 +56,31 @@ public class UsersController {
     public String insert(UsersForm usersForm, Model model) {
         Users users = usersService.findByEmailAndPassword(usersForm.getEmail(), usersForm.getPassword());
         if (users != null) {
-            session.setAttribute("userId", users.getUserId());
-            session.setAttribute("userName", users.getUserName());
-            return "redirect:/top/products";
-        } else {
-            model.addAttribute("error", "メールアドレスまたはパスワードが正しくありません。");
-            return "redirect:/login";
+            model.addAttribute("error", "このメールアドレスは既に登録されています。");
+            return "registration";
         }
 
+        Users newUser = new Users();
+        newUser.setFirstName(usersForm.getFirstName());
+        newUser.setLastName(usersForm.getLastName());
+        newUser.setBirthDate(usersForm.getBirthDate());
+        newUser.setEmail(usersForm.getEmail());
+        newUser.setPassword(usersForm.getPassword());
+
+        usersService.insert(newUser);
+
+        return "redirect:/top/products";
     }
+
+
+    @GetMapping("/logout")
+    public String logout() {
+        session.invalidate();
+        return "redirect:/top/products";
+    }
+
+//    @PostMapping("/delete")
+//    public void delete(Integer userId) {
+//        Users users = usersService.delete(usersForm.getUserId());
+//    }
 }

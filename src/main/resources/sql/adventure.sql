@@ -12,7 +12,9 @@ contact_info TEXT NOT NULL
 );
 CREATE TABLE users(
 user_id SERIAL PRIMARY KEY,
-username VARCHAR(255) UNIQUE NOT NULL,
+last_name VARCHAR(255)  NOT NULL,
+first_name VARCHAR(255)  NOT NULL,
+birth_date DATE NOT NULL,
 email VARCHAR(255) UNIQUE NOT NULL,
 password VARCHAR(255) NOT NULL,
 created_at TIMESTAMPTZ DEFAULT current_timestamp,
@@ -91,16 +93,16 @@ VALUES
     ('佐藤漁業', '新鮮な魚と海産物の提供を行っています。', 'sato@example.com');
 
 -- Users Table
-INSERT INTO users (username, email, password)
+INSERT INTO users (last_name,first_name,birth_date, email, password)
 VALUES
-    ('yamada_taro', 'yamada_taro@example.com', 'password123'),
-    ('suzuki_hanako', 'suzuki_hanako@example.com', 'password123');
+    ('yamada','taro','1976-07-22', 'yamada_taro@example.com', 'password123'),
+    ('suzuki','hanako','1992-09-19', 'suzuki_hanako@example.com', 'password123');
 
 -- Products Table
 INSERT INTO products (region_id, producer_id, product_name, description, price, image_url)
 VALUES
-    (1, 1, '北海道産じゃがいも', '新鮮で美味しいじゃがいもです。', 300, '/static/img/potato.png'),
-    (2, 2, '青森産りんご', '甘くてジューシーなりんごです。', 500, '/static/img/apple.png');
+    (1, 1, '北海道産じゃがいも', '新鮮で美味しいじゃがいもです。', 300, 'potato.png'),
+    (2, 2, '青森産りんご', '甘くてジューシーなりんごです。', 500, 'apple.png');
 
 -- Orders Table
 INSERT INTO orders (user_id, total_price, status)
