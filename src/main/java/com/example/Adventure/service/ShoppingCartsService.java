@@ -43,6 +43,10 @@ public class ShoppingCartsService {
         return productsList;
     }
 
+    public void deleteShoppingCart(Integer cartId) {
+        shoppingCartsRepository.deleteShoppingCart(cartId);
+    }
+
 
 
 }
