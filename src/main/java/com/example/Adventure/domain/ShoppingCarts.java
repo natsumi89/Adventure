@@ -1,17 +1,17 @@
 package com.example.Adventure.domain;
 
 public class ShoppingCarts {
-    private Integer cartsId;
+    private Integer cartId;
     private Integer userId;
     private Integer productId;
     private Integer quantity;
 
-    public Integer getCartsId() {
-        return cartsId;
+    public Integer getCartId() {
+        return cartId;
     }
 
-    public void setCartsId(Integer cartsId) {
-        this.cartsId = cartsId;
+    public void setCartId(Integer cartId) {
+        this.cartId = cartId;
     }
 
     public Integer getUserId() {

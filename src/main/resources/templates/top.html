@@ -56,9 +56,9 @@
 
 <div th:if="${session.lastName == null}">
     <section id="login">
-        <form th:action="@{/login}" method="get">
-            <button>ログイン</button>
-        </form>
+        <a th:href="@{/login}" method="get">
+            <p>ログイン</p>
+        </a>
         <!-- ユーザープロフィールや購入履歴をここに表示 -->
     </section>
 </div>
@@ -70,9 +70,9 @@
         <span>さん!</span>
     </div>
     <section id="logout">
-        <form th:action="@{/logout}" method="get">
-            <button>ログアウト</button>
-        </form>
+        <a th:href="@{/logout}" method="get">
+            <p>ログアウト</p>
+        </a>
 
         <!-- ユーザープロフィールや購入履歴をここに表示 -->
     </section>
@@ -85,6 +85,9 @@
 
 <footer>
     <p>&copy; 2023 食の冒険. All rights reserved.</p>
+    <a th:href="@{/show-shopping-cart}" method="get">
+        ショッピングカートへ
+    </a>
 </footer>
 
 <script src="scripts.js"></script>

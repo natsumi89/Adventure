@@ -65,6 +65,15 @@ event_date TIMESTAMPTZ DEFAULT current_timestamp,
 event_location TEXT NOT NULL
 );
 
+CREATE TABLE shopping_carts(
+    cart_id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(user_id),
+    product_id INTEGER REFERENCES products(product_id),
+    quantity INTEGER NOT NULL,
+    added_date TIMESTAMPTZ DEFAULT current_timestamp
+);
+
+
 CREATE OR REPLACE FUNCTION update_updated_at_column()
 RETURNS TRIGGER AS $$
 BEGIN
