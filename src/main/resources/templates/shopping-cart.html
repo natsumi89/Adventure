@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>shopping-cart</title>
+</head>
+<body>
+    <div th:if="${session.cartProductsList.empty || session.cartProductsList == null}">
+        <p>商品はありません。</p>
+        <a th:href="@{/top/back}">戻る</a>
+    </div>
+    <div th:unless="${session.cartProductsList.empty || session.cartProductsList == null}">
+        <div class="shopping-cart-list">
+            <div clsas="shopping-cart-content-left">
+            <div th:each="product: ${session.cartProductsList}">
+                <div class="shopping-cart-product-name">
+                    <p th:text="${product.productName}"></p>
+                </div>
+                <div class="shopping-cart-product-price">
+                    <p th:text="${product.price}"></p>
+                </div>
+                <div class="shopping-cart-product-description">
+                    <p th:text="${product.description}"></p>
+                </div>
+                <form th:action="@{/delete-shopping-carts}" method="post">
+                    <input type="hidden" th:name="productId" th:value="${product.productId}" />
+                    <button>削除</button>
+                </form>
+
+<!--                <form th:action="@{/change-amount}" method="post">-->
+<!--                    <select name="change-amount" id="change-amount">-->
+<!--                        <option th:each="num : ${#numbers.sequence(0,10)}" th:value="${num}" th:text="${num}"></option>-->
+<!--                    </select>-->
+<!--                </form>-->
+                <div class="shopping-cart-content-right">
+                    <div class="shopping-cart-image-url">
+                        <img th:src="@{/img/{imageName}(imageName=${product.imageUrl})}" alt="Product Image"/>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            <a th:href="@{/top/back}">戻る</a>
+        </div>
+    </div>
+    
+</body>
+</html>
