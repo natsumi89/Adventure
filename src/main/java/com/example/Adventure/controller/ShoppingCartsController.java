@@ -61,16 +61,17 @@ public class ShoppingCartsController {
     }
 
     @PostMapping("/delete-shopping-carts")
-    public String deleteShoppingCart(Integer productId, HttpSession session) {
-        shoppingCartsService.deleteShoppingCartByProductId(productId);
+    public String deleteShoppingCart(Integer cartId, HttpSession session) {  // cartIdを引数として受け取る
+        shoppingCartsService.deleteShoppingCart(cartId);  // cart_idを利用して削除
 
         // セッションからユーザーIDを取得
         Integer userId = (Integer) session.getAttribute("userId");
 
         // セッションのカートリストから該当の商品を削除
+        // （これは商品IDに基づいているため、正確にはcart_idに基づいてリストからアイテムを検索・削除するロジックに変更するべきです）
         List<Products> cartProductsList = (List<Products>) session.getAttribute("cartProductsList");
         if (cartProductsList != null) {
-            cartProductsList.removeIf(product -> product.getProductId().equals(productId));
+            // cartProductsList.removeIf(product -> product.getProductId().equals(productId)); // この部分はcart_idに基づいて修正が必要です
         }
 
         // セッションに更新したカートリストを設定

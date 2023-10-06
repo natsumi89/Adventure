@@ -34,12 +34,14 @@ updated_at TIMESTAMPTZ DEFAULT current_timestamp
 );
 
 CREATE TABLE orders(
-order_id SERIAL PRIMARY KEY,
-user_id INTEGER REFERENCES users(user_id),
-total_price INTEGER NOT NULL,
-order_date TIMESTAMPTZ DEFAULT current_timestamp,
-status VARCHAR(50) CHECK (status IN ('processing', 'shipped', 'delivered'))
+    order_id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(user_id),
+    total_price INTEGER NOT NULL,
+    order_date TIMESTAMPTZ DEFAULT current_timestamp,
+    status VARCHAR(50) CHECK (status IN ('processing', 'shipped', 'delivered')),
+    payment_method INTEGER CHECK (payment_method IN (1, 2, 3))
 );
+
 
 CREATE TABLE order_details(
 order_detail_id SERIAL PRIMARY KEY,
@@ -73,7 +75,6 @@ CREATE TABLE shopping_carts(
     added_date TIMESTAMPTZ DEFAULT current_timestamp
 );
 
-
 CREATE OR REPLACE FUNCTION update_updated_at_column()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -93,7 +94,13 @@ EXECUTE FUNCTION update_updated_at_column();
 INSERT INTO regions (region_name, description)
 VALUES
     ('北海道', '日本の最北の地域で、自然が豊かです。'),
-    ('青森県', 'りんごの生産が特に有名な地域です。');
+    ('青森県', 'りんごの生産が特に有名な地域です。'),
+        ('東京都', '日本の首都で、ビジネスと文化の中心です。'),
+        ('大阪府', '関西の中心で、歴史と現代が融合しています。'),
+        ('京都府', '古都であり、多くの歴史的な寺院や神社があります。'),
+        ('福岡県', '九州の中心地で、美味しい食べ物が豊富です。'),
+        ('沖縄県', '南の島で、美しい海と自然が魅力です。');
+
 
 -- Producers Table
 INSERT INTO producers (producer_name, description, contact_info)
@@ -112,6 +119,36 @@ INSERT INTO products (region_id, producer_id, product_name, description, price, 
 VALUES
     (1, 1, '北海道産じゃがいも', '新鮮で美味しいじゃがいもです。', 300, 'potato.png'),
     (2, 2, '青森産りんご', '甘くてジューシーなりんごです。', 500, 'apple.png');
+
+ -- 東京都の商品
+ INSERT INTO products (region_id, producer_id, product_name, description, price, image_url)
+ VALUES
+     (3, 1, '東京バナナ', '東京の有名なお土産で、甘くて美味しいです。', 1000, 'tokyo_banana.png'),
+     (3, 2, '東京産ブリ', '新鮮で脂ののったブリです。', 1500, 'buri.png');
+
+ -- 大阪府の商品
+ INSERT INTO products (region_id, producer_id, product_name, description, price, image_url)
+ VALUES
+     (4, 1, 'たこ焼き', '大阪の代表的なストリートフードです。', 600, 'takoyaki.png'),
+     (4, 2, 'ふぐ料理', '特別な日のごちそうとして人気があります。', 5000, 'fugu.png');
+
+ -- 京都府の商品
+ INSERT INTO products (region_id, producer_id, product_name, description, price, image_url)
+ VALUES
+     (5, 1, '抹茶スイーツ', '京都の伝統的な抹茶を使用したスイーツです。', 1200, 'matcha_sweets.png'),
+     (5, 2, '納豆', '発酵させた大豆で、健康効果があります。', 200, 'natto.png');
+
+ -- 福岡県の商品
+ INSERT INTO products (region_id, producer_id, product_name, description, price, image_url)
+ VALUES
+     (6, 1, '明太子', '辛くて美味しい、福岡の名物です。', 1800, 'mentaiko.png'),
+     (6, 2, 'とんこつラーメン', 'クリーミーなスープが特徴のラーメンです。', 800, 'ramen.png');
+
+ -- 沖縄県の商品
+ INSERT INTO products (region_id, producer_id, product_name, description, price, image_url)
+ VALUES
+     (7, 1, '沖縄そば', '沖縄独特のソウルフードで、麺が太くて美味しいです。', 700, 'okinawa_soba.png'),
+     (7, 2, 'ゴーヤチャンプルー', 'ゴーヤの苦味が特徴的な沖縄料理です。', 650, 'goya.png');
 
 -- Orders Table
 INSERT INTO orders (user_id, total_price, status)

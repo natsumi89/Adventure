@@ -43,6 +43,34 @@ public class ShoppingCartsService {
         return productsList;
     }
 
+    public void deleteShoppingCart(Integer cartId) {
+        shoppingCartsRepository.deleteShoppingCart(cartId);
+    }
 
+    public void updateOrAddToCart(Integer userId, Integer productId, Integer quantity) {
+        List<ShoppingCarts> existingCartItems = shoppingCartsRepository.findShoppingCartsByUserId(userId);
 
+        // 既存のカートアイテムを検索して、指定された商品IDに一致するものがあるか確認
+        ShoppingCarts existingItem = null;
+        for (ShoppingCarts item : existingCartItems) {
+            if (item.getProductId().equals(productId)) {
+                existingItem = item;
+                break;
+            }
+        }
+
+        if (existingItem != null) {
+            // 既存のカートアイテムがある場合、数量を更新
+            // この例では、数量が単純に1増加しますが、必要に応じて変更してください
+            existingItem.setQuantity(existingItem.getQuantity() + quantity);
+            shoppingCartsRepository.updateCartItemQuantity(existingItem);  // このメソッドはShoppingCartsRepositoryに追加する必要があります
+        } else {
+            // カートアイテムが存在しない場合、新しいカートアイテムを追加
+            ShoppingCarts newItem = new ShoppingCarts();
+            newItem.setUserId(userId);
+            newItem.setProductId(productId);
+            newItem.setQuantity(quantity);
+            shoppingCartsRepository.insertCartItem(newItem);  // このメソッドはShoppingCartsRepositoryに追加する必要があります
+        }
+    }
 }

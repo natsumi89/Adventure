@@ -29,11 +29,14 @@
                     <button>削除</button>
                 </form>
 
-<!--                <form th:action="@{/change-amount}" method="post">-->
-<!--                    <select name="change-amount" id="change-amount">-->
-<!--                        <option th:each="num : ${#numbers.sequence(0,10)}" th:value="${num}" th:text="${num}"></option>-->
-<!--                    </select>-->
-<!--                </form>-->
+                <form th:action="@{/change-amount}" method="post">
+                    <input type="hidden" th:name="productId" th:value="${product.productId}" />
+                    <select name="change-amount" id="change-amount">
+                        <option th:each="num : ${#numbers.sequence(1,10)}" th:value="${num}" th:text="${num}"></option>
+                    </select>
+                    <button>数量変更</button>
+                </form>
+
                 <div class="shopping-cart-content-right">
                     <div class="shopping-cart-image-url">
                         <img th:src="@{/img/{imageName}(imageName=${product.imageUrl})}" alt="Product Image"/>
@@ -41,8 +44,10 @@
                 </div>
             </div>
             </div>
-
             <a th:href="@{/top/back}">戻る</a>
+            <form th:action="@{order-confirmation}">
+                <button>購入手続き</button>
+            </form>
         </div>
     </div>
     
