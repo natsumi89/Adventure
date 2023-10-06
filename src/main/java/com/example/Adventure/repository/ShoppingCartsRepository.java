@@ -52,6 +52,30 @@ public class ShoppingCartsRepository {
         return template.query(sql, param, SHOPPING_CARTS_ROW_MAPPER);
     }
 
+    public void saveCartItem(Integer userId, Integer productId, Integer quantity) {
+        String sql = "INSERT INTO shopping_carts(user_id, product_id, quantity) VALUES(:userId, :productId, :quantity)";
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("userId", userId)
+                .addValue("productId", productId)
+                .addValue("quantity", quantity); // ショッピングカートの各商品の数量を格納するための量
+        template.update(sql, param);
+    }
 
+    public void updateCartItemQuantity(ShoppingCarts cartItem) {
+        String sql = "UPDATE shopping_carts SET quantity=:quantity WHERE cart_id=:cartId";
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("quantity", cartItem.getQuantity())
+                .addValue("cartId", cartItem.getCartId());
+        template.update(sql, param);
+    }
+
+    public void insertCartItem(ShoppingCarts cartItem) {
+        String sql = "INSERT INTO shopping_carts(user_id, product_id, quantity) VALUES(:userId, :productId, :quantity)";
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("userId", cartItem.getUserId())
+                .addValue("productId", cartItem.getProductId())
+                .addValue("quantity", cartItem.getQuantity());
+        template.update(sql, param);
+    }
 
 }

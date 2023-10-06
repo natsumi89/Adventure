@@ -1,7 +1,9 @@
 package com.example.Adventure.controller;
 
+import com.example.Adventure.domain.Products;
 import com.example.Adventure.domain.Users;
 import com.example.Adventure.form.UsersForm;
+import com.example.Adventure.service.ShoppingCartsService;
 import com.example.Adventure.service.UsersService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("")
 public class UsersController {
@@ -22,6 +26,9 @@ public class UsersController {
 
     @Autowired
     private HttpSession session;
+
+    @Autowired
+    private ShoppingCartsService shoppingCartsService;
 
     @GetMapping("/login")
     public String login() {
@@ -73,11 +80,28 @@ public class UsersController {
     }
 
 
-    @GetMapping("/logout")
-    public String logout() {
+    @PostMapping("/logout")
+    public String logout(HttpSession session) {
+        // ユーザーIDをセッションから取得
+        Integer userId = (Integer) session.getAttribute("userId");
+        if (userId != null) {
+            // セッションからカートの商品リストを取得
+            List<Products> cartProductsList = (List<Products>) session.getAttribute("cartProductsList");
+            if (cartProductsList != null) {
+                for (Products product : cartProductsList) {
+                    // 商品ごとにデータベースのカートに追加
+                    // 既存のデータベースのカートアイテムがある場合は、数量を更新
+                    // ない場合は新しいカートアイテムを追加
+                    shoppingCartsService.updateOrAddToCart(userId, product.getProductId(), 1); // このメソッドは新しく実装する必要があります
+                }
+            }
+        }
+        // セッションの情報をクリア
         session.invalidate();
-        return "redirect:/top/products";
+        return "redirect:/login"; // ログインページへリダイレクト
     }
+
+
 
 //    @PostMapping("/delete")
 //    public void delete(Integer userId) {

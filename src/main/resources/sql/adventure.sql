@@ -34,12 +34,14 @@ updated_at TIMESTAMPTZ DEFAULT current_timestamp
 );
 
 CREATE TABLE orders(
-order_id SERIAL PRIMARY KEY,
-user_id INTEGER REFERENCES users(user_id),
-total_price INTEGER NOT NULL,
-order_date TIMESTAMPTZ DEFAULT current_timestamp,
-status VARCHAR(50) CHECK (status IN ('processing', 'shipped', 'delivered'))
+    order_id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(user_id),
+    total_price INTEGER NOT NULL,
+    order_date TIMESTAMPTZ DEFAULT current_timestamp,
+    status VARCHAR(50) CHECK (status IN ('processing', 'shipped', 'delivered')),
+    payment_method INTEGER CHECK (payment_method IN (1, 2, 3))
 );
+
 
 CREATE TABLE order_details(
 order_detail_id SERIAL PRIMARY KEY,
@@ -73,7 +75,6 @@ CREATE TABLE shopping_carts(
     added_date TIMESTAMPTZ DEFAULT current_timestamp
 );
 
-
 CREATE OR REPLACE FUNCTION update_updated_at_column()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -93,7 +94,7 @@ EXECUTE FUNCTION update_updated_at_column();
 INSERT INTO regions (region_name, description)
 VALUES
     ('北海道', '日本の最北の地域で、自然が豊かです。'),
-    ('青森県', 'りんごの生産が特に有名な地域です。');
+    ('青森県', 'りんごの生産が特に有名な地域です。'),
         ('東京都', '日本の首都で、ビジネスと文化の中心です。'),
         ('大阪府', '関西の中心で、歴史と現代が融合しています。'),
         ('京都府', '古都であり、多くの歴史的な寺院や神社があります。'),
