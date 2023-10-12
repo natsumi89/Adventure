@@ -55,7 +55,8 @@ public class UsersRepository {
     }
 
     public void delete(Integer userId){
-        String sql = "DELETE user_id, last_name,first_name,birth_date, email, password FROM users WHERE user_id=:userId";
+        String sql = "DELETE FROM users WHERE user_id=:userId";
+
         SqlParameterSource param = new MapSqlParameterSource().addValue("user_id",userId);
         template.update(sql,param);
 
