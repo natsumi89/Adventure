@@ -11,6 +11,7 @@ public class ShoppingCartsDetail {
     private String productName;
     private Integer price;
     private String description;
+    private String imageUrl;
 
     public void generateUniqueId() {
         this.cartId = counter.incrementAndGet();
@@ -70,5 +71,13 @@ public class ShoppingCartsDetail {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
