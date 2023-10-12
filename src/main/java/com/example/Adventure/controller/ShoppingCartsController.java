@@ -80,6 +80,7 @@ public class ShoppingCartsController {
                 newCartItem.setDescription(product.getDescription());
                 newCartItem.setQuantity(1);
                 newCartItem.generateUniqueId();
+                newCartItem.setImageUrl(product.getImageUrl());
                 cartDetailsList.add(newCartItem);
             }
 

@@ -39,6 +39,7 @@ public class ShoppingCartsRepository {
         detail.setProductName(rs.getString("product_name"));
         detail.setPrice(rs.getInt("price"));
         detail.setDescription(rs.getString("description"));
+        detail.setImageUrl(rs.getString("image_url"));
         return detail;
     };
 
@@ -117,7 +118,7 @@ public class ShoppingCartsRepository {
     }
 
     public List<ShoppingCartsDetail> findShoppingCartsDetailByUserId(Integer userId) {
-        String sql = "SELECT sc.*, p.product_name, p.price, p.description " +
+        String sql = "SELECT sc.*, p.product_name, p.price, p.description,p.image_url " +
                 "FROM shopping_carts sc " +
                 "INNER JOIN products p ON sc.product_id = p.product_id " +
                 "WHERE sc.user_id=:userId";
