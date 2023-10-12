@@ -1,10 +1,141 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>$Title$</title>
+  <title>order-confirmation</title>
 </head>
 <body>
-$END$
+  <div class="order-confirmation">
+    <h3>注文確認画面</h3>
+    <div class="order-confirmation-product">
+		<p>注文商品一覧</p>
+		<div th:unless="${session.cartDetailsList.empty}"></div>
+		<input type="text" id="numberOfMerchandise"
+			   th:value="${session.cartDetailsList.size}"
+			   style="display: none">
+		<div class="confirm-content">
+			<div class="confirm-content-border"
+				 th:each="cartDetail,status:${session.cartDetailsList}">
+				<div class="confirm-content-name-price">
+					<div class="confirm-name">
+						商品名&colon;
+						<span th:text="${cartDetail.productName}">商品</span>
+					</div>
+<!--					<div class="confirm-price">-->
+<!--						<div class="confirm-price-label">-->
+<!--							金額&colon;-->
+<!--						</div>-->
+<!--						<span th:id="${'totalPrice' + status.index}"-->
+<!--							  th:text="${cartDetail.totalPrice}"-->
+<!--							  th:value="${cartDetail.totalPrice}">小計金額&colon;</span>-->
+<!--						<span>円</span>-->
+
+<!--						<label for="quantity">-->
+<!--							<div class="confirm-quantity">-->
+<!--								<div class="confirm-quantity-label">-->
+<!--									個数&colon;-->
+<!--								</div>-->
+<!--								<input type="number"-->
+<!--									   th:name="${'quantity' + status.index}"-->
+<!--									   th:id="${'quantity' + status.index}"-->
+<!--									   th:value="${cartDetail.quantity}"-->
+<!--									   onchange="amountChange(this.id,this.value)"-->
+<!--									   id="confirm-quantity-input" min="1">個-->
+<!--							</div>-->
+<!--						</label>-->
+
+      <form th:action="@{/delete-shopping-carts}" method="post">
+              <input type="hidden" name="cartId" th:value="${cartDetail.cartId}"> 
+              <input type="hidden" name="productId" th:value="${cartDetail.productId}">
+              <input type="hidden" name="productName" th:value="${cartDetail.productName}">
+              <input type="hidden" name="price" th:value="${cartDetail.price}">
+              <input type="hidden" name="description" th:value="${cartDetail.description}">
+              <button class="shopping-cart-btn" type="submit">削除</button>
+          </form>
+      <div class="shopping-cart-content-right">
+          <div class="shopping-cart-image-url">
+              <img th:src="@{/img/{imageName}(imageName=${cartDetail.imageUrl})}" alt="Product Image"/>
+          </div>
+      </div>
+  </div>
+  </div>
+
+<h2 class="confirm-subheading">お客様情報を入力してください</h2>
+											<div class="confirm-bottom">
+												<form th:action="@{/order/completed}" method="post"
+													th:object="${orderComfirmForm}">
+													<h3>お届け先</h3>
+													<div class="confirm-bottom-content">
+														<div class="confirm-customer-last-name">
+															<label for="lastName">姓&colon; <input type="text" name="lastName"
+																	id="lastName" placeholder="山田"></label>
+
+														</div>
+														<div class="confirm-customer-first-name">
+															<label for="firstName">名&colon; <input type="text" name="firstName"
+																								 id="firstName" placeholder="太郎"
+															></label>
+
+														</div>
+														<div class="confirm-customer-zipcode">
+															<label for="zipCode">郵便番号&colon;<input type="text"
+																	name="zipCode" id="zipCode" placeholder="0000000"
+																	></label>
+															<button id="search-address"
+																type="button">郵便番号から住所を検索</button><br>
+														</div>
+														<div class="confirm-customer-address">
+															<label for="address">住所&colon;<input type="text"
+																	name="address" id="address"
+																	placeholder="東京都新宿区西新宿123"
+																	></label>
+														</div>
+														<div class="confirm-customer-telephone">
+															<label for="telephone">電話番号&colon;<input type="text"
+																	name="telephone" id="telephone"
+																	placeholder="000-0000-0000"
+																	></label>
+														</div>
+													</div>
+													<h3>支払い方法</h3>
+													<!-- お振込のラジオボタンが押された時のみ、振込情報が表示される処理を追加 -->
+<!--													<div class="confirm-payment">-->
+<!--														<div class="confirm-payment-cash">-->
+<!--															<label class="payment-label"-->
+<!--																for="cashOnDelivery">代引き&colon;<input type="radio"-->
+<!--																	id="cashOnDelivery" value="1" name="pay"-->
+<!--																	onclick="buttonClick()" class="radio"-->
+<!--																	checked></label>-->
+<!--														</div>-->
+<!--														<div class="confirm-payment-transfer">-->
+<!--															<label class="payment-label" for="transfer">お振込&colon;<input-->
+<!--																	type="radio" id="transfer" value="2" name="pay"-->
+<!--																	onclick="buttonClick()" class="radio"></label>-->
+<!--														</div>-->
+<!--														<div class="confirm-payment-card">-->
+<!--															<label class="payment-label" for="credit">カード&colon;<input-->
+<!--																	type="radio" id="stripe-button" value="3" name="pay"-->
+<!--																	onclick="buttonClick()" class="radio"></label>-->
+<!--														</div>-->
+
+<!--														<div id="bank-info" value="bank-info" style="display: none;">-->
+<!--															<h1>銀行振込先情報</h1>-->
+<!--															<span>注文確定後、7営業日以内に下記口座へお振込ください。期日までに振り込みがない場合はキャンセルになります。</span><br>-->
+<!--															<span>金融機関名:ラクラク銀行</span><br>-->
+<!--															<span>支店名:ラクス支店</span><br> <span>口座種別:普通</span>-->
+<!--															<br><span>口座番号:1234567</span>-->
+<!--															<br><span>口座名義人名:ラクラクティー</span><br>-->
+<!--															<span>※振り込み手数料はお客様のご負担になります。</span>-->
+<!--														</div>-->
+<!--													</div>-->
+													<div class="shopping-cart-total-price">
+														<p th:text=" ${totalPrice}"></p>
+													</div>
+													<div class="confirm-button"><button id="confirm-btn"
+															class="confirm-button" type="submit">注文確定</button></div>
+												</form>
+
+      </div>
+    </div>
 </body>
 </html>

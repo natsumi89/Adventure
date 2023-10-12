@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
     <title>shopping-cart</title>
 </head>
 <body>
@@ -29,7 +30,7 @@
                 </div>
 
                 <form th:action="@{/delete-shopping-carts}" method="post">
-                        <input type="hidden" name="cartId" th:value="${cartDetail.cartId}"> <!-- 追加する -->
+                        <input type="hidden" name="cartId" th:value="${cartDetail.cartId}"> 
                         <input type="hidden" name="productId" th:value="${cartDetail.productId}">
                         <input type="hidden" name="productName" th:value="${cartDetail.productName}">
                         <input type="hidden" name="price" th:value="${cartDetail.price}">

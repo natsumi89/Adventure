@@ -33,3 +33,13 @@
     height: auto;
     display: block;
 }
+.shopping-cart-image-url {
+    width: 10%; /* Decreased from 20% to 10% to make it half the size */
+    display: block;
+}
+
+.shopping-cart-image-url img {
+    width: 100%;
+    height: auto;
+}
+
