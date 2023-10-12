@@ -70,11 +70,9 @@
         <span>さん!</span>
     </div>
     <section id="logout">
-        <a th:href="@{/logout}" method="get">
-            <p>ログアウト</p>
-        </a>
-
-        <!-- ユーザープロフィールや購入履歴をここに表示 -->
+        <form th:action="@{/logout}" method="post">
+            <button>ログアウト</button>
+        </form>
     </section>
 </div>
 

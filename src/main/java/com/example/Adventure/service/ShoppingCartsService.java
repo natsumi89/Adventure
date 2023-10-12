@@ -2,6 +2,7 @@ package com.example.Adventure.service;
 
 import com.example.Adventure.domain.Products;
 import com.example.Adventure.domain.ShoppingCarts;
+import com.example.Adventure.domain.ShoppingCartsDetail;
 import com.example.Adventure.repository.ProductsRepository;
 import com.example.Adventure.repository.ShoppingCartsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-
 @Service
 @Transactional
 public class ShoppingCartsService {
@@ -23,12 +23,7 @@ public class ShoppingCartsService {
         return shoppingCartsRepository.findAll();
     }
 
-
-    public void deleteShoppingCartByProductId(Integer productId) {
-        shoppingCartsRepository.deleteShoppingCartByProductId(productId);
-    }
-
-    public List<Products> getAllProductsInCart(Integer userId) {
+    public List<ShoppingCartsDetail> findShoppingCartsDetailByUserId(Integer userId) {
         // DBからショッピングカートの全商品を取得
         List<ShoppingCarts> cartItems = shoppingCartsRepository.findShoppingCartsByUserId(userId);
 
@@ -40,7 +35,7 @@ public class ShoppingCartsService {
             Products product = productsRepository.load(item.getProductId());
             productsList.add(product);
         }
-        return productsList;
+        return shoppingCartsRepository.findShoppingCartsDetailByUserId(userId);
     }
 
     public void deleteShoppingCart(Integer cartId) {
@@ -48,29 +43,26 @@ public class ShoppingCartsService {
     }
 
     public void updateOrAddToCart(Integer userId, Integer productId, Integer quantity) {
-        List<ShoppingCarts> existingCartItems = shoppingCartsRepository.findShoppingCartsByUserId(userId);
+        ShoppingCarts cartItem = new ShoppingCarts();
+        cartItem.setUserId(userId);  // <-- これを確認してください。
+        cartItem.setProductId(productId);
+        cartItem.setQuantity(quantity);
+        saveCartItem(cartItem);
+    }
 
-        // 既存のカートアイテムを検索して、指定された商品IDに一致するものがあるか確認
-        ShoppingCarts existingItem = null;
-        for (ShoppingCarts item : existingCartItems) {
-            if (item.getProductId().equals(productId)) {
-                existingItem = item;
-                break;
-            }
-        }
 
+    public Integer getProductIdByCartId(Integer cartId) {
+        return shoppingCartsRepository.getProductIdByCartId(cartId);
+    }
+
+    public void saveCartItem(ShoppingCarts cartItem) {
+        ShoppingCarts existingItem = shoppingCartsRepository.findByUserIdAndProductId(cartItem.getUserId(), cartItem.getProductId());
         if (existingItem != null) {
-            // 既存のカートアイテムがある場合、数量を更新
-            // この例では、数量が単純に1増加しますが、必要に応じて変更してください
-            existingItem.setQuantity(existingItem.getQuantity() + quantity);
-            shoppingCartsRepository.updateCartItemQuantity(existingItem);  // このメソッドはShoppingCartsRepositoryに追加する必要があります
+            existingItem.setQuantity(existingItem.getQuantity() + cartItem.getQuantity());
+            shoppingCartsRepository.updateCartItemQuantityByUserIdAndProductId(existingItem); // ここを変更
         } else {
-            // カートアイテムが存在しない場合、新しいカートアイテムを追加
-            ShoppingCarts newItem = new ShoppingCarts();
-            newItem.setUserId(userId);
-            newItem.setProductId(productId);
-            newItem.setQuantity(quantity);
-            shoppingCartsRepository.insertCartItem(newItem);  // このメソッドはShoppingCartsRepositoryに追加する必要があります
+            shoppingCartsRepository.insertCartItem(cartItem);
         }
     }
 }
+

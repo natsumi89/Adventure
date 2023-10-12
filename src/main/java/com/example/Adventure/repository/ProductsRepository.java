@@ -57,4 +57,13 @@ public class ProductsRepository {
 
     }
 
+    public List<Products> getAllProductsInCart(Integer userId) {
+        String sql = "SELECT p.* " +
+                "FROM shopping_carts sc " +
+                "INNER JOIN products p ON sc.product_id = p.product_id " +
+                "WHERE sc.user_id=:userId";
+        SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
+        return template.query(sql, param, PRODUCTS_ROW_MAPPER);
+    }
+
 }

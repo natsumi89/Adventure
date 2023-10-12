@@ -29,7 +29,7 @@ public class ProductsController {
     public String detail(@PathVariable("product_id") Integer product_id, Model model) {
         Products products = productsService.load(product_id);
         model.addAttribute("product", products);
-        return "merchandise-detail";
+        return "product-detail";
     }
 
 

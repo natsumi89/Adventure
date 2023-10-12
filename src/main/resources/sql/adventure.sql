@@ -74,6 +74,7 @@ CREATE TABLE shopping_carts(
     quantity INTEGER NOT NULL,
     added_date TIMESTAMPTZ DEFAULT current_timestamp
 );
+ALTER TABLE shopping_carts ALTER COLUMN user_id DROP NOT NULL;
 
 CREATE OR REPLACE FUNCTION update_updated_at_column()
 RETURNS TRIGGER AS $$

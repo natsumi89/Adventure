@@ -1,6 +1,7 @@
 package com.example.Adventure.controller;
 
 import com.example.Adventure.domain.Products;
+import com.example.Adventure.domain.ShoppingCartsDetail;
 import com.example.Adventure.service.ProductsService;
 import com.example.Adventure.service.ShoppingCartsService;
 import jakarta.servlet.ServletContext;
@@ -11,8 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -29,64 +31,87 @@ public class ShoppingCartsController {
 
     @GetMapping("/show-shopping-cart")
     public String index(Model model) {
-        // アプリケーションスコープからの商品リスト取得は不要かと思いますので、この部分は削除。
-        // カートの商品リストをセッションから取得
-        List<Products> cartProductsList = (List<Products>) session.getAttribute("cartProductsList");
-        if (cartProductsList == null) {
-            cartProductsList = new LinkedList<>();
-            session.setAttribute("cartProductsList", cartProductsList);
-        } else {
-            int totalPrice = calcTotalPrice(cartProductsList);
-            session.setAttribute("totalPrice",totalPrice);
-        }
-        return "shopping-cart";
+        List<ShoppingCartsDetail> cartDetailsList;
+        Integer userId = (Integer) session.getAttribute("userId");
 
+        if(userId != null) {
+            cartDetailsList = shoppingCartsService.findShoppingCartsDetailByUserId(userId);
+        } else {
+            cartDetailsList = (List<ShoppingCartsDetail>) session.getAttribute("cartDetailsList");
+            if(cartDetailsList == null) {
+                cartDetailsList = new ArrayList<>();
+            }
+        }
+
+        model.addAttribute("cartDetailsList", cartDetailsList);
+        int totalPrice = calcTotalPrice(cartDetailsList);
+        model.addAttribute("totalPrice", totalPrice);
+        return "shopping-cart";
     }
 
     @PostMapping("/add-cart")
     public String addCart(Integer productId, Model model) {
-        Products products = productsService.load(productId);
-        List<Products> cartProductsList = (List<Products>) session.getAttribute("cartProductsList");
+        Products product = productsService.load(productId);
+        Integer userId = (Integer) session.getAttribute("userId");
 
-        if(cartProductsList == null) {
-            cartProductsList = new LinkedList<>();
-            session.setAttribute("cartProductsList", cartProductsList);
+        if (userId != null) {
+            shoppingCartsService.updateOrAddToCart(userId, productId, 1);
+        } else {
+            // ログインしていない場合の処理
+            List<ShoppingCartsDetail> cartDetailsList = (List<ShoppingCartsDetail>) session.getAttribute("cartDetailsList");
+            if (cartDetailsList == null) {
+                cartDetailsList = new ArrayList<>();
+            }
+
+            boolean productExistsInCart = false;
+            for (ShoppingCartsDetail detail : cartDetailsList) {
+                if (detail.getProductId().equals(productId)) {
+                    detail.setQuantity(detail.getQuantity() + 1);
+                    productExistsInCart = true;
+                    break;
+                }
+            }
+
+            if (!productExistsInCart) {
+                ShoppingCartsDetail newCartItem = new ShoppingCartsDetail();
+                newCartItem.setProductId(productId);
+                newCartItem.setProductName(product.getProductName());
+                newCartItem.setPrice(product.getPrice());
+                newCartItem.setDescription(product.getDescription());
+                newCartItem.setQuantity(1);
+                newCartItem.generateUniqueId();
+                cartDetailsList.add(newCartItem);
+            }
+
+            session.setAttribute("cartDetailsList", cartDetailsList);
         }
 
-        cartProductsList.add(products);
-        session.setAttribute("cartProductsList", cartProductsList);
-
         return "redirect:/top/products";
-
     }
 
     @PostMapping("/delete-shopping-carts")
-    public String deleteShoppingCart(Integer cartId, HttpSession session) {  // cartIdを引数として受け取る
-        shoppingCartsService.deleteShoppingCart(cartId);  // cart_idを利用して削除
-
-        // セッションからユーザーIDを取得
+    public String deleteCart(Model model, @RequestParam String cartId) {
         Integer userId = (Integer) session.getAttribute("userId");
+        System.out.println("Received cartId: " + cartId);
 
-        // セッションのカートリストから該当の商品を削除
-        // （これは商品IDに基づいているため、正確にはcart_idに基づいてリストからアイテムを検索・削除するロジックに変更するべきです）
-        List<Products> cartProductsList = (List<Products>) session.getAttribute("cartProductsList");
-        if (cartProductsList != null) {
-            // cartProductsList.removeIf(product -> product.getProductId().equals(productId)); // この部分はcart_idに基づいて修正が必要です
+        if (userId != null) {
+            shoppingCartsService.deleteShoppingCart(Integer.parseInt(cartId));
+        } else {
+            // ログインしていない場合の処理
+            List<ShoppingCartsDetail> cartDetailsList = (List<ShoppingCartsDetail>) session.getAttribute("cartDetailsList");
+            if (cartDetailsList != null) {
+                cartDetailsList.removeIf(detail -> detail.getCartId().intValue() == Integer.parseInt(cartId));
+                session.setAttribute("cartDetailsList", cartDetailsList);
+            }
         }
-
-        // セッションに更新したカートリストを設定
-        session.setAttribute("cartProductsList", cartProductsList);
 
         return "redirect:/top/products";
     }
 
-
-
-
-    private Integer calcTotalPrice(List<Products> productsList) {
+    private Integer calcTotalPrice(List<ShoppingCartsDetail> productsList) {
         Integer totalPrice = 0;
-        for(Products products : productsList) {
-            totalPrice += products.getPrice();
+        for(ShoppingCartsDetail product : productsList) {
+            totalPrice += product.getPrice() * product.getQuantity();
         }
         return totalPrice;
     }
