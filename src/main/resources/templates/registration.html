@@ -8,31 +8,37 @@
 </head>
 <body>
     <div class="customer-registration">
-        <form th:action="@{/customer-insert}" method="post">
+        <form th:action="@{/customer-insert}" th:object="${usersForm}" method="post">
         <div class="customer-form">
             <div class="last-name">
-                <span>姓</span><br>
-                <input type="text" name="lastName" id="lastName">
+                <label for="lastName">姓</label><br>
+                <div th:errors="*{lastName}" style="color: red;">エラー!</div>
+                <input type="text" name="lastName" id="lastName" placeholder="山田" th:field="*{lastName}">
             </div>
             <div class="first-name">
-                <span>名</span><br>
-                <input type="text" name="firstName" id="firstName">
+                <label>名</label><br>
+                <div th:errors="*{firstName}" style="color: red;">エラー!</div>
+                <input type="text" name="firstName" id="firstName" placeholder="太郎" th:field="*{firstName}">
             </div>
             <div class="date-of-birth">
-                <span>生年月日</span><br>
-                <input type="date" name="birthDate" id="birthDate">
+                <label>生年月日</label><br>
+                <div th:errors="*{birthDate}" style="color: red;"></div>
+                <input type="date" name="birthDate" id="birthDate" th:field="*{birthDate}">
             </div>
             <div class="email">
-                <span>メールアドレス</span><br>
-                <input type="text" name="email" id="email">
+                <label>メールアドレス</label><br>
+                <div th:errors="*{email}" style="color: red;">エラー!</div>
+                <input type="text" name="email" id="email" th:field="*{email}">
             </div>
             <div class="password">
-                <span>パスワード</span><br>
-                <input type="password" name="password" id="password">
+                <label>パスワード</label><br>
+                <div th:errors="*{password}" style="color: red;"></div>
+                <input type="password" name="password" id="password" th:field="*{password}">
             </div>
             <div class="re-password">
-                <span>確認用パスワード</span><br>
-                <input type="password" name="re-password" id="re-password">
+                <label>確認用パスワード</label><br>
+                <div th:errors="*{rePassword}" style="color: red;"></div>
+                <input type="password" name="re-password" id="re-password" th:field="*{rePassword}">
             </div>
         </div>
         <div class="customer-registration-button">

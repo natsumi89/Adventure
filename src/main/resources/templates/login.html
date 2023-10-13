@@ -7,14 +7,16 @@
 <body>
 
 <div class="login-form">
-    <form th:action="@{/login-to-list}" method="post">
+    <form th:action="@{/login-to-list}" method="post" th:object="${usersForm}">
         <div class="email">
-            <span>メールアドレス:</span>
-            <input type="text" name="email" id="email">
+            <label>メールアドレス:</label>
+            <div th:errors="*{email}" style="color: red;"></div>
+            <input type="text" name="email" id="email" th:field="*{email}">
         </div>
         <div class="password">
-            <span>パスワード:</span>
-            <input type="password" name="password" id="password">
+            <label>パスワード:</label>
+            <div th:errors="*{password}" style="color: red;"></div>
+            <input type="password" name="password" id="password" th:field="*{password}">
             <button>ログイン</button>
         </div>
         <div th:if="${errorMessage}" class="error-message">

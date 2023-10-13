@@ -2,12 +2,17 @@ package com.example.Adventure.controller;
 
 import com.example.Adventure.domain.Products;
 import com.example.Adventure.domain.Users;
+import com.example.Adventure.form.UsersForm;
 import com.example.Adventure.service.ProductsService;
 import com.example.Adventure.service.ShoppingCartsService;
 import com.example.Adventure.service.UsersService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,19 +40,25 @@ public class UsersController {
     private ProductsService productsService;
 
     @GetMapping("/login")
-    public String login() {
+    public String login(Model model) {
+        model.addAttribute("usersForm", new UsersForm());
         return "login";
     }
 
     @PostMapping("/login-to-list")
-    public String customerLogin(@ModelAttribute Users users, RedirectAttributes redirectAttributes) {
+    public String customerLogin(@Validated UsersForm usersForm,BindingResult bindingResult,@ModelAttribute Users users, RedirectAttributes redirectAttributes,Model model) {
+
+        if(bindingResult.hasErrors()) {
+            model.addAttribute("usersForm", usersForm);
+            return "login";
+        }
+
         Users authenticatedUser = usersService.findByEmailAndPassword(users.getEmail(),users.getPassword());
 
         if(authenticatedUser == null ) {
             redirectAttributes.addFlashAttribute("errorMessage","メールアドレスまたはパスワードが間違っています。");
             return "redirect:/top/products";
         }
-
 
         // セッションにユーザー情報を保存
         session.setAttribute("email", authenticatedUser.getEmail());
@@ -64,6 +75,8 @@ public class UsersController {
 
         return "redirect:/top/products";
     }
+
+
     @PostMapping("/logout")
     public String logout() {
         // ユーザーIDをセッションから取得
@@ -84,5 +97,36 @@ public class UsersController {
         // セッションの情報をクリア
         session.invalidate();
         return "redirect:/top/products"; // ログインページへリダイレクト
+    }
+
+    @GetMapping("/customer-registration")
+    public String register(Model model) {
+        model.addAttribute("usersForm", new UsersForm());
+        return "registration";
+    }
+
+
+    @PostMapping("/customer-insert")
+    public String insert(@Valid UsersForm usersForm, BindingResult bindingResult, Model model) {
+        if(bindingResult.hasErrors()) {
+            return "registration";  // バリデーションエラーがあれば、再度登録ページを表示
+        }
+
+        Users users = usersService.findByEmailAndPassword(usersForm.getEmail(), usersForm.getPassword());
+        if (users != null) {
+            model.addAttribute("error", "このメールアドレスは既に登録されています。");
+            return "registration";
+        }
+
+        Users newUser = new Users();
+        newUser.setFirstName(usersForm.getFirstName());
+        newUser.setLastName(usersForm.getLastName());
+        newUser.setBirthDate(usersForm.getBirthDate());
+        newUser.setEmail(usersForm.getEmail());
+        newUser.setPassword(usersForm.getPassword());
+
+        usersService.insert(newUser);
+
+        return "redirect:/top/products";
     }
 }
