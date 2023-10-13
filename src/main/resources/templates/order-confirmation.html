@@ -44,15 +44,7 @@
 <!--							</div>-->
 <!--						</label>-->
 
-      <form th:action="@{/delete-shopping-carts}" method="post">
-              <input type="hidden" name="cartId" th:value="${cartDetail.cartId}"> 
-              <input type="hidden" name="productId" th:value="${cartDetail.productId}">
-              <input type="hidden" name="productName" th:value="${cartDetail.productName}">
-              <input type="hidden" name="price" th:value="${cartDetail.price}">
-              <input type="hidden" name="description" th:value="${cartDetail.description}">
-              <button class="shopping-cart-btn" type="submit">削除</button>
-          </form>
-      <div class="shopping-cart-content-right">
+      <div class="order-confirmation-content-right">
           <div class="shopping-cart-image-url">
               <img th:src="@{/img/{imageName}(imageName=${cartDetail.imageUrl})}" alt="Product Image"/>
           </div>

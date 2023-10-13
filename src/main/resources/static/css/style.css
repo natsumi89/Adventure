@@ -43,3 +43,9 @@
     height: auto;
 }
 
+.order-confirmation-content-right {
+width: 20px;
+height: auto;
+display: block;
+}
+
