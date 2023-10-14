@@ -1,9 +1,6 @@
 package com.example.Adventure.form;
 
-import jakarta.validation.constraints.AssertTrue;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -15,6 +12,7 @@ public class UsersForm {
         @NotBlank(message="名を入力してください。")
         private String firstName;
         @DateTimeFormat(pattern = "yyyy-MM-dd")
+        @NotNull(message="生年月日を入力してください。")
         private Date birthDate;
         @NotBlank(message="メールアドレスを入力してください。")
         @Email(message="メールアドレスの形式が不正です。")
