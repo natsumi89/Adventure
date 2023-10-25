@@ -10,6 +10,7 @@ producer_name VARCHAR(255) UNIQUE NOT NULL,
 description TEXT NOT NULL,
 contact_info TEXT NOT NULL
 );
+
 CREATE TABLE users(
 user_id SERIAL PRIMARY KEY,
 last_name VARCHAR(255)  NOT NULL,
@@ -147,14 +148,14 @@ VALUES
  -- 福岡県の商品
  INSERT INTO products (region_id, producer_id, product_name, description, price, image_url)
  VALUES
-     (6, 1, '明太子', '辛くて美味しい、福岡の名物です。', 1800, 'mentaiko.png'),
-     (6, 2, 'とんこつラーメン', 'クリーミーなスープが特徴のラーメンです。', 800, 'ramen.png');
+     (8, 1, '明太子', '辛くて美味しい、福岡の名物です。', 1800, 'mentaiko.png'),
+     (8, 2, 'とんこつラーメン', 'クリーミーなスープが特徴のラーメンです。', 800, 'ramen.png');
 
  -- 沖縄県の商品
  INSERT INTO products (region_id, producer_id, product_name, description, price, image_url)
  VALUES
-     (7, 1, '沖縄そば', '沖縄独特のソウルフードで、麺が太くて美味しいです。', 700, 'okinawa_soba.png'),
-     (7, 2, 'ゴーヤチャンプルー', 'ゴーヤの苦味が特徴的な沖縄料理です。', 650, 'goya.png');
+     (9, 1, '沖縄そば', '沖縄独特のソウルフードで、麺が太くて美味しいです。', 700, 'okinawa_soba.png'),
+     (9, 2, 'ゴーヤチャンプルー', 'ゴーヤの苦味が特徴的な沖縄料理です。', 650, 'goya.png');
 
  -- 甲信越の商品
  INSERT INTO products (region_id, producer_id, product_name, description, price, image_url)
@@ -185,9 +186,6 @@ VALUES
  VALUES
      (8, 1, '宮崎産マンゴー', '夏の期間限定で出回る高級フルーツです。', 3000, 'miyazaki_mango.png'),
      (8, 2, '佐賀産いちご', '甘さと酸味のバランスが絶妙です。', 600, 'saga_strawberry.png');
-
- -- 沖縄の商品は以前のクエリに既にありましたので、ここでは省略します。
-
 
 -- Orders Table
 INSERT INTO orders (user_id, total_price, status)

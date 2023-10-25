@@ -75,8 +75,8 @@
     <section id="product-list" class="my-5">
         <h2 class="mb-3">商品一覧</h2>
         <div class="productsList">
-            <div th:each="product:${productsList}" class="top-product-each-list">
-                <div class="row">
+            <div class="row">
+            <div th:each="product:${productsList}" class="col-sm-6">
                     <div class="product-list-image">
                         <a href="merchandise-infoes.html" th:href="@{/top/showDetail/}+${product.productId}">
                             <img th:src="@{/img/{imageName}(imageName=${product.imageUrl})}" alt="Product Image" class="img-fluid"/>
