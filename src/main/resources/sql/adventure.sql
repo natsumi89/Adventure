@@ -95,16 +95,18 @@ EXECUTE FUNCTION update_updated_at_column();
 
 ------------------------------
 -- Regions Table
+-- Regions Table (地域の追加)
 INSERT INTO regions (region_name, description)
 VALUES
     ('北海道', '日本の最北の地域で、自然が豊かです。'),
-    ('青森県', 'りんごの生産が特に有名な地域です。'),
-        ('東京都', '日本の首都で、ビジネスと文化の中心です。'),
-        ('大阪府', '関西の中心で、歴史と現代が融合しています。'),
-        ('京都府', '古都であり、多くの歴史的な寺院や神社があります。'),
-        ('福岡県', '九州の中心地で、美味しい食べ物が豊富です。'),
-        ('沖縄県', '南の島で、美しい海と自然が魅力です。');
-
+    ('東北', 'りんごやわかめなど、多くの食材が豊富な地域です。'),
+    ('関東', '日本の首都や観光名所が集まる地域です。'),
+    ('甲信越', '美しい自然や温泉が人気の地域です。'),
+    ('関西', '歴史的な建造物やグルメが有名な地域です。'),
+    ('四国', '美しい海や自然が魅力の地域です。'),
+    ('中国', '広大な自然や美味しい食材が特徴の地域です。'),
+    ('九州', '温泉やグルメが人気の地域です。'),
+    ('沖縄', '美しい海や自然、独特の文化が魅力の地域です。');
 
 -- Producers Table
 INSERT INTO producers (producer_name, description, contact_info)
@@ -153,6 +155,39 @@ VALUES
  VALUES
      (7, 1, '沖縄そば', '沖縄独特のソウルフードで、麺が太くて美味しいです。', 700, 'okinawa_soba.png'),
      (7, 2, 'ゴーヤチャンプルー', 'ゴーヤの苦味が特徴的な沖縄料理です。', 650, 'goya.png');
+
+ -- 甲信越の商品
+ INSERT INTO products (region_id, producer_id, product_name, description, price, image_url)
+ VALUES
+     (4, 1, '長野産りんご', 'シャキシャキとした食感が特徴です。', 450, 'nagano_apple.png'),
+     (4, 2, '新潟産コシヒカリ', '日本を代表するお米です。', 2500, 'koshihikari.png');
+
+ -- 関西の商品
+ INSERT INTO products (region_id, producer_id, product_name, description, price, image_url)
+ VALUES
+     (5, 1, '兵庫産神戸ビーフ', '高級な和牛の一つとして知られています。', 10000, 'kobe_beef.png'),
+     (5, 2, '奈良産鹿せんべい', '奈良公園で人気のお土産です。', 300, 'deer_senbei.png');
+
+ -- 四国の商品
+ INSERT INTO products (region_id, producer_id, product_name, description, price, image_url)
+ VALUES
+     (6, 1, '香川産讃岐うどん', '太くてもちもちの食感が特徴です。', 600, 'sanuki_udon.png'),
+     (6, 2, '愛媛産みかん', '甘くてジューシーなみかんです。', 350, 'ehime_mikan.png');
+
+ -- 中国の商品
+ INSERT INTO products (region_id, producer_id, product_name, description, price, image_url)
+ VALUES
+     (7, 1, '広島産お好み焼き', '麺を使用した広島風のお好み焼きです。', 800, 'hiroshima_okonomiyaki.png'),
+     (7, 2, '鳥取産20世紀梨', '甘みが強くてジューシーです。', 400, 'tottori_pear.png');
+
+ -- 九州の商品
+ INSERT INTO products (region_id, producer_id, product_name, description, price, image_url)
+ VALUES
+     (8, 1, '宮崎産マンゴー', '夏の期間限定で出回る高級フルーツです。', 3000, 'miyazaki_mango.png'),
+     (8, 2, '佐賀産いちご', '甘さと酸味のバランスが絶妙です。', 600, 'saga_strawberry.png');
+
+ -- 沖縄の商品は以前のクエリに既にありましたので、ここでは省略します。
+
 
 -- Orders Table
 INSERT INTO orders (user_id, total_price, status)
