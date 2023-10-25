@@ -28,7 +28,6 @@ nav.navbar a:hover {
     background-color: rgba(255, 255, 255, 0.1); /* ホバー時の背景変更 */
 }
 
-
 section {
     background-color: rgba(255, 255, 255, 0.7); /* セクションの背景を半透明の白に */
     padding: 20px;
@@ -52,30 +51,34 @@ footer {
 
 .productsList {
     display: flex;
-    flex-wrap: wrap; /* 2行になるように */
-    justify-content: space-around; /* 均等に間隔を空ける */
+    flex-wrap: wrap;
+    justify-content: space-around;
 }
 
 .product-container {
     display: flex;
-    width: 100%;
+    width: 48%;
+    max-width: 48%;
+    flex-basis: 48%;
+    margin: 1%;
     box-sizing: border-box;
 }
 
-.right-product-content img {
-    width: 60%; /* 画像のサイズの調整 */
+/*.right-product-content img {
+    width: 25%;
     height: auto;
     display: block;
-    margin: 0 auto; /* 画像を中央揃えに */
-}
+    margin: 0 auto;
+}*/
 
 .product-detail .product-detail-content-right img {
     width: 20%;
     height: auto;
     display: block;
 }
+
 .shopping-cart-image-url {
-    width: 10%; /* Decreased from 20% to 10% to make it half the size */
+    width: 20%;
     display: block;
 }
 
@@ -95,5 +98,20 @@ body {
     background-size: cover;
 }
 
+.col-sm-6 {
+width: 20%;
+height: auto;
+display: block;
+}
 
+.top-product-each-list {
+width: 80%;
+flex-wrap: wrap;
+display: flex;
+}
 
+.product-list-image {
+width:40%;
+height: auto;
+display: block;
+}

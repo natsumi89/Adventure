@@ -6,8 +6,8 @@
     <title>食の冒険 - 地域別特産品を巡る旅</title>
     <!-- Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" th:href="@{/css/style.css}">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+　　<link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body class="bg-light">
 
@@ -75,13 +75,15 @@
     <section id="product-list" class="my-5">
         <h2 class="mb-3">商品一覧</h2>
         <div class="productsList">
-            <div th:each="product:${productsList}" class="border-bottom pb-3 mb-3">
-                <div class="row">
-                    <div class="col-sm-6">
+            <div class="row">
+            <div th:each="product:${productsList}" class="col-sm-6">
+                    <div class="product-list-image">
                         <a href="merchandise-infoes.html" th:href="@{/top/showDetail/}+${product.productId}">
                             <img th:src="@{/img/{imageName}(imageName=${product.imageUrl})}" alt="Product Image" class="img-fluid"/>
                         </a>
                     </div>
+                    <div class="product-image-spacer"></div>
+
                     <div class="col-sm-6">
                         <a href="merchandise-infoes.html" th:href="@{/top/showDetail/}+${product.productId}">
                             <p class="product-name font-weight-bold"><span th:text="${product.productName}"></span></p>
