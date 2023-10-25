@@ -19,19 +19,26 @@ public class UsersForm {
         private String email;
 
         @NotBlank(message="パスワードを入力してください。")
-        @Pattern(regexp="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9?&%]{8,16}+$",message="パスワードの形式が不正です。大文字小文字数字が必須です。")
+        @Pattern(regexp="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$",message="半角英字大文字、小文字、数字の3種類を1つ必ず使用し、8文字以上16文字以内で入力してください。")
         private String password;
         @NotBlank(message="確認用パスワードを入力してください。")
-        @Pattern(regexp="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9?&%]{8,16}+$",message="パスワードの形式が不正です。大文字小文字数字が必須です。")
+        @Pattern(regexp="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$",message="半角英字大文字、小文字、数字の3種類を1つ必ず使用し、8文字以上16文字以内で入力してください。")
         private String rePassword;
 
-        @AssertTrue(message="パスワードと確認用パスワードは同一にしてください。")
-        public boolean isPasswordTrue() {
-            if(password == null || password.isEmpty()) {
-                return true;
-            }
-            return password.equals(rePassword);
-        }
+//        @AssertTrue(message="パスワードと確認用パスワードは同一にしてください。")
+//        public boolean isPasswordTrue() {
+//            if(password == null || password.isEmpty()) {
+//                return true;
+//            }
+//            return password.equals(rePassword);
+//        }
+    @NotNull(message = "電話番号は必須です。")
+        private Integer telephone;
+    @NotNull(message = "郵便番号は必須です。")
+        private Integer zipCode;
+    @NotBlank(message = "住所は必須です。")
+        private String address;
+    private String paymentMethod;
 
     public Integer getUserId() {
         return userId;
@@ -87,5 +94,37 @@ public class UsersForm {
 
     public void setRePassword(String rePassword) {
         this.rePassword = rePassword;
+    }
+
+    public Integer getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(Integer telephone) {
+        this.telephone = telephone;
+    }
+
+    public Integer getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(Integer zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
     }
 }

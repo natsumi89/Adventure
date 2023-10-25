@@ -25,6 +25,10 @@ public class UsersService {
     public Users findByEmailAndPassword(String email,String password) {
         return usersRepository.findByEmailAndPassword(email,password);
     }
+
+    public Users findByEmail(String email) {
+        return usersRepository.findByEmail(email);
+    }
     public void delete(Integer userId) {
         usersRepository.delete(userId);
     }

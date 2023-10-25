@@ -31,7 +31,7 @@ public class ProductsRepository {
     };
 
     public List<Products> findAll() {
-        String sql = "SELECT product_id, region_id, producer_id, product_name, description, price,image_url FROM products ORDER BY product_id";
+        String sql = "SELECT product_id, region_id, producer_id, product_name, description, price,image_url FROM products ORDER BY product_id AND region_id";
         List<Products> productsList = template.query(sql, PRODUCTS_ROW_MAPPER);
         return productsList;
     }

@@ -9,6 +9,9 @@ public class Users {
     private Date birthDate;
     private String email;
     private String password;
+    private Integer telephone;
+    private Integer zipCode;
+    private String address;
 
     public Integer getUserId() {
         return userId;
@@ -56,5 +59,29 @@ public class Users {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Integer getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(Integer telephone) {
+        this.telephone = telephone;
+    }
+
+    public Integer getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(Integer zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
