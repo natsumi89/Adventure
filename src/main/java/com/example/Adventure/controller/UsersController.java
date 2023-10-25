@@ -9,6 +9,7 @@ import com.example.Adventure.service.UsersService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -38,6 +39,9 @@ public class UsersController {
 
     @Autowired
     private ProductsService productsService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/login")
     public String login(Model model) {
@@ -104,16 +108,21 @@ public class UsersController {
         model.addAttribute("usersForm", new UsersForm());
         return "registration";
     }
-
-
     @PostMapping("/customer-insert")
     public String insert(@Valid UsersForm usersForm, BindingResult bindingResult, Model model) {
-        if(bindingResult.hasErrors()) {
-            return "registration";  // バリデーションエラーがあれば、再度登録ページを表示
+        if (bindingResult.hasErrors()) {
+            return "registration";
         }
 
-        Users users = usersService.findByEmailAndPassword(usersForm.getEmail(), usersForm.getPassword());
-        if (users != null) {
+        // passwordとrePasswordが一致するか確認
+//        if(!usersForm.getPassword().equals(usersForm.getRePassword())) {
+//            model.addAttribute("error", "入力されたパスワードが一致しません。");
+//            return "registration";
+//        }
+
+        // emailで既存のユーザーを検索
+        Users existingUser = usersService.findByEmail(usersForm.getEmail());
+        if (existingUser != null) {
             model.addAttribute("error", "このメールアドレスは既に登録されています。");
             return "registration";
         }
@@ -123,7 +132,8 @@ public class UsersController {
         newUser.setLastName(usersForm.getLastName());
         newUser.setBirthDate(usersForm.getBirthDate());
         newUser.setEmail(usersForm.getEmail());
-        newUser.setPassword(usersForm.getPassword());
+        // TODO: パスワードをハッシュ化するロジックを追加
+        newUser.setPassword(passwordEncoder.encode(usersForm.getPassword()));
 
         usersService.insert(newUser);
 

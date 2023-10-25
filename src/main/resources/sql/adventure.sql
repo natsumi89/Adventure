@@ -42,6 +42,9 @@ CREATE TABLE orders(
     payment_method INTEGER CHECK (payment_method IN (1, 2, 3))
 );
 
+ALTER TABLE orders
+ADD COLUMN telephone INTEGER,
+ADD COLUMN zip_code INTEGER;
 
 CREATE TABLE order_details(
 order_detail_id SERIAL PRIMARY KEY,
@@ -112,8 +115,8 @@ VALUES
 -- Users Table
 INSERT INTO users (last_name,first_name,birth_date, email, password)
 VALUES
-    ('yamada','taro','1976-07-22', 'yamada_taro@example.com', 'password123'),
-    ('suzuki','hanako','1992-09-19', 'suzuki_hanako@example.com', 'password123');
+    ('山田','太郎','1976-07-22', 'taro.yamada@example.com', 'TaroYamada05'),
+    ('鈴木','花子','1992-09-19', 'hanako.suzuki@example.com', 'HanakoSuzuki05');
 
 -- Products Table
 INSERT INTO products (region_id, producer_id, product_name, description, price, image_url)

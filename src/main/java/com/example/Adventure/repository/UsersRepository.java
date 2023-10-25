@@ -26,12 +26,14 @@ public class UsersRepository {
         users.setPassword(rs.getString("password"));
 
         return users;
+
     };
 
     public List<Users> findAll() {
         String sql = "SELECT user_id, last_name,first_name,birth_date, email, password FROM users ORDER BY user_id";
         List<Users> usersList = template.query(sql, USERS_ROW_MAPPER);
         return usersList;
+
     }
 
     public void insert(Users users) {
@@ -41,6 +43,7 @@ public class UsersRepository {
         String sql = "INSERT into users(last_name,first_name,birth_date, email, password)" +
                 "VALUES(:lastName,:firstName,:birthDate,:email,:password)";
         template.update(sql,param);
+
     }
 
     public Users findByEmailAndPassword(String email,String password) {
@@ -53,6 +56,17 @@ public class UsersRepository {
         return usersList.get(0);
 
     }
+
+    public Users findByEmail(String email) {
+        String sql = "SELECT user_id, last_name,first_name,birth_date, email, password FROM users WHERE email=:email";
+        SqlParameterSource param = new MapSqlParameterSource().addValue("email",email);
+        List<Users> usersList = template.query(sql,param,USERS_ROW_MAPPER);
+        if(usersList.size() == 0) {
+            return null;
+        }
+        return usersList.get(0);
+    }
+
 
     public void delete(Integer userId){
         String sql = "DELETE FROM users WHERE user_id=:userId";

@@ -5,6 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>customer-registration</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="customer-registration">
@@ -38,14 +41,18 @@
             <div class="re-password">
                 <label>確認用パスワード</label><br>
                 <div th:errors="*{rePassword}" style="color: red;"></div>
-                <input type="password" name="re-password" id="re-password" th:field="*{rePassword}">
+                <input type="password" name="rePassword" id="re-password" th:field="*{rePassword}">
             </div>
         </div>
         <div class="customer-registration-button">
             <button>会員登録</button>
         </div>
     </form>
+        <a th:href="@{/top/back}">戻る</a>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     
 </body>
 </html>

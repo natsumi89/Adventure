@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <title>order-confirmation</title>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="order-confirmation">
@@ -21,28 +24,6 @@
 						商品名&colon;
 						<span th:text="${cartDetail.productName}">商品</span>
 					</div>
-<!--					<div class="confirm-price">-->
-<!--						<div class="confirm-price-label">-->
-<!--							金額&colon;-->
-<!--						</div>-->
-<!--						<span th:id="${'totalPrice' + status.index}"-->
-<!--							  th:text="${cartDetail.totalPrice}"-->
-<!--							  th:value="${cartDetail.totalPrice}">小計金額&colon;</span>-->
-<!--						<span>円</span>-->
-
-<!--						<label for="quantity">-->
-<!--							<div class="confirm-quantity">-->
-<!--								<div class="confirm-quantity-label">-->
-<!--									個数&colon;-->
-<!--								</div>-->
-<!--								<input type="number"-->
-<!--									   th:name="${'quantity' + status.index}"-->
-<!--									   th:id="${'quantity' + status.index}"-->
-<!--									   th:value="${cartDetail.quantity}"-->
-<!--									   onchange="amountChange(this.id,this.value)"-->
-<!--									   id="confirm-quantity-input" min="1">個-->
-<!--							</div>-->
-<!--						</label>-->
 
       <div class="order-confirmation-content-right">
           <div class="shopping-cart-image-url">
@@ -54,40 +35,42 @@
 
 <h2 class="confirm-subheading">お客様情報を入力してください</h2>
 											<div class="confirm-bottom">
-												<form th:action="@{/order/completed}" method="post"
-													th:object="${orderComfirmForm}">
+												<form th:action="@{/to-order-complete}" th:object="${ordersForm}" method="post">
 													<h3>お届け先</h3>
 													<div class="confirm-bottom-content">
 														<div class="confirm-customer-last-name">
-															<label for="lastName">姓&colon; <input type="text" name="lastName"
-																	id="lastName" placeholder="山田"></label>
+															<label for="lastName">姓&colon;
+																<div th:errors="*{lastName}" style="color: red;"></div><input type="text" name="lastName"
+																	id="lastName" placeholder="山田" th:field="*{lastName}"></label>
 
 														</div>
 														<div class="confirm-customer-first-name">
-															<label for="firstName">名&colon; <input type="text" name="firstName"
+															<label for="firstName">名&colon;<div th:errors="*{firstName}" style="color: red;"></div>
+																<input type="text" name="firstName"
 																								 id="firstName" placeholder="太郎"
-															></label>
+															th:field="*{firstName}"></label>
 
 														</div>
 														<div class="confirm-customer-zipcode">
-															<label for="zipCode">郵便番号&colon;<input type="text"
+															<label for="zipCode">郵便番号&colon;<div th:errors="*{zipCode}" style="color: red;"></div><input type="text"
 																	name="zipCode" id="zipCode" placeholder="0000000"
-																	></label>
+																	th:field="*{zipCode}"></label>
 															<button id="search-address"
 																type="button">郵便番号から住所を検索</button><br>
 														</div>
 														<div class="confirm-customer-address">
-															<label for="address">住所&colon;<input type="text"
+															<label for="address">住所&colon;<div th:errors="*{address}" style="color: red;"></div><input type="text"
 																	name="address" id="address"
 																	placeholder="東京都新宿区西新宿123"
 																	></label>
 														</div>
 														<div class="confirm-customer-telephone">
-															<label for="telephone">電話番号&colon;<input type="text"
+															<label for="telephone">電話番号&colon;<div th:errors="*{telephone}" style="color:red;"></div><input type="text"
 																	name="telephone" id="telephone"
 																	placeholder="000-0000-0000"
-																	></label>
+																	th:field="*{telephone}"></label>
 														</div>
+														<input type="submit" value="Submit"/>
 													</div>
 													<h3>支払い方法</h3>
 													<!-- お振込のラジオボタンが押された時のみ、振込情報が表示される処理を追加 -->
@@ -129,5 +112,9 @@
 
       </div>
     </div>
+	</div>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </html>

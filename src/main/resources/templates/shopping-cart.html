@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <title>shopping-cart</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
 <div th:if="${cartDetailsList == null || cartDetailsList.empty}">
@@ -48,11 +51,18 @@
             <p th:text="'合計: ' + ${totalPrice} + '円'"></p>
         </div>
             <a th:href="@{/top/back}">戻る</a>
-            <form th:action="@{order-confirmation}">
+            <form th:action="@{/order-confirmation}">
                 <button>購入手続き</button>
             </form>
         </div>
     </div>
+    </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script src="scripts.js"></script>
     
 </body>
 </html>
