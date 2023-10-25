@@ -50,30 +50,34 @@ footer {
     box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
 }
 
-.productsList {
+/*.productsList {
     display: flex;
-    flex-wrap: wrap; /* 2行になるように */
-    justify-content: space-around; /* 均等に間隔を空ける */
-}
+    flex-wrap: wrap;
+    justify-content: space-around;
+}*/
 
 .product-container {
     display: flex;
-    width: 100%;
+    width: 48%;
+    max-width: 48%;
+    flex-basis: 48%;
+    margin: 1%;
     box-sizing: border-box;
 }
 
-.right-product-content img {
-    width: 60%; /* 画像のサイズの調整 */
+/*.right-product-content img {
+    width: 25%;
     height: auto;
     display: block;
-    margin: 0 auto; /* 画像を中央揃えに */
-}
+    margin: 0 auto;
+}*/
 
 .product-detail .product-detail-content-right img {
     width: 20%;
     height: auto;
     display: block;
 }
+
 .shopping-cart-image-url {
     width: 10%; /* Decreased from 20% to 10% to make it half the size */
     display: block;
@@ -94,6 +98,19 @@ body {
     background: linear-gradient(to bottom, rgba(255, 182, 193, 0.6), rgba(255, 215, 0, 0.6), rgba(255, 99, 71, 0.6)), url('/img/kouyou.jpg') no-repeat center center fixed;
     background-size: cover;
 }
+
+.product-list-image {
+width: 30%;
+height: auto;
+display: block;
+}
+
+.top-product-each-list {
+width: 25%;
+flex-wrap: wrap;
+
+}
+
 
 
 
