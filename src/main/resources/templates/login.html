@@ -10,7 +10,7 @@
 <body>
 
 <div class="login-form">
-    <form th:action="@{/login-to-list}" method="post" th:object="${usersForm}">
+    <form th:action="@{/login-to-list}" th:object="${usersForm}" method="post" >
         <div class="email">
             <label>メールアドレス:</label>
             <div th:errors="*{email}" style="color: red;"></div>
@@ -25,6 +25,10 @@
         <div th:if="${errorMessage}" class="error-message">
             <span th:text="${errorMessage}"></span>
         </div>
+        <div th:if="${param.error}" class="error-message">
+            <span>メールアドレスまたはパスワードが間違っています。</span>
+        </div>
+
     </form>
     <div class="customer-registration-page">
         <div class="customer-registration-page">

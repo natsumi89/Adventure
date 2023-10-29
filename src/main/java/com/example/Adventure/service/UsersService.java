@@ -22,8 +22,8 @@ public class UsersService {
         usersRepository.insert(users);
     }
 
-    public Users findByEmailAndPassword(String email,String password) {
-        return usersRepository.findByEmailAndPassword(email,password);
+    public Users findByEmailAndPassword(String email) {
+        return usersRepository.findByEmail(email);
     }
 
     public Users findByEmail(String email) {

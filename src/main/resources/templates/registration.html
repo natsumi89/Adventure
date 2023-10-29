@@ -43,6 +43,7 @@
                 <div th:errors="*{rePassword}" style="color: red;"></div>
                 <input type="password" name="rePassword" id="re-password" th:field="*{rePassword}">
             </div>
+            <div th:if="${error}" style="color: red;">エラー: <span th:text="${error}"></span></div>
         </div>
         <div class="customer-registration-button">
             <button>会員登録</button>

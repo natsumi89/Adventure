@@ -32,11 +32,9 @@ public class ProductsController {
         return "product-detail";
     }
 
-
     @GetMapping("/back")
     public String back() {
         return "redirect:/top/products";
     }
-
 
 }

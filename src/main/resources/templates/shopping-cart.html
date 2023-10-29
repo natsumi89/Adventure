@@ -19,6 +19,7 @@
     <div class="shopping-cart-list">
         <div class="shopping-cart-content-left">
             <div th:each="cartDetail, status: ${cartDetailsList}">
+                <section>
                 <div class="shopping-cart-product-name">
                     <p th:text="${cartDetail.productName}"></p>
                 </div>
@@ -45,13 +46,14 @@
                         <img th:src="@{/img/{imageName}(imageName=${cartDetail.imageUrl})}" alt="Product Image"/>
                     </div>
                 </div>
+                </section>
             </div>
             </div>
         <div class="shopping-cart-total-price">
             <p th:text="'合計: ' + ${totalPrice} + '円'"></p>
         </div>
             <a th:href="@{/top/back}">戻る</a>
-            <form th:action="@{/order-confirmation}">
+            <form th:action="@{/order/order-confirmation}">
                 <button>購入手続き</button>
             </form>
         </div>

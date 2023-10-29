@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.Date;
 
 @Controller
-@RequestMapping("")
+@RequestMapping("/order")
 public class OrderConfirmationController {
     @Autowired
     private OrderRepository orderRepository;

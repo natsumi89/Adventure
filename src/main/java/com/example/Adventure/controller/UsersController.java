@@ -15,10 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.HashMap;
 import java.util.List;
@@ -50,21 +48,19 @@ public class UsersController {
     }
 
     @PostMapping("/login-to-list")
-    public String customerLogin(@Validated UsersForm usersForm,BindingResult bindingResult,@ModelAttribute Users users, RedirectAttributes redirectAttributes,Model model) {
-
+    public String customerLogin(@Validated UsersForm usersForm, BindingResult bindingResult, Model model) {
         if(bindingResult.hasErrors()) {
             model.addAttribute("usersForm", usersForm);
             return "login";
         }
 
-        Users authenticatedUser = usersService.findByEmailAndPassword(users.getEmail(),users.getPassword());
+        Users authenticatedUser = usersService.findByEmail(usersForm.getEmail());
 
-        if(authenticatedUser == null ) {
-            redirectAttributes.addFlashAttribute("errorMessage","メールアドレスまたはパスワードが間違っています。");
-            return "redirect:/top/products";
+        if(authenticatedUser == null || !passwordEncoder.matches(usersForm.getPassword(), authenticatedUser.getPassword())) {
+            model.addAttribute("errorMessage", "メールアドレスまたはパスワードが間違っています。");
+            return "login";
         }
 
-        // セッションにユーザー情報を保存
         session.setAttribute("email", authenticatedUser.getEmail());
         session.setAttribute("lastName", authenticatedUser.getLastName());
         session.setAttribute("userId", authenticatedUser.getUserId());  // この行を確認
@@ -79,7 +75,6 @@ public class UsersController {
 
         return "redirect:/top/products";
     }
-
 
     @PostMapping("/logout")
     public String logout() {
@@ -113,12 +108,6 @@ public class UsersController {
         if (bindingResult.hasErrors()) {
             return "registration";
         }
-
-        // passwordとrePasswordが一致するか確認
-//        if(!usersForm.getPassword().equals(usersForm.getRePassword())) {
-//            model.addAttribute("error", "入力されたパスワードが一致しません。");
-//            return "registration";
-//        }
 
         // emailで既存のユーザーを検索
         Users existingUser = usersService.findByEmail(usersForm.getEmail());
