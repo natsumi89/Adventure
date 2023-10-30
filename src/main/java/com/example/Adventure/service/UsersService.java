@@ -2,28 +2,55 @@ package com.example.Adventure.service;
 
 import com.example.Adventure.domain.Users;
 import com.example.Adventure.repository.UsersRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@Transactional
-public class UsersService {
+@Primary
+public class UsersService implements UserDetailsService {
+    private static final Logger logger = LoggerFactory.getLogger(UsersService.class);
+
+
+    private final UsersRepository usersRepository;
+    private final PasswordEncoder passwordEncoder;
+
     @Autowired
-    private UsersRepository usersRepository;
+    public UsersService(UsersRepository usersRepository, PasswordEncoder passwordEncoder) {
+        this.usersRepository = usersRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Users user = findByEmail(email);
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found with email: " + email);
+        }
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), new ArrayList<>());
+    }
 
     public List<Users> findAll() {
         return usersRepository.findAll();
     }
 
     public void insert(Users users) {
+        users.setPassword(passwordEncoder.encode(users.getPassword()));
         usersRepository.insert(users);
-    }
 
-    public Users findByEmailAndPassword(String email) {
-        return usersRepository.findByEmail(email);
+    }
+    public void someMethod() {
+        logger.info("This is an info message");
+        logger.error("This is an error message");
     }
 
     public Users findByEmail(String email) {

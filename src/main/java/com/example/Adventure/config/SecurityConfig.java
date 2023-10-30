@@ -1,19 +1,28 @@
 package com.example.Adventure.config;
 
+import com.example.Adventure.CustomAuthenticationSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+@EnableWebSecurity
 @Configuration
+@EnableMethodSecurity
 public class SecurityConfig {
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    @Lazy
+    private CustomAuthenticationSuccessHandler successHandler;
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -29,4 +38,12 @@ public class SecurityConfig {
                 .logout((logout) -> logout.logoutUrl("/logout").logoutSuccessUrl("/").permitAll());
         return http.build();
     }
+
+    @Autowired
+    @Lazy
+    public void configureGlobal(AuthenticationManagerBuilder auth, UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+    }
 }
+
+

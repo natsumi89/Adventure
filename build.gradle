@@ -30,6 +30,8 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 	runtimeOnly "org.apache.directory.server:apacheds-core:1.5.5"
 	runtimeOnly "org.apache.directory.server:apacheds-server-jndi:1.5.5"
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.1'
+	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.1'
 }
 
 tasks.named('test') {
