@@ -36,9 +36,8 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
         Users authenticatedUser = usersService.findByEmail(email);
 
-        HttpSession session = request.getSession(); // HttpSession をここで取得
+        HttpSession session = request.getSession();
 
-        // ユーザー情報をセッションに設定
         session.setAttribute("email", authenticatedUser.getEmail());
         session.setAttribute("lastName", authenticatedUser.getLastName());
         session.setAttribute("userId", authenticatedUser.getUserId());
@@ -46,9 +45,6 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         List<ShoppingCartsDetail> cartProductsList = shoppingCartsService.findShoppingCartsDetailByUserId(authenticatedUser.getUserId());
         session.setAttribute("cartProductsList", cartProductsList);
 
-        // リダイレクト
         response.sendRedirect("/top/products");
     }
-
 }
-

@@ -11,6 +11,8 @@ public class Products {
     private String createdAt;
     private String updatedAt;
 
+    private String regionName;
+
     public Integer getProductId() {
         return productId;
     }
@@ -81,5 +83,13 @@ public class Products {
 
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String getRegionName() {
+        return regionName;
+    }
+
+    public void setRegionName(String regionName) {
+        this.regionName = regionName;
     }
 }

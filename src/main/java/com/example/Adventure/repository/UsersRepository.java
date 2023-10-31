@@ -48,8 +48,8 @@ public class UsersRepository {
         SqlParameterSource param = new MapSqlParameterSource().addValue("lastName",users.getLastName())
                 .addValue("firstName",users.getFirstName()).addValue("birthDate",users.getBirthDate())
         .addValue("email",users.getEmail()).addValue("password", securityConfig.passwordEncoder().encode(users.getPassword()));
-        String sql = "INSERT into users(last_name,first_name,birth_date, email, password)" +
-                "VALUES(:lastName,:firstName,:birthDate,:email,:password)";
+        String sql = "INSERT into users(last_name,first_name,birth_date, email, password,role)" +
+                "VALUES(:lastName,:firstName,:birthDate,:email,:password,'ROLE_USER')";
         template.update(sql,param);
         logger.info("User inserted successfully.");
 

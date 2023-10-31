@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class UsersController {
     private static final Logger logger = LoggerFactory.getLogger(UsersRepository.class);
 
-
     @Autowired
     private UsersService usersService;
 
@@ -49,7 +48,6 @@ public class UsersController {
         }
         return "login";
     }
-
 
     @GetMapping("/login-page")
     public String loginErrorPage(Model model) {
@@ -81,7 +79,7 @@ public class UsersController {
         newUser.setLastName(usersForm.getLastName());
         newUser.setBirthDate(usersForm.getBirthDate());
         newUser.setEmail(usersForm.getEmail());
-        newUser.setPassword(passwordEncoder.encode(usersForm.getPassword()));
+        newUser.setPassword(usersForm.getPassword());
 
         usersService.insert(newUser);
 

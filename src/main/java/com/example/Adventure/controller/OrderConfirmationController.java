@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.Date;
 
 @Controller
-@RequestMapping("/order")
+@RequestMapping("")
 public class OrderConfirmationController {
     @Autowired
     private OrderRepository orderRepository;
@@ -26,7 +26,7 @@ public class OrderConfirmationController {
     @Autowired
     private UsersRepository usersRepository;
 
-    @GetMapping("/order-confirmation")
+    @GetMapping("/order/order-confirmation")
     public String orderConfirmation(Model model, HttpSession session) {
         Users user = (Users) session.getAttribute("loggedInUser");
         if (user == null) {
@@ -43,7 +43,7 @@ public class OrderConfirmationController {
         return "order-confirmation";
     }
 
-    @PostMapping("/to-order-complete")
+    @PostMapping("/order/to-order-complete")
     public String toOrderComplete(@Validated OrdersForm ordersForm, BindingResult result, Model model) {
         if(result.hasErrors()) {
             model.addAttribute("ordersForm", ordersForm);
