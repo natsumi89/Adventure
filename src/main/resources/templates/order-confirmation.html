@@ -12,7 +12,10 @@
     <h3>注文確認画面</h3>
     <div class="order-confirmation-product">
 		<p>注文商品一覧</p>
-		<div th:unless="${session.cartDetailsList.empty}"></div>
+		<div th:if="${session.cartDetailsList == null or session.cartDetailsList.empty}">
+			<p>商品はありません。</p>
+		</div>
+		<div th:unless="${session.cartDetailsList == null or session.cartDetailsList.empty}">
 		<input type="text" id="numberOfMerchandise"
 			   th:value="${session.cartDetailsList.size}"
 			   style="display: none">
@@ -112,6 +115,7 @@
 
       </div>
     </div>
+</div>
 		</div>
   </div>
 </body>

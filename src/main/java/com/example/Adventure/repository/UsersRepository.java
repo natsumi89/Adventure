@@ -47,17 +47,28 @@ public class UsersRepository {
         logger.info("Inserting user with email: " + users.getEmail());
         SqlParameterSource param = new MapSqlParameterSource().addValue("lastName",users.getLastName())
                 .addValue("firstName",users.getFirstName()).addValue("birthDate",users.getBirthDate())
-        .addValue("email",users.getEmail()).addValue("password", securityConfig.passwordEncoder().encode(users.getPassword()));
+        .addValue("email",users.getEmail()).addValue("password", users.getPassword());
         String sql = "INSERT into users(last_name,first_name,birth_date, email, password,role)" +
                 "VALUES(:lastName,:firstName,:birthDate,:email,:password,'ROLE_USER')";
         template.update(sql,param);
         logger.info("User inserted successfully.");
+
 
     }
 
     public Users findByEmail(String email) {
         String sql = "SELECT user_id, last_name,first_name,birth_date, email, password FROM users WHERE email=:email";
         SqlParameterSource param = new MapSqlParameterSource().addValue("email",email);
+        List<Users> usersList = template.query(sql,param,USERS_ROW_MAPPER);
+        if(usersList.size() == 0) {
+            return null;
+        }
+        return usersList.get(0);
+    }
+
+    public Users findByEmailAndPassword(String email,String password) {
+        String sql = "SELECT user_id, last_name,first_name,birth_date, email, password FROM users WHERE email=:email AND password=:password";
+        SqlParameterSource param = new MapSqlParameterSource().addValue("email",email).addValue("password",password);
         List<Users> usersList = template.query(sql,param,USERS_ROW_MAPPER);
         if(usersList.size() == 0) {
             return null;

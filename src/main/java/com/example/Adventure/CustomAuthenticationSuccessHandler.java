@@ -45,6 +45,16 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         List<ShoppingCartsDetail> cartProductsList = shoppingCartsService.findShoppingCartsDetailByUserId(authenticatedUser.getUserId());
         session.setAttribute("cartProductsList", cartProductsList);
 
+        // セッションのカートを取得
+        List<ShoppingCartsDetail> sessionCartDetailsList = (List<ShoppingCartsDetail>) session.getAttribute("cartDetailsList");
+        if(sessionCartDetailsList != null) {
+            for(ShoppingCartsDetail detail : sessionCartDetailsList) {
+                shoppingCartsService.updateOrAddToCart(authenticatedUser.getUserId(), detail.getProductId(), detail.getQuantity());
+            }
+            // セッションのカートをクリア
+            session.removeAttribute("cartDetailsList");
+        }
+
         response.sendRedirect("/top/products");
     }
 }

@@ -21,21 +21,23 @@ public class SecurityConfig {
 
     @Autowired
     @Lazy
-    private CustomAuthenticationSuccessHandler successHandler;
+    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
 
-    @Bean
+@Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(16);
+        return new BCryptPasswordEncoder();
     }
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(
                         requests -> requests.requestMatchers("/order/*").hasRole("USER").anyRequest().permitAll())
                 .formLogin((form) -> form.loginPage("/login").loginProcessingUrl("/login-to-list").defaultSuccessUrl("/")
-                        .usernameParameter("email").passwordParameter("password").failureUrl("/login?error")
+                        .usernameParameter("email").passwordParameter("password").failureUrl("/top/products")
+                      .successHandler(customAuthenticationSuccessHandler)
                         .permitAll())
-                .logout((logout) -> logout.logoutUrl("/logout").logoutSuccessUrl("/").permitAll());
+                .logout((logout) -> logout.logoutUrl("/logout").logoutSuccessUrl("/top/products").permitAll());
+
         return http.build();
     }
 

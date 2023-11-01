@@ -19,7 +19,8 @@ import java.util.List;
 
 @Service
 @Primary
-public class UsersService implements UserDetailsService {
+public class UsersService implements UserDetailsService{
+
     private static final Logger logger = LoggerFactory.getLogger(UsersService.class);
 
 
@@ -34,10 +35,12 @@ public class UsersService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        logger.info("Trying to load user by email: " + email);
         Users user = findByEmail(email);
         if (user == null) {
-            throw new UsernameNotFoundException("User not found with email: " + email);
+            throw new UsernameNotFoundException("ユーザーが存在しません。");
         }
+
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
@@ -49,7 +52,7 @@ public class UsersService implements UserDetailsService {
     }
 
     public void insert(Users users) {
-        users.setPassword(passwordEncoder.encode(users.getPassword()));
+//        users.setPassword(passwordEncoder.encode(users.getPassword()));
         usersRepository.insert(users);
 
     }
@@ -64,5 +67,9 @@ public class UsersService implements UserDetailsService {
     public void delete(Integer userId) {
         usersRepository.delete(userId);
     }
+
+//    public Users findByEmailAndPassword(String email, String password) {
+//        return usersRepository.findByEmailAndPassword(email, password);
+//    }
 
 }
