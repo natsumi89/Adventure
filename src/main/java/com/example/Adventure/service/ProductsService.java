@@ -30,4 +30,8 @@ public class ProductsService {
     public void delete(Products products) {
         productsRepository.delete(products);
     }
+
+    public List<String> findRegions() {
+        return productsRepository.findRegion();
+    }
 }

@@ -25,22 +25,31 @@ public class ProductsRepository {
         products.setDescription(rs.getString("description"));
         products.setPrice(rs.getInt("price"));
         products.setImageUrl(rs.getString("image_url"));
-
+        products.setRegionName(rs.getString("region_name"));
 
         return products;
     };
 
     public List<Products> findAll() {
-        String sql = "SELECT product_id, region_id, producer_id, product_name, description, price,image_url FROM products ORDER BY region_id,product_id";
+        String sql = "SELECT p.product_id, p.region_id, p.producer_id, p.product_name, p.description, p.price, p.image_url, r.region_name " +
+                "FROM products p JOIN regions r ON p.region_id = r.region_id " +
+                "ORDER BY p.region_id";
         List<Products> productsList = template.query(sql, PRODUCTS_ROW_MAPPER);
         return productsList;
     }
 
     public Products load(Integer productId) {
-        String sql = "SELECT product_id,region_id,producer_id,product_name,description,price,image_url FROM products WHERE product_id = :product_id";
+        String sql = "SELECT p.product_id, p.region_id, p.producer_id, p.product_name, p.description, p.price, p.image_url, r.region_name " +
+                "FROM products p JOIN regions r ON p.region_id = r.region_id " +
+                "WHERE p.product_id = :product_id";
         SqlParameterSource param = new MapSqlParameterSource().addValue("product_id",productId);
         Products products = template.queryForObject(sql,param,PRODUCTS_ROW_MAPPER);
         return products;
+    }
+
+    public List<String> findRegion() {
+        String sql = "SELECT DISTINCT r.region_name FROM regions r LEFT OUTER JOIN products p ON r.region_id = p.region_id ORDER BY r.region_id";
+        return template.query(sql, (rs, rowNum) -> rs.getString("region_name"));
     }
 
     public void save(Products products) {

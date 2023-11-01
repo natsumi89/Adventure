@@ -87,7 +87,7 @@ public class ShoppingCartsController {
             session.setAttribute("cartDetailsList", cartDetailsList);
         }
 
-        return "redirect:/top/products";
+        return "redirect:/show-shopping-cart";
     }
 
     @PostMapping("/delete-shopping-carts")
@@ -106,7 +106,7 @@ public class ShoppingCartsController {
             }
         }
 
-        return "redirect:/top/products";
+        return "redirect:/show-shopping-cart";
     }
 
     private Integer calcTotalPrice(List<ShoppingCartsDetail> productsList) {

@@ -14,8 +14,11 @@
     <div class="main">
         <div class="product-detail">
             <span>商品詳細画面</span>
+            <section>
+
             <form th:action="@{/add-cart}" method="post" id="merchandise-info-detail">
             <div class="product-detail-content-left">
+
                 <input type="hidden" name="productId" th:value="${product.productId}">
                 <h2 class="product-detail-name" th:text="${product.productName}"></h2>
                 <p class="product-detail-price">
@@ -24,13 +27,19 @@
                 <p class="product-detail-description">
                     <span th:text="${product.description}"></span>
                 </p>
+
             </div>
+
+
+
             <div class="product-detail-content-right">
                 <img th:src="@{/img/}+${product.imageUrl}" alt="productImage">
             </div>
             <button class="product-detail-to-cart-button" type="submit">ショッピングカートに追加</button>
         </form>
+            </section>
         </div>
+
         <div class="back-to-top-page-from-product-detail">
             <a th:href="@{/top/back}">Topに戻る</a>
         </div>

@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/top")
@@ -20,10 +22,15 @@ public class ProductsController {
     @GetMapping("/products")
     public String top(Model model){
         List<Products> productsList = productsService.findAll();
-        model.addAttribute("productsList",productsList);
-        return "top";
 
+        // 地域ごとに商品をグループ化
+        Map<String, List<Products>> productsGroupedByRegion = productsList.stream()
+                .collect(Collectors.groupingBy(Products::getRegionName));
+
+        model.addAttribute("productsByRegion", productsGroupedByRegion);
+        return "top";
     }
+
 
     @GetMapping("/showDetail/{product_id}")
     public String detail(@PathVariable("product_id") Integer product_id, Model model) {
@@ -32,11 +39,9 @@ public class ProductsController {
         return "product-detail";
     }
 
-
     @GetMapping("/back")
     public String back() {
         return "redirect:/top/products";
     }
-
 
 }

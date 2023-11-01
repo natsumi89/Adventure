@@ -1,10 +1,11 @@
 package com.example.Adventure.controller;
 
 import com.example.Adventure.domain.Orders;
-import com.example.Adventure.domain.Users;
+import com.example.Adventure.domain.Products;
 import com.example.Adventure.form.OrdersForm;
 import com.example.Adventure.repository.OrderRepository;
 import com.example.Adventure.repository.UsersRepository;
+import com.example.Adventure.service.ProductsService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("")
@@ -26,24 +29,43 @@ public class OrderConfirmationController {
     @Autowired
     private UsersRepository usersRepository;
 
-    @GetMapping("/order-confirmation")
-    public String orderConfirmation(Model model, HttpSession session) {
-        Users user = (Users) session.getAttribute("loggedInUser");
-        if (user == null) {
-            // セッションにユーザ情報がない場合の処理（例: ログインページへのリダイレクト）
-            return "redirect:/login";
-        }
-        OrdersForm ordersForm = new OrdersForm();
-        ordersForm.setUserId(user.getUserId());
-        ordersForm.setTelephone(user.getTelephone());
-        ordersForm.setZipCode(user.getZipCode());
-        ordersForm.setAddress(user.getAddress());
+    @Autowired
+    private ProductsService productsService;
 
-        model.addAttribute("ordersForm", ordersForm);
+    @GetMapping("/order/order-confirmation")
+    public String orderConfirmation(Model model, HttpSession session,Orders orders) {
+        List<Products> cartMerchandiseList = (List<Products>) session.getAttribute("cartProductsList");
+
+//        for (Products products : cartProductsList) {
+//            if (products.getQuantity() == null) {
+//                products.setAmount(1);
+//            }
+//        }
+//
+//        OrdersForm ordersForm = new OrdersForm();
+//        ordersForm.setUserId(users.getUserId());
+//        ordersForm.setTelephone(user.getTelephone());
+//        ordersForm.setZipCode(user.getZipCode());
+//        ordersForm.setAddress(user.getAddress());
+
+//        Orders order = new Orders();
+//        order.setUserId(.getUserId());
+//        ordersForm.setTelephone(user.getTelephone());
+//        ordersForm.setZipCode(user.getZipCode());
+//        ordersForm.setAddress(user.getAddress());
+
+
+
+//        model.addAttribute("order", order);
+        List<Products> cartDetailsList = (List<Products>) session.getAttribute("cartDetailsList");
+        if (cartDetailsList == null) {
+            cartDetailsList = new ArrayList<>();
+            session.setAttribute("cartDetailsList", cartDetailsList);
+        }
         return "order-confirmation";
     }
 
-    @PostMapping("/to-order-complete")
+    @PostMapping("/order/to-order-complete")
     public String toOrderComplete(@Validated OrdersForm ordersForm, BindingResult result, Model model) {
         if(result.hasErrors()) {
             model.addAttribute("ordersForm", ordersForm);

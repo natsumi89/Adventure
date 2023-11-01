@@ -18,6 +18,7 @@ first_name VARCHAR(255)  NOT NULL,
 birth_date DATE NOT NULL,
 email VARCHAR(255) UNIQUE NOT NULL,
 password VARCHAR(255) NOT NULL,
+role text NOT NULL,
 created_at TIMESTAMPTZ DEFAULT current_timestamp,
 updated_at TIMESTAMPTZ DEFAULT current_timestamp
 );
@@ -114,10 +115,10 @@ VALUES
     ('佐藤漁業', '新鮮な魚と海産物の提供を行っています。', 'sato@example.com');
 
 -- Users Table
-INSERT INTO users (last_name,first_name,birth_date, email, password)
-VALUES
-    ('山田','太郎','1976-07-22', 'taro.yamada@example.com', 'TaroYamada05'),
-    ('鈴木','花子','1992-09-19', 'hanako.suzuki@example.com', 'HanakoSuzuki05');
+--INSERT INTO users (last_name,first_name,birth_date, email, password)
+--VALUES
+--    ('山田','太郎','1976-07-22', 'taro.yamada@example.com', 'TaroYamada05'),
+--    ('鈴木','花子','1992-09-19', 'hanako.suzuki@example.com', 'HanakoSuzuki05');
 
 -- Products Table
 INSERT INTO products (region_id, producer_id, product_name, description, price, image_url)
@@ -186,53 +187,24 @@ VALUES
      (9, 1, '沖縄そば', '沖縄独特のソウルフードで、麺が太くて美味しいです。', 700, 'okinawa_soba.png'),
      (9, 2, 'ゴーヤチャンプルー', 'ゴーヤの苦味が特徴的な沖縄料理です。', 650, 'goya.png');
 
- -- 甲信越の商品
- INSERT INTO products (region_id, producer_id, product_name, description, price, image_url)
- VALUES
-     (4, 1, '長野産りんご', 'シャキシャキとした食感が特徴です。', 450, 'nagano_apple.png'),
-     (4, 2, '新潟産コシヒカリ', '日本を代表するお米です。', 2500, 'koshihikari.png');
 
- -- 関西の商品
- INSERT INTO products (region_id, producer_id, product_name, description, price, image_url)
- VALUES
-     (5, 1, '兵庫産神戸ビーフ', '高級な和牛の一つとして知られています。', 10000, 'kobe_beef.png'),
-     (5, 2, '奈良産鹿せんべい', '奈良公園で人気のお土産です。', 300, 'deer_senbei.png');
-
- -- 四国の商品
- INSERT INTO products (region_id, producer_id, product_name, description, price, image_url)
- VALUES
-     (6, 1, '香川産讃岐うどん', '太くてもちもちの食感が特徴です。', 600, 'sanuki_udon.png'),
-     (6, 2, '愛媛産みかん', '甘くてジューシーなみかんです。', 350, 'ehime_mikan.png');
-
- -- 中国の商品
- INSERT INTO products (region_id, producer_id, product_name, description, price, image_url)
- VALUES
-     (7, 1, '広島産お好み焼き', '麺を使用した広島風のお好み焼きです。', 800, 'hiroshima_okonomiyaki.png'),
-     (7, 2, '鳥取産20世紀梨', '甘みが強くてジューシーです。', 400, 'tottori_pear.png');
-
- -- 九州の商品
- INSERT INTO products (region_id, producer_id, product_name, description, price, image_url)
- VALUES
-     (8, 1, '宮崎産マンゴー', '夏の期間限定で出回る高級フルーツです。', 3000, 'miyazaki_mango.png'),
-     (8, 2, '佐賀産いちご', '甘さと酸味のバランスが絶妙です。', 600, 'saga_strawberry.png');
-
--- Orders Table
-INSERT INTO orders (user_id, total_price, status)
-VALUES
-    (1, 1000, 'processing'),
-    (2, 1500, 'shipped');
-
--- Order Details Table
-INSERT INTO order_details (order_id, product_id, quantity, subtotal_price)
-VALUES
-    (1, 1, 2, 600),
-    (2, 2, 3, 1500);
-
--- Stamps Table
-INSERT INTO stamps (user_id, region_id, stamp_date)
-VALUES
-    (1, 1, now()),
-    (2, 2, now());
+---- Orders Table
+--INSERT INTO orders (user_id, total_price, status)
+--VALUES
+--    (1, 1000, 'processing'),
+--    (2, 1500, 'shipped');
+--
+---- Order Details Table
+--INSERT INTO order_details (order_id, product_id, quantity, subtotal_price)
+--VALUES
+--    (1, 1, 2, 600),
+--    (2, 2, 3, 1500);
+--
+---- Stamps Table
+--INSERT INTO stamps (user_id, region_id, stamp_date)
+--VALUES
+--    (1, 1, now()),
+--    (2, 2, now());
 
 -- Events Table
 INSERT INTO events (region_id, event_name, description, event_location)
