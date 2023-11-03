@@ -64,5 +64,10 @@ public class ShoppingCartsService {
             shoppingCartsRepository.insertCartItem(cartItem);
         }
     }
+
+    public void deleteAllItemsFromCartByUserId(Integer userId) {
+        shoppingCartsRepository.deleteAllItemsFromCartByUserId(userId);
+    }
+
 }
 

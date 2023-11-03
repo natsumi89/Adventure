@@ -10,7 +10,7 @@ public class Orders {
     private String status;
     private String address;
     private Integer telephone;
-    private Integer zipCode;
+    private String zipCode;
     private String paymentMethod;
 
     public Integer getOrderId() {
@@ -69,11 +69,11 @@ public class Orders {
         this.telephone = telephone;
     }
 
-    public Integer getZipCode() {
+    public String getZipCode() {
         return zipCode;
     }
 
-    public void setZipCode(Integer zipCode) {
+    public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
     }
 

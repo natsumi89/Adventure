@@ -29,13 +29,12 @@ public class OrderRepository {
 
     public static final RowMapper<Orders> ORDERS_ROW_MAPPER = (rs,i) -> {
         Orders orders = new Orders();
-        orders.setOrderId(rs.getInt("order_id"));
         orders.setUserId(rs.getInt("user_id"));
         orders.setTotalPrice(rs.getInt("total_price"));
         orders.setOrderDate(rs.getDate("order_date"));
         orders.setStatus(rs.getString("status"));
         orders.setAddress(rs.getString("address"));
-        orders.setZipCode(rs.getInt("zip_code"));
+        orders.setZipCode(rs.getString("zip_code"));
         orders.setTelephone(rs.getInt("telephone"));
         orders.setPaymentMethod(rs.getString("payment_method"));
         return orders;
@@ -54,7 +53,7 @@ public class OrderRepository {
     }
 
     public void save(Orders orders) {
-        String sql = "INSERT INTO orders (order_id, user_id, total_price, order_date, status,address,zip_code,telephone,payment_method) VALUES(:orderId, :userId, :totalPrice, :orderDate, :status,:address,:zipCode,:telephone,:paymentMethod)";
+        String sql = "INSERT INTO orders (user_id, total_price, order_date, status,address,zip_code,telephone,payment_method) VALUES(:userId, :totalPrice, :orderDate, :status,:address,:zipCode,:telephone,:paymentMethod)";
         SqlParameterSource param = new BeanPropertySqlParameterSource(orders);
         template.update(sql,param);
 
