@@ -38,15 +38,18 @@ updated_at TIMESTAMPTZ DEFAULT current_timestamp
 CREATE TABLE orders(
     order_id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES users(user_id),
-    total_price INTEGER NOT NULL,
+    total_price INTEGER ,
     order_date TIMESTAMPTZ DEFAULT current_timestamp,
     status VARCHAR(50) CHECK (status IN ('processing', 'shipped', 'delivered')),
-    payment_method INTEGER CHECK (payment_method IN (1, 2, 3))
+    payment_method VARCHAR(255)
 );
 
 ALTER TABLE orders
 ADD COLUMN telephone INTEGER,
-ADD COLUMN zip_code INTEGER;
+ADD COLUMN zip_code VARCHAR(255) NOT NULL;
+
+ALTER TABLE orders ADD COLUMN address VARCHAR(255);
+
 
 CREATE TABLE order_details(
 order_detail_id SERIAL PRIMARY KEY,

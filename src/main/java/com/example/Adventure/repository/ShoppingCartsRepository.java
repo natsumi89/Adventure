@@ -125,4 +125,11 @@ public class ShoppingCartsRepository {
         SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
         return template.query(sql, param, SHOPPING_CARTS_DETAIL_ROW_MAPPER);
     }
+
+    public void deleteAllItemsFromCartByUserId(Integer userId) {
+        String sql = "DELETE FROM shopping_carts WHERE user_id=:userId";
+        SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
+        template.update(sql, param);
+    }
+
 }

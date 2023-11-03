@@ -1,11 +1,12 @@
 package com.example.Adventure.controller;
 
 import com.example.Adventure.domain.Orders;
-import com.example.Adventure.domain.Products;
+import com.example.Adventure.domain.ShoppingCartsDetail;
 import com.example.Adventure.form.OrdersForm;
 import com.example.Adventure.repository.OrderRepository;
 import com.example.Adventure.repository.UsersRepository;
 import com.example.Adventure.service.ProductsService;
+import com.example.Adventure.service.ShoppingCartsService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,41 +33,39 @@ public class OrderConfirmationController {
     @Autowired
     private ProductsService productsService;
 
+    @Autowired
+    private HttpSession session;
+
+    @Autowired
+    private ShoppingCartsService shoppingCartsService;
+
     @GetMapping("/order/order-confirmation")
-    public String orderConfirmation(Model model, HttpSession session,Orders orders) {
-        List<Products> cartMerchandiseList = (List<Products>) session.getAttribute("cartProductsList");
+    public String orderConfirmation(Model model) {
+        Integer userId = (Integer) session.getAttribute("userId");
+        List<ShoppingCartsDetail> cartDetailsList;
 
-//        for (Products products : cartProductsList) {
-//            if (products.getQuantity() == null) {
-//                products.setAmount(1);
-//            }
-//        }
-//
-//        OrdersForm ordersForm = new OrdersForm();
-//        ordersForm.setUserId(users.getUserId());
-//        ordersForm.setTelephone(user.getTelephone());
-//        ordersForm.setZipCode(user.getZipCode());
-//        ordersForm.setAddress(user.getAddress());
+        model.addAttribute("ordersForm", new OrdersForm());
 
-//        Orders order = new Orders();
-//        order.setUserId(.getUserId());
-//        ordersForm.setTelephone(user.getTelephone());
-//        ordersForm.setZipCode(user.getZipCode());
-//        ordersForm.setAddress(user.getAddress());
-
-
-
-//        model.addAttribute("order", order);
-        List<Products> cartDetailsList = (List<Products>) session.getAttribute("cartDetailsList");
-        if (cartDetailsList == null) {
-            cartDetailsList = new ArrayList<>();
-            session.setAttribute("cartDetailsList", cartDetailsList);
+        if (userId != null) {
+            cartDetailsList = shoppingCartsService.findShoppingCartsDetailByUserId(userId);
+        } else {
+            cartDetailsList = (List<ShoppingCartsDetail>) session.getAttribute("cartDetailsList");
+            if (cartDetailsList == null) {
+                cartDetailsList = new ArrayList<>();
+            }
         }
+
+        model.addAttribute("cartDetailsList", cartDetailsList);
+        int totalPrice = calcTotalPrice(cartDetailsList);
+        model.addAttribute("totalPrice", totalPrice);
+
         return "order-confirmation";
     }
 
     @PostMapping("/order/to-order-complete")
     public String toOrderComplete(@Validated OrdersForm ordersForm, BindingResult result, Model model) {
+        Integer userId = (Integer) session.getAttribute("userId");
+
         if(result.hasErrors()) {
             model.addAttribute("ordersForm", ordersForm);
             return "order-confirmation";
@@ -82,8 +81,23 @@ public class OrderConfirmationController {
         orders.setOrderDate(new Date());  // 現在の日付を設定
         orders.setStatus("Order Placed");  // ここでステータスを設定
 
-        orderRepository.save(orders);  // データベースに保存
 
-        return "order-complete";
+        orderRepository.save(orders);  // データベースに保存
+        if (userId != null) {
+            shoppingCartsService.deleteAllItemsFromCartByUserId(userId);
+        } else {
+            session.removeAttribute("cartDetailsList");
+        }
+
+
+        return "order-completed";
+    }
+
+    private Integer calcTotalPrice(List<ShoppingCartsDetail> productsList) {
+        Integer totalPrice = 0;
+        for(ShoppingCartsDetail product : productsList) {
+            totalPrice += product.getPrice() * product.getQuantity();
+        }
+        return totalPrice;
     }
 }

@@ -12,16 +12,16 @@
     <h3>注文確認画面</h3>
     <div class="order-confirmation-product">
 		<p>注文商品一覧</p>
-		<div th:if="${session.cartDetailsList == null or session.cartDetailsList.empty}">
+		<div th:if="${cartDetailsList == null or cartDetailsList.empty}">
 			<p>商品はありません。</p>
 		</div>
-		<div th:unless="${session.cartDetailsList == null or session.cartDetailsList.empty}">
-		<input type="text" id="numberOfMerchandise"
-			   th:value="${session.cartDetailsList.size}"
-			   style="display: none">
-		<div class="confirm-content">
-			<div class="confirm-content-border"
-				 th:each="cartDetail,status:${session.cartDetailsList}">
+		<div th:unless="${cartDetailsList == null or cartDetailsList.empty}">
+			<input type="text" id="numberOfMerchandise"
+				   th:value="${cartDetailsList.size}"
+				   style="display: none">
+			<div class="confirm-content">
+				<div class="confirm-content-border"
+					 th:each="cartDetail,status:${cartDetailsList}">
 				<div class="confirm-content-name-price">
 					<div class="confirm-name">
 						商品名&colon;
@@ -35,17 +35,15 @@
       </div>
   </div>
   </div>
-
 <h2 class="confirm-subheading">お客様情報を入力してください</h2>
 											<div class="confirm-bottom">
-												<form th:action="@{/to-order-complete}" th:object="${ordersForm}" method="post">
+												<form th:action="@{/order/to-order-complete}" th:object="${ordersForm}" method="post">
 													<h3>お届け先</h3>
 													<div class="confirm-bottom-content">
 														<div class="confirm-customer-last-name">
 															<label for="lastName">姓&colon;
 																<div th:errors="*{lastName}" style="color: red;"></div><input type="text" name="lastName"
 																	id="lastName" placeholder="山田" th:field="*{lastName}"></label>
-
 														</div>
 														<div class="confirm-customer-first-name">
 															<label for="firstName">名&colon;<div th:errors="*{firstName}" style="color: red;"></div>
@@ -73,7 +71,7 @@
 																	placeholder="000-0000-0000"
 																	th:field="*{telephone}"></label>
 														</div>
-														<input type="submit" value="Submit"/>
+<!--														<input type="submit" value="Submit"/>-->
 													</div>
 													<h3>支払い方法</h3>
 													<!-- お振込のラジオボタンが押された時のみ、振込情報が表示される処理を追加 -->
@@ -118,6 +116,7 @@
 </div>
 		</div>
   </div>
+  <script src="/js/form.js" th:src="@{/js/form.js}"></script>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
