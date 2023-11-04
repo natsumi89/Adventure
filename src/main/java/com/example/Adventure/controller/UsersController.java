@@ -9,6 +9,7 @@ import com.example.Adventure.service.ProductsService;
 import com.example.Adventure.service.ShoppingCartsService;
 import com.example.Adventure.service.UsersService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +18,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.HashMap;
 import java.util.List;
@@ -48,28 +47,25 @@ public class UsersController {
 
     @GetMapping("/login")
     public String login(@RequestParam(required = false) String error, Model model) {
-//        model.addAttribute("usersForm", new UsersForm());
+        model.addAttribute("usersForm", new UsersForm());
         if (error != null) {
-            if (error.equals("userNotFound")) {
-                model.addAttribute("errorMessage", "ユーザーが存在しません。");
-            } else if (error.equals("badCredentials")) {
-                model.addAttribute("errorMessage", "パスワードが間違っています。");
-            } else {
-                model.addAttribute("errorMessage", "ログインに失敗しました。");
-            }
+            model.addAttribute("errorMessage", "メールアドレスまたはパスワードが間違っています。");
         }
         return "login";
     }
 
 
     @GetMapping("/customer-registration")
-    public String register(Model model) {
+    public String register(Model model,UsersForm usersForm) {
         model.addAttribute("usersForm", new UsersForm());
         return "registration";
     }
 
     @PostMapping("/customer-insert")
-    public String insert(UsersForm usersForm, Model model) {
+    public String insert(@Valid UsersForm usersForm, BindingResult bindingResult, Model model) {
+        if(bindingResult.hasErrors()) {
+            return "registration";
+        }
         Users users = usersService.findByEmail(usersForm.getEmail());
         if (users != null) {
             model.addAttribute("error", "このメールアドレスは既に登録されています。");
@@ -91,33 +87,20 @@ public class UsersController {
         return "redirect:/top/products";
     }
 
-
-
     @PostMapping("/login-to-list")
-    public String customerLogin(@Validated UsersForm usersForm, BindingResult bindingResult, Model model) {
+    public String customerLogin(@Validated UsersForm usersForm, BindingResult bindingResult, @ModelAttribute Users users, RedirectAttributes redirectAttributes, Model model) {
+
         if(bindingResult.hasErrors()) {
             model.addAttribute("usersForm", usersForm);
             return "login";
         }
 
         Users authenticatedUser = usersService.findByEmail(usersForm.getEmail());
-
-        if(authenticatedUser == null || !passwordEncoder.matches(usersForm.getPassword(), authenticatedUser.getPassword())) {
-            model.addAttribute("errorMessage", "メールアドレスまたはパスワードが間違っています。");
-            return "login";
-        }
-        if(authenticatedUser == null || usersForm.getPassword() != (authenticatedUser.getPassword())) {
-            model.addAttribute("errorMessage", "メールアドレスまたはパスワードが間違っています。");
-            return "login";
-        }
-
-        // セッションのカートを取得
         List<ShoppingCartsDetail> sessionCartDetailsList = (List<ShoppingCartsDetail>) session.getAttribute("cartDetailsList");
         if(sessionCartDetailsList != null) {
             for(ShoppingCartsDetail detail : sessionCartDetailsList) {
                 shoppingCartsService.updateOrAddToCart(authenticatedUser.getUserId(), detail.getProductId(), detail.getQuantity());
             }
-            // セッションのカートをクリア
             session.removeAttribute("cartDetailsList");
         }
 
@@ -130,7 +113,7 @@ public class UsersController {
             for(Products product : sessionCartProductsList) {
                 shoppingCartsService.updateOrAddToCart(authenticatedUser.getUserId(), product.getProductId(), 1); // 仮に数量を1としています
             }
-            session.removeAttribute("cartProductsList"); // セッションのカートをクリア
+            session.removeAttribute("cartProductsList");
         }
 
         return "redirect:/top/products";
@@ -138,7 +121,6 @@ public class UsersController {
 
     @PostMapping("/logout")
     public String logout() {
-        // ユーザーIDをセッションから取得
         Integer userId = (Integer) session.getAttribute("userId");
         if (userId != null) {
             // セッションからカートの商品リストを取得
@@ -153,21 +135,7 @@ public class UsersController {
                 }
             }
         }
-        // セッションの情報をクリア
         session.invalidate();
-        return "redirect:/top/products"; // ログインページへリダイレクト
+        return "redirect:/top/products";
     }
-//
-//    @GetMapping("/false")
-//    public String falsePage() {
-//        return "error/4××";
-//    }
-//
-//    @GetMapping("/login-page")
-//    public String loginErrorPage(Model model) {
-//        model.addAttribute("errorMessage", "ログインに失敗しました。");
-//        return "4××";
-//    }
-
-
 }
