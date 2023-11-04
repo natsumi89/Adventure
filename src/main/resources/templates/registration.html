@@ -16,32 +16,32 @@
             <div class="last-name">
                 <label for="lastName">姓</label><br>
                 <div th:errors="*{lastName}" style="color: red;">エラー!</div>
-                <input type="text" name="lastName" id="lastName" placeholder="山田" >
+                <input type="text" class="validate[required]" name="lastName" id="lastName" placeholder="山田" th:field="*{lastName}">
             </div>
             <div class="first-name">
                 <label>名</label><br>
                 <div th:errors="*{firstName}" style="color: red;">エラー!</div>
-                <input type="text" name="firstName" id="firstName" placeholder="太郎" >
+                <input type="text" class="validate[required]" name="firstName" id="firstName" placeholder="太郎" th:field="*{firstName}">
             </div>
             <div class="date-of-birth">
                 <label>生年月日</label><br>
                 <div th:errors="*{birthDate}" style="color: red;"></div>
-                <input type="date" name="birthDate" id="birthDate">
+                <input type="date" class="validate[required]" name="birthDate" id="birthDate" th:field="*{birthDate}">
             </div>
             <div class="email">
                 <label>メールアドレス</label><br>
                 <div th:errors="*{email}" style="color: red;">エラー!</div>
-                <input type="text" name="email" id="email">
+                <input type="text" class="validate[required]" name="email" id="email" th:field="*{email}">
             </div>
             <div class="password">
                 <label>パスワード</label><br>
                 <div th:errors="*{password}" style="color: red;"></div>
-                <input type="password" name="password" id="password">
+                <input type="password" class="validate[required]" name="password" id="password" th:field="*{password}">
             </div>
             <div class="re-password">
                 <label>確認用パスワード</label><br>
                 <div th:errors="*{rePassword}" style="color: red;"></div>
-                <input type="password" name="rePassword" id="re-password">
+                <input type="password" class="validate[required]" name="rePassword" id="re-password" th:field="*{rePassword}">
             </div>
             <div th:if="${error}" style="color: red;">エラー: <span th:text="${error}"></span></div>
         </div>

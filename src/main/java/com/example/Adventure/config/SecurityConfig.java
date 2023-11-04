@@ -33,8 +33,8 @@ public class SecurityConfig {
         http.authorizeHttpRequests(
                         requests -> requests.requestMatchers("/order/*").hasRole("USER").anyRequest().permitAll())
                 .formLogin((form) -> form.loginPage("/login").loginProcessingUrl("/login-to-list").defaultSuccessUrl("/")
-                        .usernameParameter("email").passwordParameter("password").failureUrl("/top/products")
-                      .successHandler(customAuthenticationSuccessHandler)
+                        .usernameParameter("email").passwordParameter("password").failureUrl("/login?error")
+                        .successHandler(customAuthenticationSuccessHandler)
                         .permitAll())
                 .logout((logout) -> logout.logoutUrl("/logout").logoutSuccessUrl("/top/products").permitAll());
 

@@ -13,12 +13,12 @@
     <form th:action="@{/login-to-list}" th:object="${usersForm}" method="post" >
         <div class="email">
             <label>メールアドレス:</label>
-<!--            <div th:errors="*{email}" style="color: red;"></div>-->
+            <div th:errors="*{email}" style="color: red;"></div>
             <input type="text" name="email" id="email">
         </div>
         <div class="password">
             <label>パスワード:</label>
-<!--            <div th:errors="*{password}" style="color: red;"></div>-->
+            <div th:errors="*{password}" style="color: red;"></div>
             <input type="password" name="password" id="password">
             <button>ログイン</button>
         </div>
