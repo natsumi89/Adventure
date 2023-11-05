@@ -41,6 +41,20 @@
                         <input type="hidden" name="description" th:value="${cartDetail.description}">
                         <button class="shopping-cart-btn" type="submit">削除</button>
                     </form>
+                    <label for="confirm-quantity-input${status.index}">
+                        <div class="shopping-cart-quantity">
+                            <div class="confirm-quantity-label">
+                                個数&colon;
+                            </div>
+                            <input type="number"
+                                   th:name="${'quantity' + status.index}"
+                                   th:id="${'confirm-quantity-input' + status.index}" 
+                            th:value="${cartDetail.quantity}"
+                            onchange="amountChange(this.id,this.value)"
+                            min="1">個
+                        </div>
+                    </label>
+
                 <div class="shopping-cart-content-right">
                     <div class="shopping-cart-image-url">
                         <img th:src="@{/img/{imageName}(imageName=${cartDetail.imageUrl})}" alt="Product Image"/>
