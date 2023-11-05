@@ -114,9 +114,17 @@
         <h2 class="mb-3">人気商品</h2>
     </section>
 
-    <section id="events" class="my-5">
-        <h2 class="mb-3">イベント情報</h2>
-    </section>
+        <section id="events" class="my-5">
+            <h2 class="mb-3">イベント情報</h2>
+            <div th:each="event:${eventsList}" class="event-list">
+                <a th:href="@{/event/{eventId}(eventId=${event.eventId})}">
+                    <div th:text="${event.eventName}"></div>
+                </a>
+                <span th:text="${event.description}"></span>
+                <p>in</p><span th:text="${event.eventLocation}"></span>
+            </div>
+        </section>
+
 </div>
 
 <footer class="bg-dark text-white text-center py-3">
