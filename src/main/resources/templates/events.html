@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>events</title>
+</head>
+<body>
+<body>
+<div class="main">
+  <div class="product-detail">
+    <span>イベント画面</span>
+    <section>
+
+        <div class="event-content">
+          <input type="hidden" name="eventId" th:value="${events.eventId}">
+          <h2 class="event-content-name" th:text="${events.eventName}"></h2>
+          <p class="event-content-description">
+            <span th:text="${events.description}"></span>
+          </p>
+          <p class="event-content-location">
+            <span th:text="${events.eventLocation}"></span>
+          </p>
+
+        </div>
+    </section>
+  </div>
+
+  <div class="back-to-top-page-from-product-detail">
+    <a th:href="@{/top/back}">Topに戻る</a>
+  </div>
+
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+
+
+</body>
+</html>

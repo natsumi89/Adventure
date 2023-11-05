@@ -1,6 +1,8 @@
 package com.example.Adventure.controller;
 
+import com.example.Adventure.domain.Events;
 import com.example.Adventure.domain.Products;
+import com.example.Adventure.service.EventService;
 import com.example.Adventure.service.ProductsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,15 +21,20 @@ public class ProductsController {
     @Autowired
     private ProductsService productsService;
 
+    @Autowired
+    private EventService eventService;
+
     @GetMapping("/products")
     public String top(Model model){
         List<Products> productsList = productsService.findAll();
+        List<Events> eventsList = eventService.findAll();
 
         // 地域ごとに商品をグループ化
         Map<String, List<Products>> productsGroupedByRegion = productsList.stream()
                 .collect(Collectors.groupingBy(Products::getRegionName));
 
         model.addAttribute("productsByRegion", productsGroupedByRegion);
+        model.addAttribute("eventsList",eventsList);
         return "top";
     }
 
