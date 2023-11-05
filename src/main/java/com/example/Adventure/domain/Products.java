@@ -10,7 +10,6 @@ public class Products {
     private String imageUrl;
     private String createdAt;
     private String updatedAt;
-
     private String regionName;
 
     public Integer getProductId() {
