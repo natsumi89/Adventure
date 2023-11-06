@@ -1,16 +1,21 @@
 package com.example.Adventure.form;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 public class OrdersForm {
-        private Integer totalPrice;
-        private String paymentMethod;
-        private Integer userId;
-        private Integer telephone;
-        private String lastName;
-        private String firstName;
+    private Integer totalPrice;
+    private String paymentMethod;
+    private Integer userId;
+    @NotBlank(message = "電話番号を入力して下さい。")
+    @Pattern(regexp = "^0\\d{9,10}$", message = "電話番号の形式で入力してください")
+    private String telephone;
+    @NotBlank(message = "姓を入力してください。")
+    private String lastName;
+    @NotBlank(message = "名を入力してください。")
+    private String firstName;
 
     @NotNull(message = "郵便番号は必須です")
     @Pattern(regexp = "\\d{7}", message = "郵便番号は7桁の数字で入力してください")
@@ -44,11 +49,11 @@ public class OrdersForm {
         this.userId = userId;
     }
 
-    public Integer getTelephone() {
+    public String getTelephone() {
         return telephone;
     }
 
-    public void setTelephone(Integer telephone) {
+    public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
 

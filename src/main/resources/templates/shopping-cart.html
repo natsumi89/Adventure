@@ -20,18 +20,18 @@
         <div class="shopping-cart-content-left">
             <div th:each="cartDetail, status: ${cartDetailsList}">
                 <section>
-                <div class="shopping-cart-product-name">
-                    <p th:text="${cartDetail.productName}"></p>
-                </div>
-                <div class="shopping-cart-product-price">
-                    <p th:text="${cartDetail.price}"></p>
-                </div>
-                <div class="shopping-cart-product-description">
-                    <p th:text="${cartDetail.description}"></p>
-                </div>
-<!--                    <div class="shopping-cart-product-quantity" th:data-product-id="${cartDetail.productId}">-->
-<!--                        <p th:text="${cartDetail.quantity}">1</p>-->
-<!--                    </div>-->
+                    <div class="shopping-cart-product-name">
+                        <p th:text="${cartDetail.productName}"></p>
+                    </div>
+                    <div class="shopping-cart-product-price">
+                        <p th:text="${cartDetail.price}"></p>
+                    </div>
+                    <div class="shopping-cart-product-description">
+                        <p th:text="${cartDetail.description}"></p>
+                    </div>
+                    <!--                    <div class="shopping-cart-product-quantity" th:data-product-id="${cartDetail.productId}">-->
+                    <!--                        <p th:text="${cartDetail.quantity}">1</p>-->
+                    <!--                    </div>-->
 
                     <form th:action="@{/delete-shopping-carts}" method="post">
                         <input type="hidden" name="cartId" th:value="${cartDetail.cartId}">
@@ -68,15 +68,13 @@
         <div class="shopping-cart-total-price">
             <p th:text="'合計: ' + ${totalPrice} + '円'"></p>
         </div>
-
         <a th:href="@{/top/back}">戻る</a>
         <form th:action="@{/order/order-confirmation}" method="get">
             <button>購入手続き</button>
         </form>
-
-        </div>
     </div>
-    </div>
+</div>
+</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>

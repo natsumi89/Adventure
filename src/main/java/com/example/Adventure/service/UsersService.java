@@ -68,8 +68,4 @@ public class UsersService implements UserDetailsService{
         usersRepository.delete(userId);
     }
 
-//    public Users findByEmailAndPassword(String email, String password) {
-//        return usersRepository.findByEmailAndPassword(email, password);
-//    }
-
 }
