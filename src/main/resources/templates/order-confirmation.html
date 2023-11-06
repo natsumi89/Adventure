@@ -77,38 +77,38 @@
                             </div>
                         </div>
 
-                        <!--                        <h3>支払い方法</h3>-->
-<!--                        <div class="confirm-payment">-->
-<!--                            <div class="confirm-payment-cash">-->
-<!--                                <label class="payment-label"-->
-<!--                                       for="cashOnDelivery">代引き&colon;<input type="radio"-->
-<!--                                                                                id="cashOnDelivery" value="1" name="pay"-->
-<!--                                                                                onclick="buttonClick()" class="radio"-->
-<!--                                                                                checked></label>-->
-<!--                            </div>-->
-<!--                            <div class="confirm-payment-transfer">-->
-<!--                                <label class="payment-label" for="transfer">お振込&colon;<input-->
-<!--                                        type="radio" id="transfer" value="2" name="pay"-->
-<!--                                        onclick="buttonClick()" class="radio"></label>-->
-<!--                            </div>-->
-<!--                            <div class="confirm-payment-card">-->
-<!--                                <label class="payment-label" for="stripe-button">カード&colon;<input-->
-<!--                                        type="radio" id="stripe-button" value="3" name="pay"-->
-<!--                                        onclick="buttonClick()" class="radio"></label>-->
-<!--                            </div>-->
-<!--                            <div id="bank-info" value="bank-info" style="display: none;">-->
-<!--                                <h1>銀行振込先情報</h1>-->
-<!--                                <span>注文確定後、7営業日以内に下記口座へお振込ください。期日までに振り込みがない場合はキャンセルになります。</span><br>-->
-<!--                                <span>金融機関名:ラクラク銀行</span><br>-->
-<!--                                <span>支店名:ラクス支店</span><br> <span>口座種別:普通</span>-->
-<!--                                <br><span>口座番号:1234567</span>-->
-<!--                                <br><span>口座名義人名:ラクラクティー</span><br>-->
-<!--                                <span>※振り込み手数料はお客様のご負担になります。</span>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="shopping-cart-total-price">-->
-<!--                            <p th:text=" ${totalPrice}"></p>-->
-<!--                        </div>-->
+                                                <h3>支払い方法</h3>
+                        <div class="confirm-payment">
+                            <div class="confirm-payment-cash">
+                                <label class="payment-label"
+                                       for="cashOnDelivery">代引き&colon;<input type="radio"
+                                                                                id="cashOnDelivery" value="1" name="pay"
+                                                                                onclick="buttonClick()" class="radio"
+                                                                                checked></label>
+                            </div>
+                            <div class="confirm-payment-transfer">
+                                <label class="payment-label" for="transfer">お振込&colon;<input
+                                        type="radio" id="transfer" value="2" name="pay"
+                                        onclick="buttonClick()" class="radio"></label>
+                            </div>
+                            <div class="confirm-payment-card">
+                                <label class="payment-label" for="stripe-button">カード&colon;<input
+                                        type="radio" id="stripe-button" value="3" name="pay"
+                                        onclick="buttonClick()" class="radio"></label>
+                            </div>
+                            <div id="bank-info" value="bank-info" style="display: none;">
+                                <h1>銀行振込先情報</h1>
+                                <span>注文確定後、7営業日以内に下記口座へお振込ください。期日までに振り込みがない場合はキャンセルになります。</span><br>
+                                <span>金融機関名:ラクラク銀行</span><br>
+                                <span>支店名:ラクス支店</span><br> <span>口座種別:普通</span>
+                                <br><span>口座番号:1234567</span>
+                                <br><span>口座名義人名:ラクラクティー</span><br>
+                                <span>※振り込み手数料はお客様のご負担になります。</span>
+                            </div>
+                        </div>
+                        <div class="shopping-cart-total-price">
+                            <p th:text=" ${totalPrice}"></p>
+                        </div>
                         <div class="confirm-button">
                             <button id="confirm-btn"
                                     class="confirm-button" type="submit">注文確定
@@ -126,7 +126,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<!--<script src="/js/form.js" th:src="@{/js/form.js}"></script>-->
+<script src="/js/form.js" th:src="@{/js/form.js}"></script>
 </body>
 
 </html>
