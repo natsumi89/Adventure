@@ -58,4 +58,10 @@ public class OrderRepository {
         template.update(sql,param);
 
     }
+
+    public void saveOrderDetails(OrderDetails orderDetails) {
+        String sql = "INSERT INTO order_details (order_id, product_id, quantity, subtotal_price) VALUES(:orderId, :productId, :quantity, :subTotalPrice)";
+        SqlParameterSource param = new BeanPropertySqlParameterSource(orderDetails);
+        template.update(sql, param);
+    }
 }

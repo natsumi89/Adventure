@@ -5,6 +5,7 @@ import com.example.Adventure.domain.ShoppingCartsDetail;
 import com.example.Adventure.form.OrdersForm;
 import com.example.Adventure.repository.OrderRepository;
 import com.example.Adventure.repository.UsersRepository;
+import com.example.Adventure.service.OrderConfirmationService;
 import com.example.Adventure.service.ProductsService;
 import com.example.Adventure.service.ShoppingCartsService;
 import jakarta.servlet.http.HttpSession;
@@ -38,6 +39,8 @@ public class OrderConfirmationController {
 
     @Autowired
     private ShoppingCartsService shoppingCartsService;
+    @Autowired
+    private OrderConfirmationService orderConfirmationService;
 
     @GetMapping("/order/order-confirmation")
     public String orderConfirmation(Model model) {
@@ -83,12 +86,12 @@ public class OrderConfirmationController {
 
 
         orderRepository.save(orders);  // データベースに保存
+        
         if (userId != null) {
             shoppingCartsService.deleteAllItemsFromCartByUserId(userId);
         } else {
             session.removeAttribute("cartDetailsList");
         }
-
 
         return "order-completed";
     }

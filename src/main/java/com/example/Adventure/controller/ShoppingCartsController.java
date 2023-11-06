@@ -1,5 +1,6 @@
 package com.example.Adventure.controller;
 
+import com.example.Adventure.CartUtils;
 import com.example.Adventure.domain.Products;
 import com.example.Adventure.domain.ShoppingCartsDetail;
 import com.example.Adventure.service.ProductsService;
@@ -28,17 +29,19 @@ public class ShoppingCartsController {
     private ServletContext application;
     @Autowired
     private HttpSession session;
+    @Autowired
+    private CartUtils cartUtils;
 
     @GetMapping("/show-shopping-cart")
     public String index(Model model) {
         List<ShoppingCartsDetail> cartDetailsList;
         Integer userId = (Integer) session.getAttribute("userId");
 
-        if(userId != null) {
+        if (userId != null) {
             cartDetailsList = shoppingCartsService.findShoppingCartsDetailByUserId(userId);
         } else {
             cartDetailsList = (List<ShoppingCartsDetail>) session.getAttribute("cartDetailsList");
-            if(cartDetailsList == null) {
+            if (cartDetailsList == null) {
                 cartDetailsList = new ArrayList<>();
             }
         }
@@ -110,10 +113,14 @@ public class ShoppingCartsController {
     }
 
     private Integer calcTotalPrice(List<ShoppingCartsDetail> productsList) {
-        Integer totalPrice = 0;
-        for(ShoppingCartsDetail product : productsList) {
-            totalPrice += product.getPrice() * product.getQuantity();
-        }
-        return totalPrice;
+        return cartUtils.calcTotalPrice(productsList);
+
+//    private Integer calcTotalPrice(List<ShoppingCartsDetail> productsList) {
+//        Integer totalPrice = 0;
+//        for(ShoppingCartsDetail product : productsList) {
+//            totalPrice += product.getPrice() * product.getQuantity();
+//        }
+//        return totalPrice;
+//    }
     }
 }

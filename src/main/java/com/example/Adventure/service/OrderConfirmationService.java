@@ -17,5 +17,9 @@ public class OrderConfirmationService {
         return orderConfirmationRepository.findAll();
     }
 
+    public void saveOrderDetails(OrderDetails orderDetails){
+        orderConfirmationRepository.saveOrderDetails(orderDetails);
+    }
+
 
 }

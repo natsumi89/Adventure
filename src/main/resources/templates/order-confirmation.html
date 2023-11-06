@@ -108,6 +108,10 @@
 													</div>
 													<div class="confirm-button"><button id="confirm-btn"
 															class="confirm-button" type="submit">注文確定</button></div>
+													<input type="hidden" th:field="*{totalPrice}" th:value="${totalPrice}" />
+													<input type="hidden" th:field="*{userId}" th:value="${userId}" />
+													<input type="hidden" th:field="*{paymentMethod}" th:value="${paymentmethod}" />
+
 												</form>
 
       </div>
