@@ -1,14 +1,19 @@
 package com.example.Adventure.controller;
 
+import com.example.Adventure.CartUtils;
 import com.example.Adventure.domain.ShoppingCartsDetail;
+import com.example.Adventure.service.ShoppingCartsService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("")
@@ -16,25 +21,37 @@ public class OrderChangeController {
     @Autowired
     private HttpSession session;
 
+    @Autowired
+    private CartUtils cartUtils;
+    @Autowired
+    private ShoppingCartsService shoppingCartsService;
     @GetMapping("/change-order/amount")
-    public void changeAmount(@RequestParam("productId") int productId, @RequestParam("value") String value,
-                             @RequestParam("totalPrice") int totalPrice) {
+    public ResponseEntity<Map<String, Integer>> changeOrderAmount(@RequestParam Integer productId, @RequestParam Integer value) {
+        Integer userId = (Integer) session.getAttribute("userId");
+        List<ShoppingCartsDetail> cartDetailsList;
 
-        // セッションからShoppingCartsDetailのリストを取得
-        List<ShoppingCartsDetail> cartDetailsList = (List<ShoppingCartsDetail>) session.getAttribute("cartDetailsList");
+        if (userId != null) {
+            shoppingCartsService.updateCartAmountByProductId(userId, productId, value);
+            cartDetailsList = shoppingCartsService.findShoppingCartsDetailByUserId(userId);
+        } else {
+            cartDetailsList = (List<ShoppingCartsDetail>) session.getAttribute("cartDetailsList");
+            if (cartDetailsList != null) {
+                for (ShoppingCartsDetail detail : cartDetailsList) {
+                    if (detail.getProductId().equals(productId)) {
+                        detail.setQuantity(value);
+                        break;
+                    }
+                }
+                session.setAttribute("cartDetailsList", cartDetailsList);
+            }
+        }
 
-        // 該当する商品の詳細を取得
-        ShoppingCartsDetail cartDetail = cartDetailsList.get(productId);
-
-        // 商品の数量を更新
-        cartDetail.setQuantity(Integer.parseInt(value));
-
-        // 更新した詳細をリストにセット
-        cartDetailsList.set(productId, cartDetail);
-
-        // 更新したリストをセッションに保存
-        session.setAttribute("cartDetailsList", cartDetailsList);
-        session.setAttribute("totalPrice", totalPrice);
+        int newTotalPrice = cartUtils.calcTotalPrice(cartDetailsList);
+        Map<String, Integer> responseMap = new HashMap<>();
+        responseMap.put("newTotalPrice", newTotalPrice);
+        return ResponseEntity.ok(responseMap);
     }
 
-    }
+
+}
+

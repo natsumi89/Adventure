@@ -68,6 +68,20 @@ public class ShoppingCartsService {
     public void deleteAllItemsFromCartByUserId(Integer userId) {
         shoppingCartsRepository.deleteAllItemsFromCartByUserId(userId);
     }
+    public void updateCartAmountByProductId(Integer userId, Integer productId, Integer quantity) {
+        ShoppingCarts existingItem = shoppingCartsRepository.findByUserIdAndProductId(userId, productId);
+        if (existingItem != null) {
+            existingItem.setQuantity(quantity);
+            shoppingCartsRepository.updateCartItemQuantityByUserIdAndProductId(existingItem);
+        } else {
+            ShoppingCarts newCartItem = new ShoppingCarts();
+            newCartItem.setUserId(userId);
+            newCartItem.setProductId(productId);
+            newCartItem.setQuantity(quantity);
+            shoppingCartsRepository.insertCartItem(newCartItem);
+        }
+    }
+
 
 }
 
