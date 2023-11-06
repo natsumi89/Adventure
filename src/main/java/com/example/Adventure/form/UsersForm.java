@@ -6,38 +6,39 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
 public class UsersForm {
-        private Integer userId;
-        @NotBlank(message="姓を入力してください。")
-        private String lastName;
-        @NotBlank(message="名を入力してください。")
-        private String firstName;
-        @DateTimeFormat(pattern = "yyyy-MM-dd")
-        @NotNull(message="生年月日を入力してください。")
-        private Date birthDate;
-        @NotBlank(message="メールアドレスを入力してください。")
-        @Email(message="メールアドレスの形式が不正です。")
-        private String email;
+    private Integer userId;
+    @NotBlank(message = "姓を入力してください。")
+    private String lastName;
+    @NotBlank(message = "名を入力してください。")
+    private String firstName;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "生年月日を入力してください。")
+    private Date birthDate;
+    @NotBlank(message = "メールアドレスを入力してください。")
+    @Email(message = "メールアドレスの形式が不正です。")
+    private String email;
 
-        @NotBlank(message="パスワードを入力してください。")
-        @Pattern(regexp="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$",message="半角英字大文字、小文字、数字の3種類を1つ必ず使用し、8文字以上16文字以内で入力してください。")
-        private String password;
-        @NotBlank(message="確認用パスワードを入力してください。")
-        @Pattern(regexp="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$",message="半角英字大文字、小文字、数字の3種類を1つ必ず使用し、8文字以上16文字以内で入力してください。")
-        private String rePassword;
+    @NotBlank(message = "パスワードを入力してください。")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$", message = "半角英字大文字、小文字、数字の3種類を使用し、8文字以上16文字以内で入力してください。")
+    private String password;
+    @NotBlank(message = "確認用パスワードを入力してください。")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$", message = "半角英字大文字、小文字、数字の3種類を使用し、8文字以上16文字以内で入力してください。")
+    private String rePassword;
 
-        @AssertTrue(message="パスワードと確認用パスワードは同一にしてください。")
-        public boolean isPasswordTrue() {
-            if(password == null || password.isEmpty()) {
-                return true;
-            }
-            return password.equals(rePassword);
+    @AssertTrue(message = "パスワードと確認用パスワードは同一にしてください。")
+    public boolean isPasswordTrue() {
+        if (password == null || password.isEmpty()) {
+            return true;
         }
+        return password.equals(rePassword);
+    }
+
     @NotNull(message = "電話番号は必須です。")
-        private Integer telephone;
+    private Integer telephone;
     @NotNull(message = "郵便番号は必須です。")
-        private Integer zipCode;
+    private Integer zipCode;
     @NotBlank(message = "住所は必須です。")
-        private String address;
+    private String address;
     private String paymentMethod;
 
     public Integer getUserId() {

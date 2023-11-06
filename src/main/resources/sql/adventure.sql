@@ -40,12 +40,12 @@ CREATE TABLE orders(
     user_id INTEGER REFERENCES users(user_id),
     total_price INTEGER ,
     order_date TIMESTAMPTZ DEFAULT current_timestamp,
-    status VARCHAR(50) CHECK (status IN ('processing', 'shipped', 'delivered')),
+    status VARCHAR(50),
     payment_method VARCHAR(255)
 );
 
 ALTER TABLE orders
-ADD COLUMN telephone INTEGER,
+ADD COLUMN telephone VARCHAR(255),
 ADD COLUMN zip_code VARCHAR(255) NOT NULL;
 
 ALTER TABLE orders ADD COLUMN address VARCHAR(255);
@@ -190,13 +190,6 @@ VALUES
      (9, 1, '沖縄そば', '沖縄独特のソウルフードで、麺が太くて美味しいです。', 700, 'okinawa_soba.png'),
      (9, 2, 'ゴーヤチャンプルー', 'ゴーヤの苦味が特徴的な沖縄料理です。', 650, 'goya.png');
 
-
----- Orders Table
---INSERT INTO orders (user_id, total_price, status)
---VALUES
---    (1, 1000, 'processing'),
---    (2, 1500, 'shipped');
---
 ---- Order Details Table
 --INSERT INTO order_details (order_id, product_id, quantity, subtotal_price)
 --VALUES

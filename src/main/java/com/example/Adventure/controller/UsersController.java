@@ -29,19 +29,14 @@ import java.util.Map;
 @RequestMapping("")
 public class UsersController {
     private static final Logger logger = LoggerFactory.getLogger(UsersRepository.class);
-
     @Autowired
     private UsersService usersService;
-
     @Autowired
     private HttpSession session;
-
     @Autowired
     private ShoppingCartsService shoppingCartsService;
-
     @Autowired
     private ProductsService productsService;
-
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -54,18 +49,19 @@ public class UsersController {
         return "login";
     }
 
-
     @GetMapping("/customer-registration")
-    public String register(Model model,UsersForm usersForm) {
+    public String register(Model model, UsersForm usersForm) {
         model.addAttribute("usersForm", new UsersForm());
         return "registration";
     }
 
     @PostMapping("/customer-insert")
     public String insert(@Valid UsersForm usersForm, BindingResult bindingResult, Model model) {
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("usersForm", usersForm);
             return "registration";
         }
+
         Users users = usersService.findByEmail(usersForm.getEmail());
         if (users != null) {
             model.addAttribute("error", "このメールアドレスは既に登録されています。");
@@ -90,15 +86,15 @@ public class UsersController {
     @PostMapping("/login-to-list")
     public String customerLogin(@Validated UsersForm usersForm, BindingResult bindingResult, @ModelAttribute Users users, RedirectAttributes redirectAttributes, Model model) {
 
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             model.addAttribute("usersForm", usersForm);
             return "login";
         }
 
         Users authenticatedUser = usersService.findByEmail(usersForm.getEmail());
         List<ShoppingCartsDetail> sessionCartDetailsList = (List<ShoppingCartsDetail>) session.getAttribute("cartDetailsList");
-        if(sessionCartDetailsList != null) {
-            for(ShoppingCartsDetail detail : sessionCartDetailsList) {
+        if (sessionCartDetailsList != null) {
+            for (ShoppingCartsDetail detail : sessionCartDetailsList) {
                 shoppingCartsService.updateOrAddToCart(authenticatedUser.getUserId(), detail.getProductId(), detail.getQuantity());
             }
             session.removeAttribute("cartDetailsList");
@@ -107,10 +103,9 @@ public class UsersController {
         session.setAttribute("email", authenticatedUser.getEmail());
         session.setAttribute("lastName", authenticatedUser.getLastName());
         session.setAttribute("userId", authenticatedUser.getUserId());  // この行を確認
-
         List<Products> sessionCartProductsList = (List<Products>) session.getAttribute("cartProductsList");
-        if(sessionCartProductsList != null) {
-            for(Products product : sessionCartProductsList) {
+        if (sessionCartProductsList != null) {
+            for (Products product : sessionCartProductsList) {
                 shoppingCartsService.updateOrAddToCart(authenticatedUser.getUserId(), product.getProductId(), 1); // 仮に数量を1としています
             }
             session.removeAttribute("cartProductsList");

@@ -9,11 +9,11 @@ import com.example.Adventure.service.OrderConfirmationService;
 import com.example.Adventure.service.ProductsService;
 import com.example.Adventure.service.ShoppingCartsService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,7 +43,7 @@ public class OrderConfirmationController {
     private OrderConfirmationService orderConfirmationService;
 
     @GetMapping("/order/order-confirmation")
-    public String orderConfirmation(Model model) {
+    public String orderConfirmation(OrdersForm ordersForm, Model model) {
         Integer userId = (Integer) session.getAttribute("userId");
         List<ShoppingCartsDetail> cartDetailsList;
 
@@ -66,10 +66,10 @@ public class OrderConfirmationController {
     }
 
     @PostMapping("/order/to-order-complete")
-    public String toOrderComplete(@Validated OrdersForm ordersForm, BindingResult result, Model model) {
+    public String toOrderComplete(@Valid OrdersForm ordersForm, BindingResult result, Model model) {
         Integer userId = (Integer) session.getAttribute("userId");
 
-        if(result.hasErrors()) {
+        if (result.hasErrors()) {
             model.addAttribute("ordersForm", ordersForm);
             return "order-confirmation";
         }
@@ -84,9 +84,8 @@ public class OrderConfirmationController {
         orders.setOrderDate(new Date());  // 現在の日付を設定
         orders.setStatus("Order Placed");  // ここでステータスを設定
 
-
         orderRepository.save(orders);  // データベースに保存
-        
+
         if (userId != null) {
             shoppingCartsService.deleteAllItemsFromCartByUserId(userId);
         } else {
@@ -98,7 +97,7 @@ public class OrderConfirmationController {
 
     private Integer calcTotalPrice(List<ShoppingCartsDetail> productsList) {
         Integer totalPrice = 0;
-        for(ShoppingCartsDetail product : productsList) {
+        for (ShoppingCartsDetail product : productsList) {
             totalPrice += product.getPrice() * product.getQuantity();
         }
         return totalPrice;

@@ -9,7 +9,7 @@ public class Orders {
     private Date orderDate;
     private String status;
     private String address;
-    private Integer telephone;
+    private String telephone;
     private String zipCode;
     private String paymentMethod;
 
@@ -61,11 +61,11 @@ public class Orders {
         this.address = address;
     }
 
-    public Integer getTelephone() {
+    public String getTelephone() {
         return telephone;
     }
 
-    public void setTelephone(Integer telephone) {
+    public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
 
