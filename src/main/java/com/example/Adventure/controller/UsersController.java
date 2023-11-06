@@ -102,7 +102,8 @@ public class UsersController {
 
         session.setAttribute("email", authenticatedUser.getEmail());
         session.setAttribute("lastName", authenticatedUser.getLastName());
-        session.setAttribute("userId", authenticatedUser.getUserId());  // この行を確認
+        session.setAttribute("firstName", authenticatedUser.getFirstName());
+        session.setAttribute("userId", authenticatedUser.getUserId());
         List<Products> sessionCartProductsList = (List<Products>) session.getAttribute("cartProductsList");
         if (sessionCartProductsList != null) {
             for (Products product : sessionCartProductsList) {

@@ -10,15 +10,15 @@ public class OrdersForm {
     private String paymentMethod;
     private Integer userId;
     @NotBlank(message = "電話番号を入力して下さい。")
-    @Pattern(regexp = "^0\\d{9,10}$", message = "電話番号の形式で入力してください")
+    @Pattern(regexp = "^0\\d{9,10}$", message = "電話番号の形式が不正です。")
     private String telephone;
     @NotBlank(message = "姓を入力してください。")
     private String lastName;
     @NotBlank(message = "名を入力してください。")
     private String firstName;
 
-    @NotNull(message = "郵便番号は必須です")
-    @Pattern(regexp = "\\d{7}", message = "郵便番号は7桁の数字で入力してください")
+    @NotNull(message = "郵便番号を入力してください。")
+    @Pattern(regexp = "\\d{7}",message="郵便番号の形式が不正です。")
     private String zipCode;
 
     @NotNull(message = "住所は必須です")
