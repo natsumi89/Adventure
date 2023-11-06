@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,8 +48,6 @@ public class OrderConfirmationController {
         Integer userId = (Integer) session.getAttribute("userId");
         List<ShoppingCartsDetail> cartDetailsList;
 
-        model.addAttribute("ordersForm", new OrdersForm());
-
         if (userId != null) {
             cartDetailsList = shoppingCartsService.findShoppingCartsDetailByUserId(userId);
         } else {
@@ -70,8 +69,11 @@ public class OrderConfirmationController {
         Integer userId = (Integer) session.getAttribute("userId");
 
         if (result.hasErrors()) {
+            for (ObjectError error : result.getAllErrors()) {
+                System.out.println(error.getDefaultMessage()); // エラーメッセージのログ出力
+            }
             model.addAttribute("ordersForm", ordersForm);
-            return "order-confirmation";
+            return orderConfirmation(ordersForm, model);  // メソッドを呼び出してエラー時の処理を行う
         }
 
         Orders orders = new Orders();

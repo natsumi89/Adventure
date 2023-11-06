@@ -41,47 +41,43 @@
                     <form th:action="@{/order/to-order-complete}" th:object="${ordersForm}" method="post">
                         <h3>お届け先</h3>
                         <div class="confirm-bottom-content">
-                            <div class="confirm-customer-last-name">
-                                <label for="lastName">姓&colon;
-                                    <div th:errors="*{lastName}" style="color: red;"></div>
-                                    <input type="text" name="lastName"
-                                           id="lastName" placeholder="山田" th:field="*{lastName}"></label>
+                            <div class="last-name">
+                                <label for="lastName">姓&colon;</label>
+                                <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" style="color: red;"></div>
+                                <input type="text" class="validate[required]" name="lastName" id="lastName" placeholder="山田"
+                                       th:field="*{lastName}">
                             </div>
+
                             <div class="confirm-customer-first-name">
-                                <label for="firstName">名&colon;<div th:errors="*{firstName}" style="color: red;"></div>
-                                    <input type="text" name="firstName"
-                                           id="firstName" placeholder="太郎"
-                                           th:field="*{firstName}"></label>
-
+                                <label for="firstName">名&colon;</label>
+                                <input type="text" name="firstName" id="firstName" placeholder="太郎" th:field="*{firstName}">
+                                <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" style="color: red;"></span>
                             </div>
+
                             <div class="confirm-customer-zipcode">
-                                <label for="zipCode">郵便番号&colon;<div th:errors="*{zipCode}"
-                                                                         style="color: red;"></div>
-                                    <input type="text"
-                                           name="zipCode" id="zipCode" placeholder="0000000"
-                                           th:field="*{zipCode}"></label>
-                                <button id="search-address"
-                                        type="button">郵便番号から住所を検索
-                                </button>
-                                <br>
+                                <label for="zipCode">郵便番号&colon;</label>
+                                <div th:if="${#fields.hasErrors('zipCode')}" th:errors="*{zipCode}" style="color: red;"></div>
+                                <input type="text" class="validate[required]" name="zipCode" id="zipCode" placeholder="0000000"
+                                       th:field="*{zipCode}">
+                                <button id="search-address" type="button">郵便番号から住所を検索</button><br>
                             </div>
+
                             <div class="confirm-customer-address">
-                                <label for="address">住所&colon;<div th:errors="*{address}" style="color: red;"></div>
-                                    <input type="text" name="address" id="address" placeholder="東京都新宿区西新宿123"
-                                           th:field="*{address}"></label>
-
+                                <label for="address">住所&colon;</label>
+                                <div th:if="${#fields.hasErrors('address')}" th:errors="*{address}" style="color: red;"></div>
+                                <input type="text" class="validate[required]" name="address" id="address" placeholder="東京都新宿区西新宿123"
+                                       th:field="*{address}">
                             </div>
+
                             <div class="confirm-customer-telephone">
-                                <label for="telephone">電話番号&colon;<div th:errors="*{telephone}"
-                                                                           style="color:red;"></div>
-                                    <input type="text"
-                                           name="telephone" id="telephone"
-                                           placeholder="000-0000-0000"
-                                           th:field="*{telephone}"></label>
+                                <label for="telephone">電話番号&colon;</label>
+                                <div  th:if="${#fields.hasErrors('telephone')}" th:errors="*{telephone}" style="color: red;"></div>
+                                <input type="text" class="validate[required]" name="telephone" id="telephone" placeholder="000-0000-0000"
+                                       th:field="*{telephone}">
                             </div>
-
                         </div>
-                        <h3>支払い方法</h3>
+
+                                                <h3>支払い方法</h3>
                         <div class="confirm-payment">
                             <div class="confirm-payment-cash">
                                 <label class="payment-label"
