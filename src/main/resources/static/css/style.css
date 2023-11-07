@@ -2,52 +2,93 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Poppins', sans-serif;
+}
+
+h1.text-center {
+    color: #000080; /* タイトルの色をスレートブルーに変更 */
+    font-size: 2.5em;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px #B0C4DE; /* タイトルに影を追加して立体感を出す */
 }
 
 body {
-    background: linear-gradient(to bottom, #FFB6C1, #FFD700, #FF6347); /* 華やかなグラデーションに変更 */
+    background: linear-gradient(to bottom, #FFB6C1, #FFD700, #FF6347);
+     padding-top: 100px;/* 華やかなグラデーションに変更 */
 }
 
 header {
-    background-color: #FF4500; /* 明るいオレンジに */
+    background-color: #FFFACD; ; /* 明るいオレンジに */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    opacity: 0.7;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000; /* 他の要素より前面に表示されるようにする */
 }
 
 nav.navbar {
-    background: linear-gradient(45deg, #4B79A1, #283E51); /* グラディエント */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* 影の強化 */
+    background: #E6E6FA; /* ラベンダーの色 */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* 影の強化 */
 }
 
 nav.navbar a {
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* テキストに影を追加 */
+    color: black; /* リンクのテキスト色を黒に変更 */
+    text-shadow: none; /* テキストの影を無効にする */
 }
 
 nav.navbar a:hover {
-    color: #FFD700; /* ホバー時の色変更 */
-    background-color: rgba(255, 255, 255, 0.1); /* ホバー時の背景変更 */
+    color: #FF4500; /* ホバー時のテキスト色 */
+    background-color: #E6E6FA; /* ホバー時の背景色をラベンダーに保持 */
+    border-radius: 15px;
+    padding: 5px 10px;
 }
 
 section {
     background-color: rgba(255, 255, 255, 0.7); /* セクションの背景を半透明の白に */
     padding: 20px;
-    border-radius: 15px; /* 角を丸く */
+    border-radius: 15px;
     margin-bottom: 20px;
 }
 
 button, .btn {
-    transition: all 0.3s; /* トランジション追加 */
+    background-color: #FF4500;
+    color: white;
 }
 
 button:hover, .btn:hover {
-    transform: scale(1.05); /* ホバー時に少し大きく */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    background-color: #FFD700;
+    color: #FF4500;
 }
 
 footer {
-    background-color: #32CD32; /* 明るい緑に */
-    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
+    background-color: #EEE8AA; /* ヘッダーと同じ背景色に変更 */
+    color: black; /* テキスト色を黒に変更 */
+    width: 100%; /* 横幅を100%に設定 */
+    padding: 1rem 0; /* 上下にpaddingを設定 */
+    bottom: 0;
+    left: 0;
+    z-index: 10; /* 他の要素より上に表示 */
+    opacity: 0.9; /* ヘッダーと同じ透明度に設定(0.9に少し増やす) */
+    box-shadow: none; /* 影を削除 */
 }
+
+footer a, footer .nav-link {
+    color: black; /* リンクの色を黒に */
+    text-decoration: none;
+}
+
+footer p {
+    color: black;
+}
+
+/* フッター内のナビゲーションバーをヘッダーと同様に */
+footer .navbar {
+    background-color: transparent; /* 背景色を透明に */
+    box-shadow: none; /* 影を削除 */
+}
+
 
 .productsList {
     display: flex;
@@ -64,13 +105,6 @@ footer {
     box-sizing: border-box;
     justify-content: flex-start; /* 左寄せにする */
 }
-
-/*.right-product-content img {
-    width: 25%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-}*/
 
 .product-detail .product-detail-content-right img {
     width: 20%;
@@ -105,7 +139,6 @@ body {
     display: block;
 }
 
-
 .top-product-each-list {
 width: 80%;
 flex-wrap: wrap;
@@ -120,4 +153,49 @@ display: block;
 
 .navbar-nav {
 margin: 0,0,0,auto;
+}
+
+nav.navbar-dark {
+background-color: #F5F5DC;; /* ナビゲーションバーを少し明るい色に */
+}
+
+.logo {
+width:40px;
+height: auto;
+display: block;
+}
+
+h1.text-center {
+    font-size: 2.5em;
+    font-weight: bold;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+.btn-light-blue {
+    background-color: #B0E0E6; /* 淡い青色 */
+    border-color: #B0E0E6;
+    color: #fff;
+}
+
+.btn-light-blue:hover {
+    background-color: #8CBADD;
+    border-color: #8CBADD;
+    color: #fff;
+}
+
+.navbar-nav mr-auto {
+font-color: brack;
+}
+
+footer p, footer a, footer .nav-link {
+    color: black !important; /* 他のスタイルを上書き */
+}
+
+footer a, footer .nav-link, footer p {
+    color: black; /* リンクの色を黒に */
+    text-decoration: none;
+    text-shadow: none; /* 影を削除 */
 }
