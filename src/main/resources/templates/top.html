@@ -8,54 +8,54 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 　　<link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rounded+Mplus+1c:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
 </head>
 <body class="bg-light">
 
-<header class="bg-dark text-white py-3">
+<header class="text-brack py-3">
     <div class="container">
         <h1 class="text-center">食の冒険</h1>
     </div>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item"><a class="nav-link" href="#regions">地域を探す</a></li>
+                <li class="nav-item"><a class="nav-link" href="#popular">人気商品</a></li>
+                <li class="nav-item"><a class="nav-link" href="#events">イベント情報</a></li>
+                <li class="nav-item"><a class="nav-link" href="#stamp">スタンプカード</a></li>
+            </ul>
+            <div class="ml-auto">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a th:href="@{/show-shopping-cart}" method="get" class="btn btn-primary btn-sm btn-light-blue">
+                            ショッピングカート
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <div th:if="${session.lastName == null}">
+                            <a th:href="@{/login}" method="get" class="btn btn-primary btn-sm btn-light-blue">ログイン</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div th:unless="${session.lastName == empty}">
+                            <div class="login-name">
+                                <p class="font-weight-bold">ようこそ<span th:text="${session.lastName}"></span>さん!</p>
+                            </div>
+                            <form th:action="@{/logout}" method="post">
+                                <button class="btn btn-danger">ログアウト</button>
+                            </form>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
 </header>
 <!--ヘッダーが入ります。-->
-<nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="container">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item"><a class="nav-link" href="#regions">地域を探す</a></li>
-            <li class="nav-item"><a class="nav-link" href="#popular">人気商品</a></li>
-            <li class="nav-item"><a class="nav-link" href="#events">イベント情報</a></li>
-            <li class="nav-item"><a class="nav-link" href="#stamp">スタンプカード</a></li>
-        </ul>
-        <div class="ml-auto">
-            <ul class="navbar-nav">
-
-                <li class="nav-item"><a th:href="@{/show-shopping-cart}" method="get" class="btn btn-secondary btn-sm">
-                    ショッピングカート
-                </a></li>
-                <li class="nav-item"> <li class="nav-item">
-
-                <div th:if="${session.lastName == null}">
-                    <section id="login-header" class="my-5">
-                        <a th:href="@{/login}" method="get">
-                            ログイン
-                        </a>
-                    </section>
-                </div>
-
-                <div th:unless="${session.lastName == empty}" class="my-5">
-                    <div class="login-name">
-                        <p class="font-weight-bold">ようこそ<span th:text="${session.lastName}"></span>さん!</p>
-                    </div>
-                    <section id="logout-header">
-                        <form th:action="@{/logout}" method="post">
-                            <button class="btn btn-danger">ログアウト</button>
-                        </form>
-                    </section>
-                </div></li>
-
-            </ul>
-        </div>
-    </div>
-</nav>
 
 <!--<div class="aside-right flex-item">-->
 <!--    <div th:include="./html_mock/aside-right :: frag_aside-right"></div>-->
@@ -128,10 +128,9 @@
         <section id="stamp" class="my-5">
             <h2 class="mb-3">スタンプカード</h2>
         </section>
-
 </div>
 
-<footer class="bg-dark text-white text-center py-3">
+<footer class="text-brack text-center py-3">
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-dark">
             <div class="container">
@@ -143,31 +142,26 @@
                 </ul>
                 <div class="ml-auto">
                     <ul class="navbar-nav">
-
-                        <li class="nav-item"><a th:href="@{/show-shopping-cart}" method="get" class="btn btn-secondary btn-sm">
-                            ショッピングカート
-                        </a></li>
-                        <li class="nav-item"> <li class="nav-item">
-
-                        <div th:if="${session.lastName == null}">
-                            <section id="login-footer" class="my-5">
-                                <a th:href="@{/login}" method="get">
-                                    ログイン
-                                </a>
-                            </section>
-                        </div>
-
-                        <div th:unless="${session.lastName == empty}" class="my-5">
-                            <div class="login-name">
-                                <p class="font-weight-bold">ようこそ<span th:text="${session.lastName}"></span>さん!</p>
+                        <li class="nav-item">
+                            <a th:href="@{/show-shopping-cart}" method="get" class="btn btn-primary btn-sm btn-light-blue">
+                                ショッピングカート
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <div th:if="${session.lastName == null}" class="btn btn-primary btn-sm btn-light-blue">
+                                <a th:href="@{/login}" method="get">ログイン</a>
                             </div>
-                            <section id="logout-footer">
-                                <form th:action="@{/logout}" method="post">
+                        </li>
+                        <li class="nav-item">
+                            <div th:unless="${session.lastName == empty}">
+                                <div class="login-name">
+                                    <p class="font-weight-bold">ようこそ<span th:text="${session.lastName}"></span>さん!</p>
+                                </div>
+                                <form th:action="@{/logout}" method="post" class="btn btn-primary btn-sm btn-light-blue">
                                     <button class="btn btn-danger">ログアウト</button>
                                 </form>
-                            </section>
-                        </div></li>
-
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </div>

@@ -8,7 +8,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
-
+<header class="text-brack py-3">
+    <div class="container">
+        <a th:href="@{/top/back}">
+            <h1 class="text-center">食の冒険</h1>
+        </a>
+    </div>
+</header>
 <div class="login-form">
     <form th:action="@{/login-to-list}" th:object="${usersForm}" method="post" >
         <div class="email">
