@@ -19,10 +19,10 @@ public class UsersForm {
     private String email;
 
     @NotBlank(message = "パスワードを入力してください。")
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$", message = "半角英字大文字、小文字、数字の3種類を使用し、8文字以上16文字以内で入力してください。")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]{8,16}$\n", message = "半角英字大文字、小文字、数字の3種類を使用し、8文字以上16文字以内で入力してください。")
     private String password;
     @NotBlank(message = "確認用パスワードを入力してください。")
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$", message = "半角英字大文字、小文字、数字の3種類を使用し、8文字以上16文字以内で入力してください。")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]{8,16}$\n", message = "半角英字大文字、小文字、数字の3種類を使用し、8文字以上16文字以内で入力してください。")
     private String rePassword;
 
     @AssertTrue(message = "パスワードと確認用パスワードが一致しません。")

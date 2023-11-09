@@ -43,7 +43,7 @@
                 <input type="text" class="validate[required]" name="email" id="email" th:field="*{email}">
             </div>
             <div class="password">
-                <label>パスワード</label><br>
+                <label>パスワード(大文字小文字数字を1つ以上使い8文字以上16文字以内で入力してください。)</label><br>
                 <div th:errors="*{password}" style="color: red;"></div>
                 <div th:errors="*{passwordTrue}" style="color: red;"></div>
                 <input type="password" class="validate[required]" name="password" id="password" th:field="*{password}">
