@@ -9,6 +9,7 @@ import com.example.Adventure.service.ProductsService;
 import com.example.Adventure.service.ShoppingCartsService;
 import com.example.Adventure.service.UsersService;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -55,7 +57,17 @@ public class UsersController {
     }
 
     @PostMapping("/customer-insert")
-    public String insert(UsersForm usersForm, Model model) {
+    public String insert(@Valid UsersForm usersForm, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            // バリデーションエラーがある場合、ログにエラーメッセージを出力してみる
+            for (FieldError error : bindingResult.getFieldErrors()) {
+                System.out.println(error.getField() + ": " + error.getDefaultMessage());
+            }
+            model.addAttribute("usersForm", usersForm);
+            return "registration";
+        }
+
+
         Users users = usersService.findByEmail(usersForm.getEmail());
         if (users != null) {
             model.addAttribute("error", "このメールアドレスは既に登録されています。");
