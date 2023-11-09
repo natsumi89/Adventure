@@ -117,12 +117,6 @@ VALUES
     ('田中農場', '新鮮な野菜と果物の生産を行っています。', 'tanaka@example.com'),
     ('佐藤漁業', '新鮮な魚と海産物の提供を行っています。', 'sato@example.com');
 
--- Users Table
---INSERT INTO users (last_name,first_name,birth_date, email, password)
---VALUES
---    ('山田','太郎','1976-07-22', 'taro.yamada@example.com', 'TaroYamada05'),
---    ('鈴木','花子','1992-09-19', 'hanako.suzuki@example.com', 'HanakoSuzuki05');
-
 -- Products Table
 INSERT INTO products (region_id, producer_id, product_name, description, price, image_url)
 VALUES
