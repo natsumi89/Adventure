@@ -1,6 +1,7 @@
 package com.example.Adventure.service;
 
 import com.example.Adventure.domain.OrderDetails;
+import com.example.Adventure.domain.Orders;
 import com.example.Adventure.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,10 @@ public class OrderConfirmationService {
 
     public void saveOrderDetails(OrderDetails orderDetails){
         orderConfirmationRepository.saveOrderDetails(orderDetails);
+    }
+
+    public void save(Orders orders) {
+        orderConfirmationRepository.save(orders);
     }
 
 

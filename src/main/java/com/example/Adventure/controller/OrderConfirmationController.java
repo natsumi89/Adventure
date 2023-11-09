@@ -95,7 +95,7 @@ public class OrderConfirmationController {
         orders.setOrderDate(new Date());  // 現在の日付を設定
         orders.setStatus("Order Placed");  // ここでステータスを設定
 
-        orderRepository.save(orders);  // データベースに保存
+        orderConfirmationService.save(orders);  // データベースに保存
 
         if (userId != null) {
             shoppingCartsService.deleteAllItemsFromCartByUserId(userId);
