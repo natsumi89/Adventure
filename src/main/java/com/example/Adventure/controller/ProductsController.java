@@ -24,6 +24,11 @@ public class ProductsController {
     @Autowired
     private EventService eventService;
 
+
+    /**
+     * @param model
+     * @return
+     */
     @GetMapping("/products")
     public String top(Model model){
         List<Products> productsList = productsService.findAll();
@@ -38,17 +43,16 @@ public class ProductsController {
         return "top";
     }
 
-
     @GetMapping("/showDetail/{product_id}")
     public String detail(@PathVariable("product_id") Integer product_id, Model model) {
         Products products = productsService.load(product_id);
         model.addAttribute("product", products);
         return "product-detail";
     }
-
     @GetMapping("/back")
     public String back() {
         return "redirect:/top/products";
     }
+
 
 }

@@ -46,7 +46,6 @@ public class UsersService implements UserDetailsService{
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
     }
 
-
     public List<Users> findAll() {
         return usersRepository.findAll();
     }

@@ -9,7 +9,6 @@ import com.example.Adventure.service.ProductsService;
 import com.example.Adventure.service.ShoppingCartsService;
 import com.example.Adventure.service.UsersService;
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,12 +55,7 @@ public class UsersController {
     }
 
     @PostMapping("/customer-insert")
-    public String insert(@Valid UsersForm usersForm, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("usersForm", usersForm);
-            return "registration";
-        }
-
+    public String insert(UsersForm usersForm, Model model) {
         Users users = usersService.findByEmail(usersForm.getEmail());
         if (users != null) {
             model.addAttribute("error", "このメールアドレスは既に登録されています。");
@@ -82,6 +76,7 @@ public class UsersController {
 
         return "redirect:/top/products";
     }
+
 
     @PostMapping("/login-to-list")
     public String customerLogin(@Validated UsersForm usersForm, BindingResult bindingResult, @ModelAttribute Users users, RedirectAttributes redirectAttributes, Model model) {

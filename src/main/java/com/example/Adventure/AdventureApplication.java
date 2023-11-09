@@ -13,6 +13,4 @@ public class AdventureApplication {
 //		boolean isMatching = encoder.matches(rawPassword, encodedPassword);
 //		System.out.println(isMatching);
 	}
-
-
 }
