@@ -121,6 +121,7 @@
                                     class="confirm-button" type="submit">注文確定
                             </button>
                         </div>
+                        <a th:href="@{/show-shopping-cart}">戻る</a>
                         <input type="hidden" th:field="*{totalPrice}"/>
                         <input type="hidden" th:field="*{userId}"/>
                         <input type="hidden" th:field="*{paymentMethod}"/>
