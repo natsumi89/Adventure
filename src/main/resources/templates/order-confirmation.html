@@ -79,7 +79,7 @@
                             <div class="confirm-customer-telephone">
                                 <label for="telephone">電話番号&colon;</label>
                                 <div  th:if="${#fields.hasErrors('telephone')}" th:errors="*{telephone}" style="color: red;"></div>
-                                <input type="text" class="validate[required]" name="telephone" id="telephone" placeholder="000-0000-0000"
+                                <input type="text" class="validate[required]" name="telephone" id="telephone" placeholder="00000000000"
                                        th:field="*{telephone}">
                             </div>
                         </div>
@@ -121,6 +121,7 @@
                                     class="confirm-button" type="submit">注文確定
                             </button>
                         </div>
+                        <a th:href="@{/show-shopping-cart}">戻る</a>
                         <input type="hidden" th:field="*{totalPrice}"/>
                         <input type="hidden" th:field="*{userId}"/>
                         <input type="hidden" th:field="*{paymentMethod}"/>

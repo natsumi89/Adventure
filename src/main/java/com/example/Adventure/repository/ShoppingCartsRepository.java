@@ -91,7 +91,7 @@ public class ShoppingCartsRepository {
             SqlParameterSource param = new MapSqlParameterSource().addValue("cartId", cartId);
             return template.queryForObject(sql, param, Integer.class);
         } catch (EmptyResultDataAccessException e) {
-            return null;  // または適切なエラーハンドリングを行う
+            return null;
         }
     }
 
