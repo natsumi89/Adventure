@@ -1,7 +1,9 @@
 package com.example.Adventure.repository;
 
+import com.example.Adventure.ProductsRowMapper;
 import com.example.Adventure.domain.Products;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -9,13 +11,16 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class ProductsRepository {
     @Autowired
     private NamedParameterJdbcTemplate template;
-
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
     public static final RowMapper<Products> PRODUCTS_ROW_MAPPER = (rs,i) -> {
         Products products = new Products();
         products.setProductId(rs.getInt("product_id"));
@@ -74,5 +79,13 @@ public class ProductsRepository {
         SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
         return template.query(sql, param, PRODUCTS_ROW_MAPPER);
     }
+    public List<Products> searchProducts(String query) {
+        String sql = "SELECT * FROM products WHERE product_name LIKE :query";
+        String searchQuery = "%" + query + "%";
 
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("query", searchQuery);
+
+        return template.query(sql, parameters, new ProductsRowMapper());
+    }
 }
