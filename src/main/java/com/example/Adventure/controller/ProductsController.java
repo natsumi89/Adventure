@@ -32,19 +32,6 @@ public class ProductsController {
      * @param model
      * @return
      */
-//    @GetMapping("/products")
-//    public String top(Model model){
-//        List<Products> productsList = productsService.findAll();
-//        List<Events> eventsList = eventService.findAll();
-//
-//        // 地域ごとに商品をグループ化
-//        Map<String, List<Products>> productsGroupedByRegion = productsList.stream()
-//                .collect(Collectors.groupingBy(Products::getRegionName));
-//
-//        model.addAttribute("productsByRegion", productsGroupedByRegion);
-//        model.addAttribute("eventsList",eventsList);
-//        return "top";
-//    }
     @GetMapping("/products")
     public String top(Model model) {
         List<Products> productsList = productsService.findAll();
@@ -56,11 +43,6 @@ public class ProductsController {
 
         model.addAttribute("productsByRegion", productsGroupedByRegion);
         model.addAttribute("eventsList", eventsList);
-
-//        // ここでproductsGroupedByRegionを宣言し初期化
-//        Map<String, List<Products>> productsGroupedByRegion = productsList.stream()
-//                .collect(Collectors.groupingBy(product -> Objects.requireNonNullElse(product.getRegionName(), "Unknown")));
-//        // 他のコード...
         return "top";
     }
     @GetMapping("/auto-complete")

@@ -86,9 +86,9 @@
                 <input type="text" name="name" id="query" placeholder="商品を検索">
                 <button type="submit">検索</button>
             </form>
-<!--            <div th:if="${empty productsByRegion}" class="my-3">-->
-<!--                <p style="color: red;">一致する商品がありません。</p>-->
-<!--            </div>-->
+            <div th:if="${noMerchandise}" class="my-3">
+                <p style="color: red;">一致する商品がありません。</p>
+            </div>
         </section>
 
 
