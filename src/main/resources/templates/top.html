@@ -87,10 +87,12 @@
                 <button type="submit">検索</button>
             </form>
             <div th:if="${noMerchandise}" class="my-3">
-                <p style="color: red;">一致する商品がありません。</p>
+                <p style="color: red;">当てはまる商品がありません。</p>
+                <div class="back-to-top-page-from-product-detail">
+                    <a th:href="@{/top/back}">戻る</a>
+                </div>
             </div>
         </section>
-
 
     <section id="product-list" class="my-5">
         <h2 class="mb-3">商品一覧</h2>
@@ -134,6 +136,7 @@
         </section>
         <section id="stamp" class="my-5">
             <h2 class="mb-3">スタンプカード</h2>
+            <a th:href="@{/to-stamp-card}" method="get">スタンプカードへ</a>
         </section>
 </div>
 
