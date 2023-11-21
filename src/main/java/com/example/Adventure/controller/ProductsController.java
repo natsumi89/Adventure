@@ -67,7 +67,7 @@ public class ProductsController {
 
         List<Products> searchProductsList = productsService.searchProducts(name);
         if (searchProductsList.isEmpty()) {
-            model.addAttribute("noMerchandise", "該当する商品がありません");
+            model.addAttribute("noMerchandise", "当てはまる商品がありません");
         }
 
         List<Events> eventsList = eventService.findAll();
