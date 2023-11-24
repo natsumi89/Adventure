@@ -12,6 +12,7 @@ public class Orders {
     private String telephone;
     private String zipCode;
     private String paymentMethod;
+    private Integer regionId;
 
     public Integer getOrderId() {
         return orderId;
@@ -83,5 +84,13 @@ public class Orders {
 
     public void setPaymentMethod(String paymentMethod) {
         this.paymentMethod = paymentMethod;
+    }
+
+    public Integer getRegionId() {
+        return regionId;
+    }
+
+    public void setRegionId(Integer regionId) {
+        this.regionId = regionId;
     }
 }

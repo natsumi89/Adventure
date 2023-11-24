@@ -68,14 +68,6 @@ public class OrderConfirmationController {
     public String toOrderComplete(@Valid OrdersForm ordersForm, BindingResult result, Model model) {
         Integer userId = (Integer) session.getAttribute("userId");
 
-//        if (result.hasErrors()) {
-//            for (ObjectError error : result.getAllErrors()) {
-//                System.out.println(error.getDefaultMessage()); // エラーメッセージのログ出力
-//            }
-//            model.addAttribute("ordersForm", ordersForm);
-//            return orderConfirmation(ordersForm, model);  // メソッドを呼び出してエラー時の処理を行う
-//        }
-
         if (result.hasErrors()) {
             // バリデーションエラーがある場合、ログにエラーメッセージを出力してみる
             for (FieldError error : result.getFieldErrors()) {
@@ -84,16 +76,17 @@ public class OrderConfirmationController {
             model.addAttribute("ordersForm",ordersForm);
             return orderConfirmation(ordersForm, model);
         }
-
+// OrdersForm クラスから Orders オブジェクトに値をセット
         Orders orders = new Orders();
-        orders.setUserId(ordersForm.getUserId());
+        orders.setUserId((Integer) session.getAttribute("userId"));  // ここで userId をセット
         orders.setTotalPrice(ordersForm.getTotalPrice());
         orders.setTelephone(ordersForm.getTelephone());
         orders.setZipCode(ordersForm.getZipCode());
         orders.setAddress(ordersForm.getAddress());
         orders.setPaymentMethod(ordersForm.getPaymentMethod());
-        orders.setOrderDate(new Date());  // 現在の日付を設定
-        orders.setStatus("Order Placed");  // ここでステータスを設定
+        orders.setOrderDate(new Date());
+        orders.setStatus("Order Placed");
+
 
         orderConfirmationService.save(orders);  // データベースに保存
 

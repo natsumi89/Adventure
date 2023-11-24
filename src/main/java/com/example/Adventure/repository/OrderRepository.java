@@ -8,9 +8,12 @@ import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class OrderRepository {
@@ -51,13 +54,25 @@ public class OrderRepository {
         Orders orders = template.queryForObject(sql,param,ORDERS_ROW_MAPPER);
         return orders;
     }
-
     public void save(Orders orders) {
         String sql = "INSERT INTO orders (user_id, total_price, order_date, status,address,zip_code,telephone,payment_method) VALUES(:userId, :totalPrice, :orderDate, :status,:address,:zipCode,:telephone,:paymentMethod)";
         SqlParameterSource param = new BeanPropertySqlParameterSource(orders);
-        template.update(sql,param);
 
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        template.update(sql, param, keyHolder, new String[]{"order_id"}); // "order_id"は自動生成される主キーの列名
+
+        if (keyHolder.getKeys() != null) {
+            Map<String, Object> keys = keyHolder.getKeys();
+            if (keys.containsKey("order_id")) {
+                orders.setOrderId(((Number) keys.get("order_id")).intValue());
+            } else {
+                // order_idが見つからない場合の処理
+            }
+        } else {
+            // キーが取得できなかった場合の処理
+        }
     }
+
 
     public void saveOrderDetails(OrderDetails orderDetails) {
         String sql = "INSERT INTO order_details (order_id, product_id, quantity, subtotal_price) VALUES(:orderId, :productId, :quantity, :subTotalPrice)";

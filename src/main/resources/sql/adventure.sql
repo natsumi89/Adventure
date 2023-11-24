@@ -50,7 +50,6 @@ ADD COLUMN zip_code VARCHAR(255) NOT NULL;
 
 ALTER TABLE orders ADD COLUMN address VARCHAR(255);
 
-
 CREATE TABLE order_details(
 order_detail_id SERIAL PRIMARY KEY,
 order_id INTEGER REFERENCES orders(order_id),
