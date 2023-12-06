@@ -41,7 +41,7 @@ CREATE TABLE orders(
     total_price INTEGER ,
     order_date TIMESTAMPTZ DEFAULT current_timestamp,
     status VARCHAR(50),
-    payment_method VARCHAR(255)
+    payment_method INTEGER
 );
 
 ALTER TABLE orders
@@ -49,6 +49,7 @@ ADD COLUMN telephone VARCHAR(255),
 ADD COLUMN zip_code VARCHAR(255) NOT NULL;
 
 ALTER TABLE orders ADD COLUMN address VARCHAR(255);
+ALTER TABLE stamps
 
 CREATE TABLE order_details(
 order_detail_id SERIAL PRIMARY KEY,
@@ -58,11 +59,14 @@ quantity INTEGER NOT NULL,
 subtotal_price INTEGER NOT NULL
 );
 
-CREATE TABLE stamps(
-stamp_id SERIAL PRIMARY KEY,
-user_id INTEGER REFERENCES users(user_id),
-region_id INTEGER REFERENCES regions(region_id),
-stamp_date TIMESTAMPTZ DEFAULT current_timestamp
+CREATE TABLE stamps (
+    stamp_id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(user_id),
+    order_id INTEGER REFERENCES orders(order_id),
+    region_id INTEGER REFERENCES regions(region_id),
+    stamp_date TIMESTAMPTZ DEFAULT current_timestamp,
+    stamps INTEGER DEFAULT 0,
+    card_number INTEGER DEFAULT 0
 );
 
 CREATE TABLE events(

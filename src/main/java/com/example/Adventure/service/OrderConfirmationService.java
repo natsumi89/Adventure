@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Date;
 import java.time.Instant;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Transactional
@@ -33,6 +34,7 @@ public class OrderConfirmationService {
         System.out.println("After setting User ID: " + orders.getUserId());
         orderConfirmationRepository.save(orders);
         System.out.println("Saved Order ID: " + orders.getOrderId());
+
         // スタンプ押印処理
         if (shouldApplyStamp(orders)) {
             Stamps stamp = new Stamps();
@@ -53,57 +55,95 @@ public class OrderConfirmationService {
             applyDiscount(orders.getUserId());
         }
     }
-
     private boolean shouldApplyStamp(Orders orders) {
-        // 注文完了時にスタンプを押す条件判定
-        // 例: 注文した商品のregion_idごとにスタンプを押す
-
         List<Integer> productRegionIds = stampRepository.findRegionIdsByOrderId(orders.getOrderId());
         int userId = orders.getUserId();
 
         for (Integer regionId : productRegionIds) {
             List<Stamps> userStamps = stampRepository.findStampsByUserIdAndRegionId(userId, regionId);
-            long totalStampsForRegion = userStamps.stream()
-                    .filter(stamp -> stamp.getStamps() != null)
-                    .mapToLong(Stamps::getStamps)
-                    .sum();
 
-            // スタンプを押す条件を適宜調整
-            if (totalStampsForRegion < 10) {
-                // まだ10個未満の場合はスタンプを押す
+            // 同じ注文とリージョンのスタンプを検索
+            Stamps existingStamp = userStamps.stream()
+                    .filter(stamp -> Objects.equals(stamp.getOrderId(), orders.getOrderId()) && Objects.equals(stamp.getRegionId(), regionId))
+                    .findFirst()
+                    .orElse(null);
+
+            if (existingStamp != null) {
+                // 既存のスタンプがあれば更新
+                int newStamps = existingStamp.getStamps() + 1;
+                existingStamp.setStamps(newStamps);
+
+                // スタンプカードの進捗を更新
+                if (newStamps == 10) {
+                    existingStamp.setCardNumber(existingStamp.getCardNumber() + 1);
+                }
+
+                stampRepository.saveStamp(existingStamp);
+            } else {
+                // 新しいスタンプを作成して保存
                 Stamps newStamp = new Stamps();
                 newStamp.setUserId(userId);
+                newStamp.setOrderId(orders.getOrderId());
                 newStamp.setRegionId(regionId);
                 newStamp.setStampDate(Date.from(Instant.now()));
+                newStamp.setStamps(1);
+
+// スタンプカードの進捗を更新
+                if (newStamp.getStamps() == 10) {
+                    newStamp.setCardNumber(1);
+                }
+
                 stampRepository.saveStamp(newStamp);
             }
         }
 
-        return true;  // ここでは単純に常に true を返しています。実際の条件に応じて変更してください。
+        return true;
     }
+
     private boolean shouldApplyDiscount(Integer userId) {
         // スタンプが10個以上たまったかどうかの条件判定
         List<Stamps> stamps = stampRepository.findStampsByUserId(userId);
         System.out.println("Stamps: " + stamps);
 
         if (stamps != null) {
+            // Total Stampsをログに出力
             long totalStamps = stamps.stream()
                     .filter(stamp -> stamp.getStamps() != null)  // null チェックを追加
-                    .mapToLong(Stamps::getStamps)
+                    .mapToLong(stamp -> stamp.getStamps() != null ? stamp.getStamps() : 0)
                     .sum();
-            return totalStamps >= 10;  // 10個以上のスタンプがたまったら割引を適用
+            System.out.println("Total Stamps: " + totalStamps);
+
+            // Apply Discountをログに出力
+            boolean applyDiscount = totalStamps >= 10;  // 10個以上のスタンプがたまったら割引を適用
+            System.out.println("Apply Discount: " + applyDiscount);
+
+            return applyDiscount;
         } else {
             return false;  // スタンプが取得できない場合は割引を適用しない
         }
     }
 
     private void applyDiscount(Integer userId) {
-        // 割引ロジックの実装
-        // 例: 注文の合計金額に割引を適用
         List<Orders> userOrders = stampRepository.findOrdersByUserId(userId);
+
         for (Orders order : userOrders) {
-            int discountedTotalPrice = (int) (order.getTotalPrice() * 0.9);  // 10%割引
-            stampRepository.updateOrderTotalPrice(order.getOrderId(), discountedTotalPrice);
+            List<Stamps> userStamps = stampRepository.findStampsByUserId(userId);
+            long totalStamps = userStamps.stream()
+                    .filter(stamp -> stamp.getStamps() != null)
+                    .mapToLong(Stamps::getStamps)
+                    .sum();
+
+            if (totalStamps >= 10) {
+                int discountedTotalPrice = (int) (order.getTotalPrice() * 0.9);  // 10%割引
+                stampRepository.updateOrderTotalPrice(order.getOrderId(), discountedTotalPrice);
+
+                // 割引情報をDBに格納
+                Stamps discountStamp = new Stamps();
+                discountStamp.setUserId(userId);
+                discountStamp.setRegionId(null); // または適切な値を指定
+                discountStamp.setStampDate(Date.from(Instant.now()));
+                discountStamp.setStamps(-10); //
+            }
         }
     }
 }

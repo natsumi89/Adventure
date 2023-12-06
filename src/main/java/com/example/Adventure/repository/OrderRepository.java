@@ -39,7 +39,7 @@ public class OrderRepository {
         orders.setAddress(rs.getString("address"));
         orders.setZipCode(rs.getString("zip_code"));
         orders.setTelephone(rs.getString("telephone"));
-        orders.setPaymentMethod(rs.getString("payment_method"));
+        orders.setPaymentMethod(rs.getInt("payment_method"));
         return orders;
     };
 

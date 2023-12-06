@@ -20,12 +20,15 @@ public class StampRepository {
     @Autowired
     private NamedParameterJdbcTemplate template;
 
+    // StampRepositoryのSTAMPS_ROW_MAPPERを修正
     public static final RowMapper<Stamps> STAMPS_ROW_MAPPER = (rs, i) -> {
         Stamps stamps = new Stamps();
         stamps.setStampId(rs.getInt("stamp_id"));
         stamps.setStampDate(rs.getDate("stamp_date"));
         stamps.setUserId(rs.getInt("user_id"));
         stamps.setRegionId(rs.getInt("region_id"));
+        stamps.setStamps(rs.getInt("stamps"));
+        stamps.setCardNumber(rs.getInt("card_number"));
         return stamps;
     };
 
@@ -42,6 +45,10 @@ public class StampRepository {
                 "WHERE od.order_id = :orderId";
         SqlParameterSource param = new MapSqlParameterSource().addValue("orderId", orderId);
         List<Integer> regionIds = template.queryForList(sql, param, Integer.class);
+
+        // ログを追加
+        System.out.println("Region IDs for Order ID " + orderId + ": " + regionIds);
+
         return regionIds != null ? regionIds : Collections.emptyList();
     }
 

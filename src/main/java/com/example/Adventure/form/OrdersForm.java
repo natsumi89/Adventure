@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Size;
 
 public class OrdersForm {
     private Integer totalPrice;
-    private String paymentMethod;
+    private Integer paymentMethod;
     private Integer userId;
     @NotBlank(message = "電話番号を入力して下さい。")
     @Pattern(regexp = "^0\\d{9,10}$", message = "電話番号の形式が不正です。")
@@ -18,12 +18,14 @@ public class OrdersForm {
     private String firstName;
 
     @NotNull(message = "郵便番号を入力してください。")
-    @Pattern(regexp = "\\d{7}",message="郵便番号の形式が不正です。")
+    @Pattern(regexp = "\\d{7}", message = "郵便番号の形式が不正です。")
     private String zipCode;
 
     @NotNull(message = "住所は必須です")
     @Size(max = 255, message = "住所は255文字以内で入力してください")
     private String address;
+
+    private Integer regionId;
 
     public Integer getTotalPrice() {
         return totalPrice;
@@ -33,11 +35,11 @@ public class OrdersForm {
         this.totalPrice = totalPrice;
     }
 
-    public String getPaymentMethod() {
+    public Integer getPaymentMethod() {
         return paymentMethod;
     }
 
-    public void setPaymentMethod(String paymentMethod) {
+    public void setPaymentMethod(Integer paymentMethod) {
         this.paymentMethod = paymentMethod;
     }
 
@@ -87,5 +89,13 @@ public class OrdersForm {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Integer getRegionId() {
+        return regionId;
+    }
+
+    public void setRegionId(Integer regionId) {
+        this.regionId = regionId;
     }
 }
