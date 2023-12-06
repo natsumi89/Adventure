@@ -3,18 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>スタンプカード</title>
+    <link rel="icon" th:href="@{/img/favicon.ico}">
 </head>
-<body>
-<div class="stamp-card-detail">
+<header></header>
+<body><!-- スタンプカードの表示 -->
 <p>スタンプカード</p>
-  <div class="stamp-card-point">
-      <p>現在のポイント</p>
-  </div>
-  <div class="stamp-card-description">
-    <p>スタンプカードの説明</p><br>
-    <p>その地域の商品を1個買うごとに1スタンプ押印されます。スタンプが10個貯まると次回10%割引が自動で適用されます。</p>
-  </div>
-</div>
+<div th:each="regionId : ${regionIds}">
+    <div class="stamp-card">
+        <p>Region ID: <span th:text="${regionId}"></span></p>
+        <p>Card Number: <span th:text="${stampCardMap[regionId]}"></span></p>
 
+        <!-- スタンプの表示 -->
+        <div th:each="stamp : ${userStamps}">
+            <div th:if="${stamp.regionId == regionId}">
+                <img src="stamp-image.png" alt="Stamp Image">
+            </div>
+        </div>
+        <div>
+            <a th:href=@"{/back}" method="get">戻る</a>
+        </div>
+    </div>
+</div>
 </body>
 </html>

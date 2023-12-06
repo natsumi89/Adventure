@@ -6,8 +6,11 @@ public class Stamps {
     private Integer stampId;
     private Integer userId;
     private Integer regionId;
-    private Date stampDate;
+//    private Date stampDate;
     private Integer stamps;
+    private Integer cardNumber;
+    private Date stampDate = new Date();
+    private Integer orderId;
 
     public Integer getStampId() {
         return stampId;
@@ -33,6 +36,22 @@ public class Stamps {
         this.regionId = regionId;
     }
 
+    public Integer getStamps() {
+        return stamps;
+    }
+
+    public void setStamps(Integer stamps) {
+        this.stamps = stamps;
+    }
+
+    public Integer getCardNumber() {
+        return cardNumber;
+    }
+
+    public void setCardNumber(Integer cardNumber) {
+        this.cardNumber = cardNumber;
+    }
+
     public Date getStampDate() {
         return stampDate;
     }
@@ -41,11 +60,13 @@ public class Stamps {
         this.stampDate = stampDate;
     }
 
-    public Integer getStamps() {
-        return stamps;
+    public Integer getOrderId() {
+        return orderId;
     }
 
-    public void setStamps(Integer stamps) {
-        this.stamps = stamps;
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
     }
 }
+
+

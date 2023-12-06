@@ -18,6 +18,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -59,22 +60,19 @@ public class OrderConfirmationController {
 
         model.addAttribute("cartDetailsList", cartDetailsList);
         int totalPrice = calcTotalPrice(cartDetailsList);
+        session.setAttribute("total_price", totalPrice); // totalPriceをsessionにセット
         model.addAttribute("totalPrice", totalPrice);
 
         return "order-confirmation";
     }
 
-    @PostMapping("/order/to-order-complete")
-    public String toOrderComplete(@Valid OrdersForm ordersForm, BindingResult result, Model model) {
-        Integer userId = (Integer) session.getAttribute("userId");
 
-//        if (result.hasErrors()) {
-//            for (ObjectError error : result.getAllErrors()) {
-//                System.out.println(error.getDefaultMessage()); // エラーメッセージのログ出力
-//            }
-//            model.addAttribute("ordersForm", ordersForm);
-//            return orderConfirmation(ordersForm, model);  // メソッドを呼び出してエラー時の処理を行う
-//        }
+    @PostMapping("/order/to-order-complete")
+    public String toOrderComplete(@Valid OrdersForm ordersForm, BindingResult result,
+                                  @RequestParam("pay") Integer paymentMethod, Model model) {
+
+        Integer userId = (Integer) session.getAttribute("userId");
+        Integer totalPrice = (Integer) session.getAttribute("total_price");
 
         if (result.hasErrors()) {
             // バリデーションエラーがある場合、ログにエラーメッセージを出力してみる
@@ -86,16 +84,22 @@ public class OrderConfirmationController {
         }
 
         Orders orders = new Orders();
-        orders.setUserId(ordersForm.getUserId());
-        orders.setTotalPrice(ordersForm.getTotalPrice());
+        orders.setUserId((Integer) session.getAttribute("userId"));
+        orders.setTotalPrice(totalPrice);
         orders.setTelephone(ordersForm.getTelephone());
         orders.setZipCode(ordersForm.getZipCode());
         orders.setAddress(ordersForm.getAddress());
-        orders.setPaymentMethod(ordersForm.getPaymentMethod());
-        orders.setOrderDate(new Date());  // 現在の日付を設定
-        orders.setStatus("Order Placed");  // ここでステータスを設定
+        orders.setPaymentMethod(paymentMethod);
+        orders.setOrderDate(new Date());
+        orders.setStatus("Order Placed");
+        orders.setRegionId(ordersForm.getRegionId());
 
-        orderConfirmationService.save(orders);  // データベースに保存
+        orderConfirmationService.save(orders);
+
+        System.out.println("userId: " + userId);
+        System.out.println("totalPrice: " + totalPrice);
+        System.out.println("paymentMethod: " + ordersForm.getPaymentMethod());
+        System.out.println("ordersForm: " + ordersForm);
 
         if (userId != null) {
             shoppingCartsService.deleteAllItemsFromCartByUserId(userId);
