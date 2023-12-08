@@ -13,15 +13,17 @@ public class OrdersForm {
     @Pattern(regexp = "^0\\d{9,10}$", message = "電話番号の形式が不正です。")
     private String telephone;
     @NotBlank(message = "姓を入力してください。")
+    @Size(max = 10, message = "姓は10文字以内で入力してください")
     private String lastName;
     @NotBlank(message = "名を入力してください。")
+    @Size(max = 10, message = "名は10文字以内で入力してください")
     private String firstName;
 
     @NotNull(message = "郵便番号を入力してください。")
     @Pattern(regexp = "\\d{7}", message = "郵便番号の形式が不正です。")
     private String zipCode;
 
-    @NotNull(message = "住所は必須です")
+    @NotBlank(message = "住所は必須です")
     @Size(max = 255, message = "住所は255文字以内で入力してください")
     private String address;
 

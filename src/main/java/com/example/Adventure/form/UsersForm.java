@@ -8,8 +8,10 @@ import java.util.Date;
 public class UsersForm {
     private Integer userId;
     @NotBlank(message = "姓を入力してください。")
+    @Size(max = 10, message = "姓は10文字以内で入力してください")
     private String lastName;
     @NotBlank(message = "名を入力してください。")
+    @Size(max = 10, message = "名は10文字以内で入力してください")
     private String firstName;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "生年月日を入力してください。")
