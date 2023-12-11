@@ -65,8 +65,6 @@ public class OrderConfirmationController {
 
         return "order-confirmation";
     }
-
-
     @PostMapping("/order/to-order-complete")
     public String toOrderComplete(@Valid OrdersForm ordersForm, BindingResult result,
                                   @RequestParam("pay") Integer paymentMethod, Model model) {
@@ -79,36 +77,47 @@ public class OrderConfirmationController {
             for (FieldError error : result.getFieldErrors()) {
                 System.out.println(error.getField() + ": " + error.getDefaultMessage());
             }
-            model.addAttribute("ordersForm",ordersForm);
+            model.addAttribute("ordersForm", ordersForm);
             return orderConfirmation(ordersForm, model);
         }
 
-        Orders orders = new Orders();
-        orders.setUserId((Integer) session.getAttribute("userId"));
-        orders.setTotalPrice(totalPrice);
-        orders.setTelephone(ordersForm.getTelephone());
-        orders.setZipCode(ordersForm.getZipCode());
-        orders.setAddress(ordersForm.getAddress());
-        orders.setPaymentMethod(paymentMethod);
-        orders.setOrderDate(new Date());
-        orders.setStatus("Order Placed");
-        orders.setRegionId(ordersForm.getRegionId());
+            Orders orders = new Orders();
+            orders.setUserId((Integer) session.getAttribute("userId"));
+            orders.setTotalPrice(totalPrice);
+            orders.setTelephone(ordersForm.getTelephone());
+            orders.setZipCode(ordersForm.getZipCode());
+            orders.setAddress(ordersForm.getAddress());
+            orders.setPaymentMethod(paymentMethod);
+            orders.setOrderDate(new Date());
+            orders.setStatus("Order Placed");
+            orders.setRegionId(ordersForm.getRegionId());
 
-        orderConfirmationService.save(orders);
+//            // 注文が確定されたらショッピングカートを空にする
+//            if (orderRepository.existsByUserIdAndStatus(userId, "Order Placed")) {
+//                // 既に注文がある場合、エラーメッセージを表示して処理を中断
+//                model.addAttribute("error", "You have already placed an order. Duplicate orders are not allowed.");
+//                return orderConfirmation(ordersForm, model);
+//            }
 
-        System.out.println("userId: " + userId);
-        System.out.println("totalPrice: " + totalPrice);
-        System.out.println("paymentMethod: " + ordersForm.getPaymentMethod());
-        System.out.println("ordersForm: " + ordersForm);
+            System.out.println("Before saving order. Status: " + orders.getStatus());
+            orderRepository.save(orders);
+            System.out.println("After saving order. Status: " + orders.getStatus());
 
-        if (userId != null) {
-            shoppingCartsService.deleteAllItemsFromCartByUserId(userId);
-        } else {
-            session.removeAttribute("cartDetailsList");
-        }
+            // 注文が確定されたらショッピングカートを空にする
+            if (userId != null) {
+                shoppingCartsService.deleteAllItemsFromCartByUserId(userId);
+            } else {
+                session.removeAttribute("cartDetailsList");
+            }
 
-        return "order-completed";
+        return "redirect:/order-completed";
     }
+
+
+    @GetMapping("/order-completed")
+        public String orderComplete() {
+            return "order-completed";
+        }
 
     private Integer calcTotalPrice(List<ShoppingCartsDetail> productsList) {
         Integer totalPrice = 0;

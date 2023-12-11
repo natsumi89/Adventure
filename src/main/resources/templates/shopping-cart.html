@@ -32,7 +32,7 @@
                         <p th:text="${cartDetail.productName}"></p>
                     </div>
                     <div class="shopping-cart-product-price">
-                        <p th:text="${cartDetail.price}"></p>
+                        <p th:text="${cartDetail.price} + '円'"></p>
                     </div>
                     <div class="shopping-cart-product-description">
                         <p th:text="${cartDetail.description}"></p>
@@ -78,10 +78,9 @@
         </div>
         <a th:href="@{/top/back}">戻る</a>
         <form th:action="@{/order/order-confirmation}" method="get">
-            <button>購入手続き</button>
+            <button>注文確認へ</button>
         </form>
     </div>
-</div>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
