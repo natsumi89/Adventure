@@ -27,7 +27,10 @@ public class OrderConfirmationService {
     private HttpSession session;
 
     public void save(Orders orders) {
-        System.out.println("Before setting User ID: " + orders.getUserId());
+        // ユーザーが既に注文しているか確認
+        if (orderConfirmationRepository.existsByUserIdAndStatus(orders.getUserId(), "Order Placed")) {
+            throw new RuntimeException("同じユーザーが既に注文しています。");
+        }
 
         Integer loggedInUserId = (Integer) session.getAttribute("userId");
         orders.setUserId(loggedInUserId);
@@ -103,7 +106,6 @@ public class OrderConfirmationService {
     private boolean shouldApplyDiscount(Integer userId) {
         // スタンプが10個以上たまったかどうかの条件判定
         List<Stamps> stamps = stampRepository.findStampsByUserId(userId);
-        System.out.println("Stamps: " + stamps);
 
         if (stamps != null) {
             // Total Stampsをログに出力
@@ -111,10 +113,10 @@ public class OrderConfirmationService {
                     .filter(stamp -> stamp.getStamps() != null)  // null チェックを追加
                     .mapToLong(stamp -> stamp.getStamps() != null ? stamp.getStamps() : 0)
                     .sum();
-            System.out.println("Total Stamps: " + totalStamps);
 
             // Apply Discountをログに出力
             boolean applyDiscount = totalStamps >= 10;  // 10個以上のスタンプがたまったら割引を適用
+            System.out.println("Total Stamps: " + totalStamps);
             System.out.println("Apply Discount: " + applyDiscount);
 
             return applyDiscount;
@@ -142,7 +144,10 @@ public class OrderConfirmationService {
                 discountStamp.setUserId(userId);
                 discountStamp.setRegionId(null); // または適切な値を指定
                 discountStamp.setStampDate(Date.from(Instant.now()));
-                discountStamp.setStamps(-10); //
+                discountStamp.setStamps(-10);  // マイナスのスタンプで割引を表現
+
+                // 以下の行を追加して割引情報を保存
+                stampRepository.saveStamp(discountStamp);
             }
         }
     }

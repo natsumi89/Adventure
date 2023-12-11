@@ -73,6 +73,14 @@ public class OrderRepository {
         }
     }
 
+    public boolean existsByUserIdAndStatus(Integer userId, String status) {
+        String sql = "SELECT COUNT(*) FROM orders WHERE user_id = :userId AND status = :status";
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("userId", userId)
+                .addValue("status", status);
+
+        return template.queryForObject(sql, param, Integer.class) > 0;
+    }
 
     public void saveOrderDetails(OrderDetails orderDetails) {
         String sql = "INSERT INTO order_details (order_id, product_id, quantity, subtotal_price) VALUES(:orderId, :productId, :quantity, :subTotalPrice)";
