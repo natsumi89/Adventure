@@ -7,142 +7,23 @@
     <link rel="icon" th:href="@{/img/favicon.ico}">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-　　<link rel="stylesheet" th:href="@{/css/style.css}">
+    　　
+    <link rel="stylesheet" th:href="@{/css/style.css}">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Rounded+Mplus+1c:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rounded+Mplus+1c:wght@300;400;500&display=swap"
+          rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
 </head>
-<body class="bg-light">
+<body class="bg-light" style="display: flex;">
 
-<header class="text-brack py-3">
-    <div class="container">
-        <h1 class="text-center">食の冒険</h1>
-    </div>
-    <nav class="navbar navbar-expand-lg">
+<div class="main-content" style="flex: 4; padding: 20px;">
+
+    <header class="text-brack py-3">
         <div class="container">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item"><a class="nav-link" href="#regions">地域を探す</a></li>
-                <li class="nav-item"><a class="nav-link" href="#popular">人気商品</a></li>
-                <li class="nav-item"><a class="nav-link" href="#events">イベント情報</a></li>
-                <li class="nav-item"><a class="nav-link" href="#stamp">スタンプカード</a></li>
-            </ul>
-            <div class="ml-auto">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a th:href="@{/show-shopping-cart}" method="get" class="btn btn-primary btn-sm btn-light-blue">
-                            ショッピングカート
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <div th:if="${session.lastName == null}">
-                            <a th:href="@{/login}" method="get" class="btn btn-primary btn-sm btn-light-blue">ログイン</a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <div th:unless="${session.lastName == empty}">
-                            <div class="login-name">
-                                <p class="font-weight-bold">ようこそ<span th:text="${session.lastName}"></span>さん!</p>
-                            </div>
-                            <form th:action="@{/logout}" method="post">
-                                <button class="btn btn-danger">ログアウト</button>
-                            </form>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+            <h1 class="text-center">食の冒険</h1>
         </div>
-    </nav>
-
-</header>
-<!--ヘッダーが入ります。-->
-
-<!--<div class="aside-right flex-item">-->
-<!--    <div th:include="./html_mock/aside-right :: frag_aside-right"></div>-->
-<!--</div>-->
-
-<div class="container my-5">
-    <div class="main-content">
-        <section class="section-content" id="regions">
-            <h2 class="mb-3">地域を探す</h2>
-        <!-- 地図APIによる地域選択機能をここに表示 -->
-        <img th:src="@{/img/japan.png}" usemap="#ImageMap" alt="" />
-        <map name="ImageMap">
-            <area shape="poly" coords="570,19,571,19,573,21,583,24,588,32,594,39,598,45,600,50,609,55,619,60,641,68,646,73,654,79,668,87,675,96,678,99,685,92,693,84,700,78,711,73,720,68,723,78,723,89,716,99,716,106,718,116,723,124,728,127,733,136,727,141,715,144,708,148,699,151,683,152,677,154,671,157,667,164,660,172,658,182,653,190,645,195,634,193,628,188,620,185,614,180,604,176,594,169,579,165,579,156,575,161,559,164,569,163,567,168,561,169,556,168,554,167,552,162,550,162,536,161,528,161,527,175,529,180,532,181,548,182,559,186,562,190,562,196,561,200,558,203,555,203,547,201,544,201,539,200,533,201,528,210,523,215,513,213,510,214,506,211,505,202,510,197,512,195,507,189,505,186,499,181,497,177,491,171,490,169,489,164,493,163,502,160,510,155,512,151,513,150,513,150,514,142,514,137,510,130,511,123,511,108,531,116,534,119,548,121,550,116,560,101,554,97,554,86,554,70,554,67,562,43,562,43,562,43,568,20,728,105" href="#北海道" alt="#北海道" />
-            <area shape="poly" coords="567,258,569,255,569,252,569,250,571,246,570,240,564,235,559,237,559,235,556,234,558,229,559,224,561,223,566,221,572,221,580,220,583,224,583,232,583,241,583,245,582,253,587,259,590,262,608,281,608,281,606,297,605,307,604,319,604,332,598,336,595,342,597,351,601,367,599,368,596,379,595,384,592,386,584,380,578,378,573,378,573,385,573,387,570,397,573,405,574,415,582,428,578,437,571,441,567,445,559,444,555,445,551,445,546,439,546,438,539,431,536,431,524,438,516,440,508,440,506,439,504,425,504,420,507,417,511,416,513,413,515,403,515,402,517,397,515,393,513,388,514,383,517,381,522,377,523,374,523,374,523,372,515,357,502,356,511,348,512,339,514,334,517,328,516,320,516,314,508,305,513,296,515,285,514,284,513,272,511,267,512,260,512,257,523,256,524,250,524,245,544,238,524,240,528,236,536,235,536,252,536,253,545,262,545,252,546,251,548,247,556,248,560,255,560,253,564,255,569,250,569,241,568,240,563,236,555,234,556,227,556,229,556,229,571,236,571,236,575,252,599,319,603,324" href="#東北" alt="#東北" />
-            <area shape="poly" coords="572,454,569,469,567,474,566,479,570,487,573,490,579,497,580,503,568,511,561,518,553,528,543,536,539,539,530,536,531,528,539,522,542,516,543,507,541,499,535,507,531,515,520,522,516,530,508,533,502,529,495,522,488,507,491,501,492,494,482,492,481,485,477,479,476,466,466,454,467,450,476,443,484,450,497,440,509,451,533,434,546,446,557,451" href="#関東" alt="#関東" />
-            <area shape="poly" coords="484,447,502,439,499,415,515,409,513,395,514,382,520,374,517,362,503,353,497,380,451,420,439,432,417,435,412,431,405,420,415,406,411,395,397,397,383,401,385,421,382,430,358,441,355,449,350,467,345,481,345,492,356,491,367,484,371,486,382,505,388,515,370,531,361,586,382,574,405,565,401,558,389,547,400,528,418,543,461,548,480,531,491,552,511,539,498,525,490,512,488,506,493,499,491,494,482,494,478,480,475,464,468,456,479,444,478,442" href="#甲信越" alt="#甲信越" />
-            <area shape="poly" coords="359,592,361,580,363,565,367,535,390,510,383,503,369,486,349,496,343,496,344,486,281,476,289,488,292,499,282,509,283,523,295,523,308,528,327,533,329,541,328,554,322,566,344,597,344,593" href="#関西" alt="#関西" />
-            <area shape="poly" coords="285,480,257,482,247,476,222,475,213,484,182,502,144,516,138,536,182,560,186,561,200,538,221,547,257,531,280,526,286,505,292,499,290,492,290,492" href="#中国" alt="#中国" />
-            <area shape="poly" coords="287,611,307,572,274,538,257,543,245,563,217,556,187,583,204,594,202,620,227,632,236,621,254,602,272,599,272,599" href="#四国" alt="#四国" />
-            <area shape="poly" coords="68,571,138,547,143,560,162,565,157,581,164,588,184,598,181,617,174,627,167,642,170,668,153,680,123,685,132,673,134,663,123,661,121,665,118,672,101,672,102,652,119,627,110,615,118,610,110,594,100,589,97,598,104,607,72,604,72,604" href="#九州" alt="#九州" />
-            <area shape="poly" coords="59,743,74,732,78,743,62,752,53,759,51,768,45,770,38,773,37,763,38,753,49,742,52,738,59,738" href="#沖縄" alt="#沖縄" />
-        </map>
-    </section>
-
-        <section id="research-product" class="my-5">
-            <h2 class="mb-3">検索</h2>
-            <form th:action="@{/top/search}" method="post">
-                <input type="text" name="name" id="query" placeholder="商品を検索">
-                <button type="submit">検索</button>
-            </form>
-            <div th:if="${noMerchandise}" class="my-3">
-                <p style="color: red;">当てはまる商品がありません。</p>
-                <div class="back-to-top-page-from-product-detail">
-                    <a th:href="@{/top/back}">戻る</a>
-                </div>
-            </div>
-        </section>
-
-    <section id="product-list" class="my-5">
-        <h2 class="mb-3">商品一覧</h2>
-        <div class="productsList">
-            <div th:each="regionEntry: ${productsByRegion}" class="region-group">
-                <h3 th:text="${regionEntry.key}" th:id="${regionEntry.key}"></h3>
-                <div class="row">
-                    <div th:each="product: ${regionEntry.value}" class="col-sm-6">
-                    <div class="product-list-image">
-                        <a href="product-detail.html" th:href="@{/top/showDetail/}+${product.productId}">
-                            <img th:src="@{/img/{imageName}(imageName=${product.imageUrl})}" alt="Product Image" class="img-fluid"/>
-                        </a>
-                    </div>
-                    <div class="product-image-spacer"></div>
-
-                    <div class="col-sm-6">
-                        <a href="product-detail.html" th:href="@{/top/showDetail/}+${product.productId}">
-                            <p class="product-name font-weight-bold"><span th:text="${product.productName}"></span></p>
-                        </a>
-                        <p class="product-price"><span th:text="${product.price}"></span>円</p>
-                        <p class="product-description"><span th:text="${product.description}"></span></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </div>
-    </section>
-    <section id="popular" class="my-5">
-        <h2 class="mb-3">人気商品</h2>
-    </section>
-
-        <section id="events" class="my-5">
-            <h2 class="mb-3">イベント情報</h2>
-            <div th:each="event:${eventsList}" class="event-list">
-                <a th:href="@{/event/{eventId}(eventId=${event.eventId})}">
-                    <div th:text="${event.eventName}"></div>
-                </a>
-                <span th:text="${event.description}"></span>
-                <p>in</p><span th:text="${event.eventLocation}"></span>
-            </div>
-        </section>
-        <section id="stamp" class="my-5">
-            <h2 class="mb-3">スタンプカード</h2>
-            <a th:href="@{/to-stamp-card}" method="get">スタンプカードへ</a>
-        </section>
-</div>
-
-<footer class="text-brack text-center py-3">
-    <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-dark">
+        <nav class="navbar navbar-expand-lg">
             <div class="container">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item"><a class="nav-link" href="#regions">地域を探す</a></li>
@@ -153,21 +34,24 @@
                 <div class="ml-auto">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a th:href="@{/show-shopping-cart}" method="get" class="btn btn-primary btn-sm btn-light-blue">
+                            <a th:href="@{/show-shopping-cart}" method="get"
+                               class="btn btn-primary btn-sm btn-light-blue">
                                 ショッピングカート
                             </a>
                         </li>
                         <li class="nav-item">
-                            <div th:if="${session.lastName == null}" class="btn btn-primary btn-sm btn-light-blue">
-                                <a th:href="@{/login}" method="get">ログイン</a>
+                            <div th:if="${session.lastName == null}">
+                                <a th:href="@{/login}" method="get"
+                                   class="btn btn-primary btn-sm btn-light-blue">ログイン</a>
                             </div>
                         </li>
                         <li class="nav-item">
                             <div th:unless="${session.lastName == empty}">
                                 <div class="login-name">
-                                    <p class="font-weight-bold">ようこそ<span th:text="${session.lastName}"></span>さん!</p>
+                                    <p class="font-weight-bold">ようこそ<span th:text="${session.lastName}"></span>さん!
+                                    </p>
                                 </div>
-                                <form th:action="@{/logout}" method="post" class="btn btn-primary btn-sm btn-light-blue">
+                                <form th:action="@{/logout}" method="post">
                                     <button class="btn btn-danger">ログアウト</button>
                                 </form>
                             </div>
@@ -176,14 +60,162 @@
                 </div>
             </div>
         </nav>
-        <p>&copy; 2023 食の冒険. All rights reserved.</p>
+
+    </header>
+
+    <div class="container-fluid my-5">
+        <div class="main-content">
+            <section class="my-box my-5" id="regions">
+                <h2 class="mb-3">地域を探す</h2>
+                <!-- 地図APIによる地域選択機能をここに表示 -->
+                <img th:src="@{/img/japan.png}" usemap="#ImageMap" alt=""/>
+                <map name="ImageMap">
+                    <area shape="poly"
+                          coords="570,19,571,19,573,21,583,24,588,32,594,39,598,45,600,50,609,55,619,60,641,68,646,73,654,79,668,87,675,96,678,99,685,92,693,84,700,78,711,73,720,68,723,78,723,89,716,99,716,106,718,116,723,124,728,127,733,136,727,141,715,144,708,148,699,151,683,152,677,154,671,157,667,164,660,172,658,182,653,190,645,195,634,193,628,188,620,185,614,180,604,176,594,169,579,165,579,156,575,161,559,164,569,163,567,168,561,169,556,168,554,167,552,162,550,162,536,161,528,161,527,175,529,180,532,181,548,182,559,186,562,190,562,196,561,200,558,203,555,203,547,201,544,201,539,200,533,201,528,210,523,215,513,213,510,214,506,211,505,202,510,197,512,195,507,189,505,186,499,181,497,177,491,171,490,169,489,164,493,163,502,160,510,155,512,151,513,150,513,150,514,142,514,137,510,130,511,123,511,108,531,116,534,119,548,121,550,116,560,101,554,97,554,86,554,70,554,67,562,43,562,43,562,43,568,20,728,105"
+                          href="#北海道" alt="#北海道"/>
+                    <area shape="poly"
+                          coords="567,258,569,255,569,252,569,250,571,246,570,240,564,235,559,237,559,235,556,234,558,229,559,224,561,223,566,221,572,221,580,220,583,224,583,232,583,241,583,245,582,253,587,259,590,262,608,281,608,281,606,297,605,307,604,319,604,332,598,336,595,342,597,351,601,367,599,368,596,379,595,384,592,386,584,380,578,378,573,378,573,385,573,387,570,397,573,405,574,415,582,428,578,437,571,441,567,445,559,444,555,445,551,445,546,439,546,438,539,431,536,431,524,438,516,440,508,440,506,439,504,425,504,420,507,417,511,416,513,413,515,403,515,402,517,397,515,393,513,388,514,383,517,381,522,377,523,374,523,374,523,372,515,357,502,356,511,348,512,339,514,334,517,328,516,320,516,314,508,305,513,296,515,285,514,284,513,272,511,267,512,260,512,257,523,256,524,250,524,245,544,238,524,240,528,236,536,235,536,252,536,253,545,262,545,252,546,251,548,247,556,248,560,255,560,253,564,255,569,250,569,241,568,240,563,236,555,234,556,227,556,229,556,229,571,236,571,236,575,252,599,319,603,324"
+                          href="#東北" alt="#東北"/>
+                    <area shape="poly"
+                          coords="572,454,569,469,567,474,566,479,570,487,573,490,579,497,580,503,568,511,561,518,553,528,543,536,539,539,530,536,531,528,539,522,542,516,543,507,541,499,535,507,531,515,520,522,516,530,508,533,502,529,495,522,488,507,491,501,492,494,482,492,481,485,477,479,476,466,466,454,467,450,476,443,484,450,497,440,509,451,533,434,546,446,557,451"
+                          href="#関東" alt="#関東"/>
+                    <area shape="poly"
+                          coords="484,447,502,439,499,415,515,409,513,395,514,382,520,374,517,362,503,353,497,380,451,420,439,432,417,435,412,431,405,420,415,406,411,395,397,397,383,401,385,421,382,430,358,441,355,449,350,467,345,481,345,492,356,491,367,484,371,486,382,505,388,515,370,531,361,586,382,574,405,565,401,558,389,547,400,528,418,543,461,548,480,531,491,552,511,539,498,525,490,512,488,506,493,499,491,494,482,494,478,480,475,464,468,456,479,444,478,442"
+                          href="#甲信越" alt="#甲信越"/>
+                    <area shape="poly"
+                          coords="359,592,361,580,363,565,367,535,390,510,383,503,369,486,349,496,343,496,344,486,281,476,289,488,292,499,282,509,283,523,295,523,308,528,327,533,329,541,328,554,322,566,344,597,344,593"
+                          href="#関西" alt="#関西"/>
+                    <area shape="poly"
+                          coords="285,480,257,482,247,476,222,475,213,484,182,502,144,516,138,536,182,560,186,561,200,538,221,547,257,531,280,526,286,505,292,499,290,492,290,492"
+                          href="#中国" alt="#中国"/>
+                    <area shape="poly"
+                          coords="287,611,307,572,274,538,257,543,245,563,217,556,187,583,204,594,202,620,227,632,236,621,254,602,272,599,272,599"
+                          href="#四国" alt="#四国"/>
+                    <area shape="poly"
+                          coords="68,571,138,547,143,560,162,565,157,581,164,588,184,598,181,617,174,627,167,642,170,668,153,680,123,685,132,673,134,663,123,661,121,665,118,672,101,672,102,652,119,627,110,615,118,610,110,594,100,589,97,598,104,607,72,604,72,604"
+                          href="#九州" alt="#九州"/>
+                    <area shape="poly"
+                          coords="59,743,74,732,78,743,62,752,53,759,51,768,45,770,38,773,37,763,38,753,49,742,52,738,59,738"
+                          href="#沖縄" alt="#沖縄"/>
+                </map>
+            </section>
+
+            <section id="research-product" class="my-box my-5">
+                <h2 class="mb-3">検索</h2>
+                <form th:action="@{/top/search}" method="post">
+                    <input type="text" name="name" id="query" placeholder="商品を検索">
+                    <button type="submit">検索</button>
+                </form>
+                <div th:if="${noMerchandise}" class="my-3">
+                    <p style="color: red;">当てはまる商品がありません。</p>
+                    <div class="back-to-top-page-from-product-detail">
+                        <a th:href="@{/top/back}">戻る</a>
+                    </div>
+                </div>
+            </section>
+
+            <section id="product-list" class="my-box my-5">
+                <h2 class="mb-3">商品一覧</h2>
+                <div class="productsList">
+                    <div th:each="regionEntry: ${productsByRegion}" class="region-group">
+                        <h3 th:text="${regionEntry.key}" th:id="${regionEntry.key}"></h3>
+                        <div class="row">
+                            <div th:each="product: ${regionEntry.value}" class="col-sm-6">
+                                <div class="product-list-image">
+                                    <a href="product-detail.html" th:href="@{/top/showDetail/}+${product.productId}">
+                                        <img th:src="@{/img/{imageName}(imageName=${product.imageUrl})}"
+                                             alt="Product Image" class="img-fluid"/>
+                                    </a>
+                                </div>
+                                <div class="product-image-spacer"></div>
+
+                                <div class="col-sm-6">
+                                    <a href="product-detail.html" th:href="@{/top/showDetail/}+${product.productId}">
+                                        <p class="product-name font-weight-bold"><span
+                                                th:text="${product.productName}"></span></p>
+                                    </a>
+                                    <p class="product-price"><span th:text="${product.price}"></span>円</p>
+                                    <p class="product-description"><span th:text="${product.description}"></span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="popular" class="my-box my-5">
+                <h2 class="mb-3">人気商品</h2>
+            </section>
+
+            <section id="events" class="my-box my-5">
+                <h2 class="mb-3">イベント情報</h2>
+                <div th:each="event:${eventsList}" class="event-list">
+                    <a th:href="@{/event/{eventId}(eventId=${event.eventId})}">
+                        <div th:text="${event.eventName}"></div>
+                    </a>
+                    <span th:text="${event.description}"></span>
+                    <p>in</p><span th:text="${event.eventLocation}"></span>
+                </div>
+            </section>
+            <section id="stamp" class="my-box my-5">
+                <h2 class="mb-3">スタンプカード</h2>
+                <a th:href="@{/to-stamp-card}" method="get">スタンプカードへ</a>
+            </section>
+
+        </div>
+        <div class="aside-right col-2 my-box">
+            <div th:include="./html_mock/aside-right :: frag_aside-right"></div>
+        </div>
+
     </div>
-</footer>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-<!--<script src="scripts.js"></script>-->
+    <footer class="text-brack text-center py-3">
+        <div class="container-fluid my-box">
+            <nav class="navbar navbar-expand-lg navbar-dark">
+                <div class="container">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item"><a class="nav-link" href="#regions">地域を探す</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#popular">人気商品</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#events">イベント情報</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#stamp">スタンプカード</a></li>
+                    </ul>
+                    <div class="ml-auto">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a th:href="@{/show-shopping-cart}" method="get"
+                                   class="btn btn-primary btn-sm btn-light-blue">
+                                    ショッピングカート
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <div th:if="${session.lastName == null}" class="btn btn-primary btn-sm btn-light-blue">
+                                    <a th:href="@{/login}" method="get">ログイン</a>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <div th:unless="${session.lastName == empty}">
+                                    <div class="login-name">
+                                        <p class="font-weight-bold">ようこそ<span th:text="${session.lastName}"></span>さん!
+                                        </p>
+                                    </div>
+                                    <form th:action="@{/logout}" method="post"
+                                          class="btn btn-primary btn-sm btn-light-blue">
+                                        <button class="btn btn-danger">ログアウト</button>
+                                    </form>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <p>&copy; 2023 食の冒険. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!--<script src="scripts.js"></script>-->
 </body>
 </html>

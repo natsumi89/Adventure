@@ -8,7 +8,7 @@
 <aside th:fragment="frag_aside-right">
     <div class="aside-right">
         <ul class="sideNav-list" th:each="region : ${productsByRegion}">
-            <div th:text="'食' + ${region.key+'&#9655;'}" th:id="${region.key}" onclick="countryClicked(this.id)"></div>
+            <div th:text="'★' + ${region.key+'&#9655;'}" th:id="${region.key}" onclick="countryClicked(this.id)"></div>
             <div th:id="${'list'+region.key}" style="display: none;">
                 <ul class="sideNav-list" th:each="product : ${region.value}">
                     <li class="sideNav__list-management active">
