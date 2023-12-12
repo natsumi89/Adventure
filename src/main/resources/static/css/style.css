@@ -11,11 +11,23 @@ h1.text-center {
     font-weight: bold;
     text-shadow: 2px 2px 4px #B0C4DE; /* タイトルに影を追加して立体感を出す */
 }
+        body {
+            display: flex;
+            background: linear-gradient(to bottom, #FFB6C1, #FFD700, #FF6347);
+        }
 
-body {
-    background: linear-gradient(to bottom, #FFB6C1, #FFD700, #FF6347);
-     padding-top: 100px;/* 華やかなグラデーションに変更 */
-}
+        div[style^="flex: 3;"] {
+            flex: 3;
+            padding: 20px;
+        }
+
+        div[style^="flex: 1;"] {
+            flex: 1;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 15px;
+            margin-left: 20px;
+        }
 
 header {
     background-color: #FFFACD; ; /* 明るいオレンジに */
@@ -46,11 +58,14 @@ nav.navbar a:hover {
 }
 
 section {
-    background-color: rgba(255, 255, 255, 0.7); /* セクションの背景を半透明の白に */
-    padding: 20px;
-    border-radius: 15px;
-    margin-bottom: 20px;
-}
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            width: 85%;
+            align-self: center; /* セクションを中央に配置 */
+            /*margin-right: 20px;*/
+        }
 
 button, .btn {
     background-color: #FF4500;
@@ -61,6 +76,11 @@ button:hover, .btn:hover {
     background-color: #FFD700;
     color: #FF4500;
 }
+
+        .container-fluid.my-5 {
+            display: flex;
+            justify-content: space-between;
+        }
 
 footer {
     background-color: #EEE8AA; /* ヘッダーと同じ背景色に変更 */
@@ -198,4 +218,22 @@ footer a, footer .nav-link, footer p {
     color: black; /* リンクの色を黒に */
     text-decoration: none;
     text-shadow: none; /* 影を削除 */
+}
+        .main-content {
+            flex: 4;
+            padding: 20px;
+            display: flex;
+            flex-direction: column; /* 子要素を縦に配置 */
+            width: 70%; /* 修正: メインコンテンツの幅を設定 */
+        }
+
+/* サイドバー */
+.aside-right {
+    position: fixed;
+    flex: 1;
+    padding: 20px;
+    /*background-color: rgba(255, 255, 255, 0.7);*/
+    border-radius: 15px;
+    margin-top: 70px; /* 修正: 上からの位置を指定 */
+    right: 20px; /* 修正: 右からの位置を指定 */
 }

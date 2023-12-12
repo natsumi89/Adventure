@@ -1,5 +1,6 @@
 package com.example.Adventure.controller;
 
+import com.example.Adventure.domain.OrderDetails;
 import com.example.Adventure.domain.Orders;
 import com.example.Adventure.domain.ShoppingCartsDetail;
 import com.example.Adventure.form.OrdersForm;
@@ -72,6 +73,10 @@ public class OrderConfirmationController {
         Integer userId = (Integer) session.getAttribute("userId");
         Integer totalPrice = (Integer) session.getAttribute("total_price");
 
+        // cartDetailsList を宣言および初期化
+        List<ShoppingCartsDetail> cartDetailsList = new ArrayList<>(); // 明示的に初期化
+
+
         if (result.hasErrors()) {
             // バリデーションエラーがある場合、ログにエラーメッセージを出力してみる
             for (FieldError error : result.getFieldErrors()) {
@@ -92,16 +97,17 @@ public class OrderConfirmationController {
             orders.setStatus("Order Placed");
             orders.setRegionId(ordersForm.getRegionId());
 
-//            // 注文が確定されたらショッピングカートを空にする
-//            if (orderRepository.existsByUserIdAndStatus(userId, "Order Placed")) {
-//                // 既に注文がある場合、エラーメッセージを表示して処理を中断
-//                model.addAttribute("error", "You have already placed an order. Duplicate orders are not allowed.");
-//                return orderConfirmation(ordersForm, model);
-//            }
-
             System.out.println("Before saving order. Status: " + orders.getStatus());
             orderRepository.save(orders);
             System.out.println("After saving order. Status: " + orders.getStatus());
+        for (ShoppingCartsDetail cartDetail : cartDetailsList) {
+            OrderDetails orderDetails = new OrderDetails();
+            orderDetails.setOrderId(orders.getOrderId());
+            orderDetails.setProductId(cartDetail.getProductId());
+            orderDetails.setQuantity(cartDetail.getQuantity());
+            orderDetails.setSubTotalPrice(cartDetail.getPrice() * cartDetail.getQuantity());
+            orderRepository.saveOrderDetails(orderDetails);
+        }
 
             // 注文が確定されたらショッピングカートを空にする
             if (userId != null) {

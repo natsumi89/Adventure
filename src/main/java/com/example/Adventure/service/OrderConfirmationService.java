@@ -1,5 +1,6 @@
 package com.example.Adventure.service;
 
+import com.example.Adventure.domain.OrderDetails;
 import com.example.Adventure.domain.Orders;
 import com.example.Adventure.domain.Stamps;
 import com.example.Adventure.repository.OrderRepository;
@@ -150,5 +151,8 @@ public class OrderConfirmationService {
                 stampRepository.saveStamp(discountStamp);
             }
         }
+    }
+    public void saveOrderDetails(OrderDetails orderDetails) {
+        orderConfirmationRepository.saveOrderDetails(orderDetails);
     }
 }

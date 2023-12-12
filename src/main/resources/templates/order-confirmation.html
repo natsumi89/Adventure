@@ -35,6 +35,13 @@
                             商品名&colon;
                             <span th:text="${cartDetail.productName}">商品</span>
                         </div>
+                        <div class="confirm-quantity">
+                            <div class="confirm-quantity-label">
+                                個数&colon;
+                                <span th:text="${cartDetail.quantity}"></span>個
+                            </div>
+
+                        </div>
 
                         <div class="order-confirmation-content-right">
                             <div class="shopping-cart-image-url">
@@ -102,6 +109,7 @@
                             <div class="confirm-payment-card">
                                 <label class="payment-label" for="stripe-button">カード&colon;<input
                                         type="radio" id="stripe-button" value="3" name="pay"
+                                        onclick="buttonClick()"
                                        class="radio"></label>
                             </div>
                         </div>
@@ -126,6 +134,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="/js/form.js" th:src="@{/js/form.js}"></script>
+<script src="/js/checout.js" th:src="@{/js/checkout.js}"></script>
+<script src="https://checkout.stripe.com/checkout.js"></script>
 </body>
 
 </html>
