@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>注文完了</title>
     <link rel="icon" th:href="@{/img/favicon.ico}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <header class="text-brack py-3">
     <div class="container">
@@ -15,8 +16,14 @@
     </div>
 </header>
 <body>
+<div clas="order-completed">
+    <div class="order-completed-content">
     <p>ご購入ありがとうございました。</p>
+    </div>
+<div class="order-completed-back-to-page">
     <a th:href="@{/top/back}">戻る</a>
+</div>
+</div>
     
 </body>
 </html>
