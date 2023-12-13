@@ -19,6 +19,7 @@
     </div>
 </header>
 <body>
+<div class="main-shopping-cart">
 <div th:if="${cartDetailsList == null || cartDetailsList.empty}">
     <p>商品はありません。</p>
     <a th:href="@{/top/back}">戻る</a>
@@ -37,10 +38,6 @@
                     <div class="shopping-cart-product-description">
                         <p th:text="${cartDetail.description}"></p>
                     </div>
-                    <!--                    <div class="shopping-cart-product-quantity" th:data-product-id="${cartDetail.productId}">-->
-                    <!--                        <p th:text="${cartDetail.quantity}">1</p>-->
-                    <!--                    </div>-->
-
                     <form th:action="@{/delete-shopping-carts}" method="post">
                         <input type="hidden" name="cartId" th:value="${cartDetail.cartId}">
                         <input type="hidden" name="productId" th:value="${cartDetail.productId}">
@@ -81,6 +78,7 @@
             <button>注文確認へ</button>
         </form>
     </div>
+</div>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

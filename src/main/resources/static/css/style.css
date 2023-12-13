@@ -11,17 +11,19 @@ h1.text-center {
     font-weight: bold;
     text-shadow: 2px 2px 4px #B0C4DE; /* タイトルに影を追加して立体感を出す */
 }
-        body {
+
+body {
             display: flex;
             background: linear-gradient(to bottom, #FFB6C1, #FFD700, #FF6347);
+            margin-top: 90px;
         }
 
-        div[style^="flex: 3;"] {
+div[style^="flex: 3;"] {
             flex: 3;
             padding: 20px;
         }
 
-        div[style^="flex: 1;"] {
+div[style^="flex: 1;"] {
             flex: 1;
             padding: 20px;
             background-color: rgba(255, 255, 255, 0.7);
@@ -32,12 +34,12 @@ h1.text-center {
 header {
     background-color: #FFFACD; ; /* 明るいオレンジに */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    opacity: 0.7;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        z-index: 1000; /* 他の要素より前面に表示されるようにする */
+    opacity: 0.9;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* 他の要素より前面に表示されるようにする */
 }
 
 nav.navbar {
@@ -67,17 +69,22 @@ section {
             /*margin-right: 20px;*/
         }
 
+/* ボタンのスタイル */
 button, .btn {
     background-color: #FF4500;
     color: white;
+    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s; /* トランジションを追加 */
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* 少しの影を追加 */
 }
 
 button:hover, .btn:hover {
-    background-color: #FFD700;
-    color: #FF4500;
+    background-color: #8CBADD; /* ホバー時の背景色を変更 */
+    color: white;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3); /* ホバー時に影をより強調 */
 }
 
-        .container-fluid.my-5 {
+
+.container-fluid.my-5 {
             display: flex;
             justify-content: space-between;
         }
@@ -108,7 +115,6 @@ footer .navbar {
     background-color: transparent; /* 背景色を透明に */
     box-shadow: none; /* 影を削除 */
 }
-
 
 .productsList {
     display: flex;
@@ -143,9 +149,10 @@ footer .navbar {
 }
 
 .order-confirmation-content-right {
-width: 20px;
+width: 500px;
 height: auto;
 display: block;
+margin:0,0,0,auto;
 }
 
 body {
@@ -194,10 +201,13 @@ img {
     max-width: 100%;
     height: auto;
 }
+
+/* ライトブルーのボタン */
 .btn-light-blue {
-    background-color: #B0E0E6; /* 淡い青色 */
+    background-color: #B0E0E6;
     border-color: #B0E0E6;
     color: #fff;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
 }
 
 .btn-light-blue:hover {
@@ -219,7 +229,8 @@ footer a, footer .nav-link, footer p {
     text-decoration: none;
     text-shadow: none; /* 影を削除 */
 }
-        .main-content {
+
+.main-content {
             flex: 4;
             padding: 20px;
             display: flex;
@@ -237,3 +248,264 @@ footer a, footer .nav-link, footer p {
     margin-top: 70px; /* 修正: 上からの位置を指定 */
     right: 20px; /* 修正: 右からの位置を指定 */
 }
+
+.login-form {
+            background-color: rgba(255, 255, 255, 0.9); /* より白い背景 */
+            border-radius: 10px;
+            max-width: 400px;
+            margin: auto; /* 中央寄せ */
+            margin-top:20px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 少しの影を追加 */
+        }
+
+.login-form label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+.login-form input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+.login-form button {
+            background-color: #4CAF50; /* グリーンのボタン */
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+.login-form button:hover {
+            background-color: #45a049; /* ホバー時の色変更 */
+        }
+
+.error-message {
+            color: red;
+            margin-top: 16px;
+        }
+
+.customer-registration-page a {
+            color: #1E90FF; /* リンクの色を変更 */
+        }
+
+.back-to-top-page-from-login a {
+            color: #8B4513; /* リンクの色を変更 */
+            }
+
+.customer-registration {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    max-width: 400px;
+    margin: auto;
+    margin-top: 20px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.customer-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+}
+
+.customer-form div {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 8px;
+}
+
+.customer-form label {
+    margin-bottom: 4px;
+}
+
+.customer-form input {
+    width: calc(100% - 5px);
+    padding: 4px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 4px;
+}
+
+.customer-form .error-message {
+    width: 100%;
+    color: red;
+    margin-top: 4px;
+    font-size: 14px;
+}
+
+.customer-registration-button {
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.customer-registration-button button {
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.customer-registration-button button:hover {
+    background-color: #005F79;
+}
+
+.back-to-top-page-from-login a {
+    color: #8B4513;
+}
+
+.confirm-content {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    padding: 20px;
+    margin: auto;
+    width: 70%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.confirm-subheading {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.confirm-content-name-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/*.confirm-content-name-price img {
+    width: 100%;
+    max-width: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}*/
+
+
+
+.confirm-name {
+    font-size: 1.2em;
+}
+
+.confirm-quantity-label {
+    font-weight: bold;
+}
+
+.confirm-bottom {
+    margin-top: 20px;
+}
+
+.confirm-bottom-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.confirm-bottom-content > div {
+    width: calc(50% - 10px);
+    margin-bottom: 20px;
+}
+
+.confirm-payment {
+    margin-top: 20px;
+}
+
+.payment-label {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.confirm-payment input {
+    margin-right: 5px;
+}
+
+.shopping-cart-total-price {
+    margin-top: 20px;
+    font-size:20px;
+}
+
+.confirm-button {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.confirm-button button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+.confirm-button button:hover {
+    background-color: #00CED1;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.confirm-button a {
+    display: block;
+    margin-top: 10px;
+    text-decoration: none;
+    color: #000080;
+    font-weight: bold;
+}
+
+.main-shopping-cart {
+margin: auto;
+font-size:20px;
+}
+
+.main-product-detail {
+margin: auto;
+font-size:20px;
+
+}
+
+     .order-completed {
+            text-align: center;
+            background: linear-gradient(to bottom right, #FFB6C1, #FF69B4);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            width: 70%;
+            color: #fff;
+        }
+
+        .order-completed p {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .order-completed-back-to-page a {
+            display: inline-block;
+            text-decoration: none;
+            color: #fff;
+            background-color: #4CAF50;
+            padding: 15px 30px;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+
+        .order-completed-back-to-page a:hover {
+            background-color: #45a049;
+        }
+
+
+

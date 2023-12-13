@@ -42,6 +42,9 @@
                             </div>
 
                         </div>
+                        <div class="order-confirmtion-product-price">
+                            <p th:text="${cartDetail.price} + '円'"></p>
+                        </div>
 
                         <div class="order-confirmation-content-right">
                             <div class="shopping-cart-image-url">
@@ -114,7 +117,7 @@
                             </div>
                         </div>
                         <div class="shopping-cart-total-price">
-                            <p th:text="${totalPrice} + '円'"></p>
+                            <p th:text="'合計' + ${totalPrice} + '円'"></p>
                         </div>
                         <div class="confirm-button">
                             <button id="confirm-btn" class="confirm-button" type="submit">注文確定</button>
