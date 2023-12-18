@@ -52,5 +52,10 @@ public class ProductsServiceImpl implements ProductsService {
     public List<String> findRegions() {
         return productsRepository.findRegion();
     }
+
+    @Override
+    public List<Products> findTopProducts(int limit) {
+        return productsRepository.findTopProducts(limit);
+    }
 }
 

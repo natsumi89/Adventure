@@ -7,6 +7,8 @@ public class OrderDetails {
     private Integer quantity;
     private Integer subTotalPrice;
 
+    private Integer purchaseCount;
+
     public Integer getOrderDetailId() {
         return orderDetailId;
     }
@@ -45,5 +47,13 @@ public class OrderDetails {
 
     public void setSubTotalPrice(Integer subTotalPrice) {
         this.subTotalPrice = subTotalPrice;
+    }
+
+    public Integer getPurchaseCount() {
+        return purchaseCount;
+    }
+
+    public void setPurchaseCount(Integer purchaseCount) {
+        this.purchaseCount = purchaseCount;
     }
 }

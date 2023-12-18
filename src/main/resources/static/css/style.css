@@ -386,16 +386,6 @@ footer a, footer .nav-link, footer p {
     align-items: center;
     margin-bottom: 20px;
 }
-
-/*.confirm-content-name-price img {
-    width: 100%;
-    max-width: 100%;
-    object-fit: cover;
-    border-radius: 10px;
-}*/
-
-
-
 .confirm-name {
     font-size: 1.2em;
 }
@@ -506,6 +496,65 @@ font-size:20px;
         .order-completed-back-to-page a:hover {
             background-color: #45a049;
         }
+.product-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 2px solid #B0E0E6;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #F0F8FF;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.product-container:hover {
+    background-color: #E0FFFF;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.product-list-image {
+    width: 30%;
+    margin-right: 20px;
+    border-radius: 10px;
+    overflow: hidden; /* 画像が枠からはみ出ないように */
+}
+
+.product-list-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    transition: transform 0.3s; /* ホバー時に画像を拡大 */
+}
+
+.product-container:hover .product-list-image img {
+    transform: scale(1.1);
+}
+
+.product-details {
+    width: 70%;
+}
+
+.product-name {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333; /* 商品名の色を変更 */
+}
+
+.product-price {
+    font-size: 1.2em;
+    color: #FF4500;
+    margin-bottom: 10px;
+}
+
+.product-description {
+    font-size: 1em;
+    color: #696969;
+}
+
 
 
 

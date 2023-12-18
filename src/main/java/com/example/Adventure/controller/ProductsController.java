@@ -20,13 +20,10 @@ import java.util.stream.Collectors;
 public class ProductsController {
     @Autowired
     private ProductsService productsService;
-
     @Autowired
     private EventService eventService;
-
     @Autowired
     private HttpSession session;
-
 
     /**
      * @param model
@@ -35,14 +32,15 @@ public class ProductsController {
     @GetMapping("/products")
     public String top(Model model) {
         List<Products> productsList = productsService.findAll();
+        List<Products> topProducts = productsService.findTopProducts(5); // トップ5商品を取得
         List<Events> eventsList = eventService.findAll();
 
         Map<String, List<Products>> productsGroupedByRegion = productsList.stream()
                 .collect(Collectors.groupingBy(product -> product.getRegionName() != null ? product.getRegionName() : "Unknown"));
 
-
         model.addAttribute("productsByRegion", productsGroupedByRegion);
         model.addAttribute("eventsList", eventsList);
+        model.addAttribute("topProducts", topProducts);
         return "top";
     }
     @GetMapping("/auto-complete")
