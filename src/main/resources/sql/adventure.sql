@@ -87,6 +87,12 @@ CREATE TABLE shopping_carts(
 );
 ALTER TABLE shopping_carts ALTER COLUMN user_id DROP NOT NULL;
 
+ALTER TABLE order_details
+ADD COLUMN purchase_count INTEGER DEFAULT 0;
+
+UPDATE order_details od
+SET purchase_count = (SELECT COUNT(*) FROM order_details WHERE product_id = od.product_id);
+
 CREATE OR REPLACE FUNCTION update_updated_at_column()
 RETURNS TRIGGER AS $$
 BEGIN

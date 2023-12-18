@@ -108,19 +108,10 @@ public class ShoppingCartsController {
                 session.setAttribute("cartDetailsList", cartDetailsList);
             }
         }
-
         return "redirect:/show-shopping-cart";
     }
 
     private Integer calcTotalPrice(List<ShoppingCartsDetail> productsList) {
         return cartUtils.calcTotalPrice(productsList);
-
-//    private Integer calcTotalPrice(List<ShoppingCartsDetail> productsList) {
-//        Integer totalPrice = 0;
-//        for(ShoppingCartsDetail product : productsList) {
-//            totalPrice += product.getPrice() * product.getQuantity();
-//        }
-//        return totalPrice;
-//    }
     }
 }

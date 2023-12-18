@@ -131,5 +131,4 @@ public class ShoppingCartsRepository {
         SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
         template.update(sql, param);
     }
-
 }

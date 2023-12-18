@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,14 +17,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="back-to-top-page">
-                    <form th:action="{/back}" method="get">
-                    <button>戻る</button>
-                </form>
+                <div class="back-to-top-page-from-product-detail">
+                    <a th:href="@{/top/back}">戻る</a>
                 </div>
             </div>
         </div>
     </main>
-    
 </body>
 </html>

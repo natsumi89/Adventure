@@ -3,6 +3,7 @@ package com.example.Adventure.repository;
 import com.example.Adventure.domain.OrderDetails;
 import com.example.Adventure.domain.Orders;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -11,6 +12,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -20,7 +22,7 @@ public class OrderRepository {
     @Autowired
     private NamedParameterJdbcTemplate template;
 
-    public static final RowMapper<OrderDetails> ORDER_DETAILS_ROW_MAPPER = (rs,i) -> {
+    public static final RowMapper<OrderDetails> ORDER_DETAILS_ROW_MAPPER = (rs, i) -> {
         OrderDetails orderDetails = new OrderDetails();
         orderDetails.setOrderDetailId(rs.getInt("order_detail_id"));
         orderDetails.setOrderId(rs.getInt("order_id"));
@@ -30,7 +32,7 @@ public class OrderRepository {
         return orderDetails;
     };
 
-    public static final RowMapper<Orders> ORDERS_ROW_MAPPER = (rs,i) -> {
+    public static final RowMapper<Orders> ORDERS_ROW_MAPPER = (rs, i) -> {
         Orders orders = new Orders();
         orders.setUserId(rs.getInt("user_id"));
         orders.setTotalPrice(rs.getInt("total_price"));
@@ -50,10 +52,11 @@ public class OrderRepository {
 
     public Orders load(Integer orderId) {
         String sql = "SELECT order_id, user_id, total_price, order_date, status,address,zip_code,telephone,payment_method FROM orders WHERE order_id = :orderId ORDER BY order_id";
-        SqlParameterSource param = new MapSqlParameterSource().addValue("order_id",orderId);
-        Orders orders = template.queryForObject(sql,param,ORDERS_ROW_MAPPER);
+        SqlParameterSource param = new MapSqlParameterSource().addValue("orderId", orderId);
+        Orders orders = template.queryForObject(sql, param, ORDERS_ROW_MAPPER);
         return orders;
     }
+
     public void save(Orders orders) {
         String sql = "INSERT INTO orders (user_id, total_price, order_date, status,address,zip_code,telephone,payment_method) VALUES(:userId, :totalPrice, :orderDate, :status,:address,:zipCode,:telephone,:paymentMethod)";
         SqlParameterSource param = new BeanPropertySqlParameterSource(orders);
@@ -82,9 +85,53 @@ public class OrderRepository {
         return template.queryForObject(sql, param, Integer.class) > 0;
     }
 
+    @Transactional
     public void saveOrderDetails(OrderDetails orderDetails) {
-        String sql = "INSERT INTO order_details (order_id, product_id, quantity, subtotal_price) VALUES(:orderId, :productId, :quantity, :subTotalPrice)";
-        SqlParameterSource param = new BeanPropertySqlParameterSource(orderDetails);
-        template.update(sql, param);
+        try {
+            String insertSql = "INSERT INTO order_details (order_id, product_id, quantity, subtotal_price, purchase_count) " +
+                    "VALUES (:orderId, :productId, :quantity, :subTotalPrice, 1)";
+
+            String updateSql = "UPDATE order_details " +
+                    "SET quantity = quantity + :quantity, " +
+                    "subtotal_price = :subTotalPrice, " +
+                    "purchase_count = purchase_count + 1 " +
+                    "WHERE order_id = :orderId AND product_id = :productId";
+
+            SqlParameterSource param = new BeanPropertySqlParameterSource(orderDetails);
+
+            // まず挿入を試みる
+            template.update(insertSql, param);
+
+            // 挿入が失敗した場合は更新を試みる（重複エラーが発生した場合）
+            template.update(updateSql, param);
+
+            System.out.println("OrderDetails saved successfully - Order ID: " + orderDetails.getOrderId() + ", Product ID: " + orderDetails.getProductId());
+        } catch (DataAccessException e) {
+            // エラーログを追加
+            System.out.println("Error saving order details: " + e.getMessage());
+            throw e;  // 例外を再スローして呼び出し元で確認
+        }
+    }
+
+    public Integer saveAndGetOrderId(Orders orders) {
+        String sql = "INSERT INTO orders (user_id, total_price, order_date, status, address, zip_code, telephone, payment_method) " +
+                "VALUES (:userId, :totalPrice, :orderDate, :status, :address, :zipCode, :telephone, :paymentMethod)";
+        SqlParameterSource param = new BeanPropertySqlParameterSource(orders);
+
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        template.update(sql, param, keyHolder, new String[]{"order_id"}); // "order_id"は自動生成される主キーの列名
+
+        if (keyHolder.getKeys() != null) {
+            Map<String, Object> keys = keyHolder.getKeys();
+            if (keys.containsKey("order_id")) {
+                return ((Number) keys.get("order_id")).intValue();
+            } else {
+                // order_idが見つからない場合の処理
+                throw new RuntimeException("Failed to retrieve order ID after saving");
+            }
+        } else {
+            // キーが取得できなかった場合の処理
+            throw new RuntimeException("Failed to retrieve keys after saving");
+        }
     }
 }

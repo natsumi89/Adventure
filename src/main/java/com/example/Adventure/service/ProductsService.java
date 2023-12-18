@@ -13,6 +13,8 @@ public interface ProductsService {
 
     List<Products> searchProducts(String query);
     List<String> convertProductsToProductNames(List<Products> productsList);
+
+    List<Products> findTopProducts(int limit);
 }
 
 

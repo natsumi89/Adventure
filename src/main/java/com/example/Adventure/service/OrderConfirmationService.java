@@ -21,7 +21,6 @@ public class OrderConfirmationService {
 
     @Autowired
     private OrderRepository orderConfirmationRepository;
-
     @Autowired
     private StampRepository stampRepository;
     @Autowired
@@ -84,7 +83,6 @@ public class OrderConfirmationService {
 
                 stampRepository.saveStamp(existingStamp);
             } else {
-                // 新しいスタンプを作成して保存
                 Stamps newStamp = new Stamps();
                 newStamp.setUserId(userId);
                 newStamp.setOrderId(orders.getOrderId());
@@ -92,7 +90,6 @@ public class OrderConfirmationService {
                 newStamp.setStampDate(Date.from(Instant.now()));
                 newStamp.setStamps(1);
 
-// スタンプカードの進捗を更新
                 if (newStamp.getStamps() == 10) {
                     newStamp.setCardNumber(1);
                 }
@@ -153,6 +150,7 @@ public class OrderConfirmationService {
         }
     }
     public void saveOrderDetails(OrderDetails orderDetails) {
+        System.out.println("Received OrderDetails - Order ID: " + orderDetails.getOrderId() + ", Product ID: " + orderDetails.getProductId());
         orderConfirmationRepository.saveOrderDetails(orderDetails);
     }
 }
