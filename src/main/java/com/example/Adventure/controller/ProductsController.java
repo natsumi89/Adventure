@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -36,6 +37,14 @@ public class ProductsController {
         List<Events> eventsList = eventService.findAll();
 
         Map<String, List<Products>> productsGroupedByRegion = productsList.stream()
+                .sorted(Comparator.comparingInt(product -> {
+                    String regionName = product.getRegionName();
+                    if ("Unknown".equals(regionName)) {
+                        return Integer.MAX_VALUE;
+                    } else {
+                        return product.getRegionId();
+                    }
+                }))
                 .collect(Collectors.groupingBy(product -> product.getRegionName() != null ? product.getRegionName() : "Unknown"));
 
         model.addAttribute("productsByRegion", productsGroupedByRegion);

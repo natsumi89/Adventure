@@ -38,7 +38,7 @@ public class ProductsRepository {
     public List<Products> findAll() {
         String sql = "SELECT p.product_id, p.region_id, p.producer_id, p.product_name, p.description, p.price, p.image_url, r.region_name " +
                 "FROM products p JOIN regions r ON p.region_id = r.region_id " +
-                "ORDER BY p.region_id";
+                "ORDER BY r.region_id";
         List<Products> productsList = template.query(sql, PRODUCTS_ROW_MAPPER);
         return productsList;
     }
