@@ -1,5 +1,11 @@
 function amountChange(id, value, productId) {
     console.log(`Changing amount for productId: ${productId}, value: ${value}`);
+
+    if (value <= 0) {
+        alert("数量は1以上を選択してください。");
+        return;
+    }
+
     fetch(`/change-order/amount?productId=${productId}&value=${value}`, {
         method: 'GET'
     }).then(response => {

@@ -241,12 +241,16 @@ footer a, footer .nav-link, footer p {
 /* サイドバー */
 .aside-right {
     position: fixed;
+    top: 90px; /* 修正: 画面上部からの位置を調整 */
+    bottom: 0;
+    overflow-y: auto; /* スクロールバーを追加 */
+    max-height: calc(100vh - 40px); /* ビューポートの高さから上部のナビゲーションバーの高さを差し引く */
     flex: 1;
     padding: 20px;
-    /*background-color: rgba(255, 255, 255, 0.7);*/
+    overflow-y: auto; /* スクロールバーを追加 */
     border-radius: 15px;
-    margin-top: 70px; /* 修正: 上からの位置を指定 */
-    right: 20px; /* 修正: 右からの位置を指定 */
+    margin-top: 40px;
+    right: 20px;
 }
 
 .login-form {
@@ -467,7 +471,7 @@ font-size:20px;
 
 }
 
-     .order-completed {
+.order-completed {
             text-align: center;
             background: linear-gradient(to bottom right, #FFB6C1, #FF69B4);
             border-radius: 15px;
@@ -555,6 +559,27 @@ font-size:20px;
     color: #696969;
 }
 
+@media (min-width: 768px) {
+    .aside-right {
+        font-size: 18px;
+    }
+}
 
+@media (max-width: 767px) {
+    .aside-right {
+        font-size: 12px;
+    }
+}
 
+@media (max-width: 576px) {
+    .aside-right {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .aside-right {
+        font-size: 8px;
+    }
+}
 

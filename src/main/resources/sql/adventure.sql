@@ -186,24 +186,11 @@ VALUES
     (8, 1, '宮崎産マンゴー', '夏の期間限定で出回る高級フルーツです。', 3000, 'miyazaki_mango.png'),
     (8, 2, '佐賀産いちご', '甘さと酸味のバランスが絶妙です。', 600, 'saga_strawberry.png');
 
-
  -- 沖縄県の商品
  INSERT INTO products (region_id, producer_id, product_name, description, price, image_url)
  VALUES
      (9, 1, '沖縄そば', '沖縄独特のソウルフードで、麺が太くて美味しいです。', 700, 'okinawa_soba.png'),
      (9, 2, 'ゴーヤチャンプルー', 'ゴーヤの苦味が特徴的な沖縄料理です。', 650, 'goya.png');
-
----- Order Details Table
---INSERT INTO order_details (order_id, product_id, quantity, subtotal_price)
---VALUES
---    (1, 1, 2, 600),
---    (2, 2, 3, 1500);
---
----- Stamps Table
---INSERT INTO stamps (user_id, region_id, stamp_date)
---VALUES
---    (1, 1, now()),
---    (2, 2, now());
 
 -- Events Table
 INSERT INTO events (region_id, event_name, description, event_location)

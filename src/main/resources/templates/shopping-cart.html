@@ -46,7 +46,6 @@
                         <input type="hidden" name="description" th:value="${cartDetail.description}">
                         <button class="shopping-cart-btn" type="submit">削除</button>
                     </form>
-
                     <label for="confirm-quantity-input${status.index}">
                         <div class="shopping-cart-quantity">
                             <div class="confirm-quantity-label">
@@ -61,7 +60,6 @@
                                    min="1">個
                         </div>
                     </label>
-
                     <div class="shopping-cart-content-right">
                         <div class="shopping-cart-image-url">
                             <img th:src="@{/img/{imageName}(imageName=${cartDetail.imageUrl})}" alt="Product Image"/>
@@ -74,18 +72,15 @@
             <p th:text="'合計: ' + ${totalPrice} + '円'"></p>
         </div>
         <a th:href="@{/top/back}">戻る</a>
-        <form th:action="@{/order/order-confirmation}" method="get">
-            <button>注文確認へ</button>
+        <form th:action="@{/order/order-confirmation}" method="get" id="orderConfirmationForm">
+            <button onclick="validateQuantity()">注文確認へ</button>
         </form>
     </div>
 </div>
 </div>
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
 <script src="/js/script.js" th:src="@{/js/script.js}"></script>
-
 </body>
 </html>

@@ -51,7 +51,4 @@ public class OrderChangeController {
         responseMap.put("newTotalPrice", newTotalPrice);
         return ResponseEntity.ok(responseMap);
     }
-
-
 }
-
