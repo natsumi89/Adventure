@@ -2,39 +2,38 @@ let handler = StripeCheckout.configure({
   key: 'pk_test_51NDOT0CcxxRiYOcnZUNon1HEJj1ai181kBFy8lKemibfaFbYMjnSKilBdc1ha6SvutSLAwj8azn4zDEy0ygzYSKZ00chcvpmtm',
   locale: 'ja',
   token: function(token) {
-    // Handle the token (e.g., send it to your server)
-    console.log('Token received:', token);
   }
 });
 
 function buttonClick() {
+  let creditButton = document.getElementById("credit");
+  let cashButton = document.getElementById("cashOnDelivery");
+  let transferButton = document.getElementById("transfer");
+  let bankInfo = document.getElementById("bank-info");
   let stripeButton = document.getElementById("stripe-button");
-  let cashOnDelivery = document.getElementById("cashOnDelivery");
-  let transfer = document.getElementById("transfer");
 
-  if (cashOnDelivery.checked || transfer.checked) {
-    stripeButton.style.display = "none";
-  } else {
+  if (transferButton.checked) {
+    bankInfo.style.display = "block";
     stripeButton.style.display = "block";
+  } else if (cashButton.checked) {
+    bankInfo.style.display = "none";
+    stripeButton.style.display = "block";
+  } else if (creditButton.checked) {
+    bankInfo.style.display = "none";
+    stripeButton.style.display = "block";
+  } else {
+    bankInfo.style.display = "none";
+    stripeButton.style.display = "none";
   }
-}
+};
 
-document.getElementById("cashOnDelivery").addEventListener("change", buttonClick);
-document.getElementById("transfer").addEventListener("change", buttonClick);
-
-document.getElementById("stripe-button").addEventListener("click", function(e) {
-  // Fetch the total price directly from the input element
-  let totalPrice = parseInt(document.getElementById("totalPrice").value);
-  console.log('Total Price:', totalPrice);
-
+document.getElementById('stripe-button').addEventListener('click', function(e) {
+  let totalPrice = parseInt(document.getElementById("totalPrice").innerText);
   handler.open({
-    name: 'tea-voyage',
+    name: 'adventure',
     description: 'クレジット決済画面',
     zipCode: false,
     currency: "jpy",
     amount: totalPrice
   });
 });
-
-// Log a message when the script is loaded
-console.log('Script loaded.');
