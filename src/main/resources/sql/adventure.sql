@@ -49,7 +49,6 @@ ADD COLUMN telephone VARCHAR(255),
 ADD COLUMN zip_code VARCHAR(255) NOT NULL;
 
 ALTER TABLE orders ADD COLUMN address VARCHAR(255);
-ALTER TABLE stamps
 
 CREATE TABLE order_details(
 order_detail_id SERIAL PRIMARY KEY,
@@ -197,4 +196,5 @@ INSERT INTO events (region_id, event_name, description, event_location)
 VALUES
     (1, '北海道食材フェア', '北海道の新鮮な食材を堪能できるイベントです。', 'Sapporo Dome'),
     (2, '青森りんご祭り', '青森のおいしいりんごを味わえるイベントです。', 'Aomori City Hall');
+
 
