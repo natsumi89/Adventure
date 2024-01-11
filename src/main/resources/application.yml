@@ -1,8 +1,4 @@
 spring:
-  autoconfigure:
-#      exclude:
-#        - org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
-#        - org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/adventure
@@ -19,3 +15,7 @@ logging:
             JdbcTemplate: DEBUG
             StatementCreatorUtils: TRACE
 
+server:
+  servlet:
+    session:
+      timeout: 3600

@@ -1,0 +1,23 @@
+<!-- src/main/resources/templates/session-timeout.html -->
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>セッションタイムアウト</title>
+    <link rel="icon" th:href="@{/img/favicon.ico}">
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        function notifySessionTimeout() {
+            alert("セッションがタイムアウトしました。再ログインしてください。");
+        }
+        /*]]>*/
+    </script>
+</head>
+<body>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    notifySessionTimeout(); // ページが読み込まれたら即座にアラートを表示
+    /*]]>*/
+</script>
+</body>
+</html>

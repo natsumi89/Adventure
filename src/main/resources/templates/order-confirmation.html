@@ -7,6 +7,13 @@
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <link rel="icon" th:href="@{/img/favicon.ico}">
+<!--    <script th:inline="javascript">-->
+<!--        /*<![CDATA[*/-->
+<!--        function notifySessionTimeout() {-->
+<!--            alert("セッションがタイムアウトしました。再ログインしてください。");-->
+<!--        }-->
+<!--        /*]]>*/-->
+<!--    </script>-->
 </head>
 <header class="text-brack py-3">
     <div class="container">
@@ -111,7 +118,7 @@
                                         onclick="buttonClick()" class="radio"></label>
                             </div>
                             <div class="confirm-payment-card">
-                                <label class="payment-label" for="credit">カード&colon;<input
+                                <label class="payment-label" for="stripe-button">カード&colon;<input
                                         type="radio" id="stripe-button" value="3" name="pay"
                                         onclick="buttonClick()" class="radio"></label>
                             </div>
@@ -156,6 +163,11 @@
 <script src="/js/checout.js" th:src="@{/js/checkout.js}"></script>
 <script src="https://checkout.stripe.com/checkout.js"></script>
 <script src="https://js.stripe.com/v3/"></script>
+<!--<script>-->
+<!--    document.addEventListener("DOMContentLoaded", function () {-->
+<!--        notifySessionTimeout();-->
+<!--    });-->
+<!--</script>-->
 </body>
 
 </html>
