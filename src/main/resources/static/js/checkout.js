@@ -13,7 +13,7 @@ function buttonClick() {
   let stripeButton = document.getElementById("stripe-button");
 
   if (transferButton.checked) {
-    bankInfo.style.display = "block";
+    bankInfo.style.display = "none";
     stripeButton.style.display = "block";
   } else if (cashButton.checked) {
     bankInfo.style.display = "none";

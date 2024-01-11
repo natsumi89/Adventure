@@ -12,7 +12,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Rounded+Mplus+1c:wght@300;400;500&display=swap"
           rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-
+<!--    <script th:inline="javascript">-->
+<!--        /*<![CDATA[*/-->
+<!--        function notifySessionTimeout() {-->
+<!--            alert("セッションがタイムアウトしました。再ログインしてください。");-->
+<!--        }-->
+<!--        /*]]>*/-->
+<!--    </script>-->
 </head>
 <body class="bg-light" style="display: flex;">
 <div class="main-content" style="flex: 4; padding: 20px;">
@@ -226,5 +232,10 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <!--<script src="scripts.js"></script>-->
         <script src="/js/header.js" th:src="@{/js/header.js}"></script>
+<!--    <script>-->
+<!--        document.addEventListener("DOMContentLoaded", function () {-->
+<!--            notifySessionTimeout();-->
+<!--        });-->
+<!--    </script>-->
 </body>
 </html>
