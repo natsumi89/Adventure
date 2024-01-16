@@ -30,6 +30,6 @@ $(function () {
     format = format.replace("DD", ("0"+ today.getDate()).slice(-2));
     return format;
  }
-	 const data = dateFormat(today,'YYYY-MM-DD');
-	 const field = document.getElementById('birth');
-	 field.setAttribute("max", data);
+	 //const data = dateFormat(today,'YYYY-MM-DD');
+	 //const field = document.getElementById('birth');
+	 //field.setAttribute("max", data);
