@@ -4,37 +4,30 @@
     <meta charset="UTF-8">
     <title>スタンプカード</title>
     <link rel="icon" th:href="@{/img/favicon.ico}">
-<!--    <script th:inline="javascript">-->
-<!--        /*<![CDATA[*/-->
-<!--        function notifySessionTimeout() {-->
-<!--            alert("セッションがタイムアウトしました。再ログインしてください。");-->
-<!--        }-->
-<!--        /*]]>*/-->
-<!--    </script>-->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-<header></header>
-<body><!-- スタンプカードの表示 -->
+<body>
+<div class="stamp-top">
 <p>スタンプカード</p>
-<div th:each="regionId : ${regionIds}">
-    <div class="stamp-card">
-        <p>Region ID: <span th:text="${regionId}"></span></p>
-        <p>Card Number: <span th:text="${stampCardMap[regionId]}"></span></p>
+</div>
 
-        <!-- スタンプの表示 -->
-        <div th:each="stamp : ${userStamps}">
-            <div th:if="${stamp.regionId == regionId}">
-                <img src="stamp-image.png" alt="Stamp Image">
+<div th:if="${myStamp != null}">
+
+    <div class="stamp-card">
+        <p> スタンプカード: <span th:text="${myStamp.cardNumber + 1}"></span>枚目</p>
+
+        <div class="stamp-grid">
+                <div th:each="i : ${#numbers.sequence(1, myStamp.stamps % 10 + 1)}">
+                    <span th:text="${i}"></span>
+                    <img th:src="@{/img/stamp-image.png}" alt="Stamp Image">
+                </div>
             </div>
-        </div>
-        <div>
-            <a th:href=@"{/back}" method="get">戻る</a>
+
+        <div class="back-button">
+            <a th:href="@{/top/back}" method="get">戻る</a>
         </div>
     </div>
 </div>
-<!--<script>-->
-<!--    document.addEventListener("DOMContentLoaded", function () {-->
-<!--        notifySessionTimeout();-->
-<!--    });-->
-<!--</script>-->
+
 </body>
 </html>

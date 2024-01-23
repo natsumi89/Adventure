@@ -65,19 +65,16 @@ public class OrderConfirmationService {
         for (Integer regionId : productRegionIds) {
             List<Stamps> userStamps = stampRepository.findStampsByUserIdAndRegionId(userId, regionId);
 
-            // 同じ注文とリージョンのスタンプを検索
             Stamps existingStamp = userStamps.stream()
-                    .filter(stamp -> Objects.equals(stamp.getOrderId(), orders.getOrderId()) && Objects.equals(stamp.getRegionId(), regionId))
+                    .filter(stamp -> Objects.equals(stamp.getOrderId(), orders.getOrderId()))
                     .findFirst()
                     .orElse(null);
 
             if (existingStamp != null) {
-                // 既存のスタンプがあれば更新
                 int newStamps = existingStamp.getStamps() + 1;
                 existingStamp.setStamps(newStamps);
 
-                // スタンプカードの進捗を更新
-                if (newStamps == 10) {
+                if (newStamps % 10 == 0) {
                     existingStamp.setCardNumber(existingStamp.getCardNumber() + 1);
                 }
 
@@ -86,12 +83,11 @@ public class OrderConfirmationService {
                 Stamps newStamp = new Stamps();
                 newStamp.setUserId(userId);
                 newStamp.setOrderId(orders.getOrderId());
-                newStamp.setRegionId(regionId);
                 newStamp.setStampDate(Date.from(Instant.now()));
                 newStamp.setStamps(1);
 
-                if (newStamp.getStamps() == 10) {
-                    newStamp.setCardNumber(1);
+                if (newStamp.getStamps() % 10 == 0) {
+                    newStamp.setCardNumber(newStamp.getCardNumber() + 1);
                 }
 
                 stampRepository.saveStamp(newStamp);
@@ -100,7 +96,6 @@ public class OrderConfirmationService {
 
         return true;
     }
-
     private boolean shouldApplyDiscount(Integer userId) {
         // スタンプが10個以上たまったかどうかの条件判定
         List<Stamps> stamps = stampRepository.findStampsByUserId(userId);
@@ -140,7 +135,6 @@ public class OrderConfirmationService {
                 // 割引情報をDBに格納
                 Stamps discountStamp = new Stamps();
                 discountStamp.setUserId(userId);
-                discountStamp.setRegionId(null); // または適切な値を指定
                 discountStamp.setStampDate(Date.from(Instant.now()));
                 discountStamp.setStamps(-10);  // マイナスのスタンプで割引を表現
 

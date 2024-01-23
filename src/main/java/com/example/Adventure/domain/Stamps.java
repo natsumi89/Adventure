@@ -12,6 +12,21 @@ public class Stamps {
     private Date stampDate = new Date();
     private Integer orderId;
 
+    public Stamps() {
+        this.stamps = 0; // 初期値は0
+        this.cardNumber = 0; // 初期値は0
+    }
+    public void stampPressed() {
+        this.stamps++;
+        System.out.println("Stamps: " + this.stamps);
+
+        // スタンプが10の倍数になるごとにcardNumberを増加させる
+        if (this.stamps % 10 == 0) {
+            this.cardNumber++;
+            System.out.println("Card Number: " + this.cardNumber);
+        }
+    }
+
     public Integer getStampId() {
         return stampId;
     }
@@ -26,14 +41,6 @@ public class Stamps {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
-    }
-
-    public Integer getRegionId() {
-        return regionId;
-    }
-
-    public void setRegionId(Integer regionId) {
-        this.regionId = regionId;
     }
 
     public Integer getStamps() {
@@ -67,6 +74,27 @@ public class Stamps {
     public void setOrderId(Integer orderId) {
         this.orderId = orderId;
     }
+
+    public Integer getRegionId() {
+        return regionId;
+    }
+
+    public void setRegionId(Integer RegionId) {
+        this.regionId = regionId;
+    }
+
+    @Override
+    public String toString() {
+        return "Stamps{" +
+                "stampId=" + stampId +
+                ", stampDate=" + stampDate +
+                ", userId=" + userId +
+                ", regionId=" + regionId +
+                ", stamps=" + stamps +
+                ", cardNumber=" + cardNumber +
+                '}';
+    }
+
 }
 
 

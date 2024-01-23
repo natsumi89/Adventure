@@ -33,7 +33,7 @@ public class StampRepository {
     };
 
     public void saveStamp(Stamps stamp) {
-        String sql = "INSERT INTO stamps (user_id, region_id, stamp_date) VALUES(:userId, :regionId, :stampDate)";
+        String sql = "INSERT INTO stamps (user_id, region_id, stamp_date, stamps, card_number, order_id) VALUES(:userId, :regionId, :stampDate, :stamps, :cardNumber, :orderId)";
         SqlParameterSource param = new BeanPropertySqlParameterSource(stamp);
         template.update(sql, param);
     }
