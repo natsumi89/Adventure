@@ -7,13 +7,6 @@
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <link rel="icon" th:href="@{/img/favicon.ico}">
-<!--    <script th:inline="javascript">-->
-<!--        /*<![CDATA[*/-->
-<!--        function notifySessionTimeout() {-->
-<!--            alert("セッションがタイムアウトしました。再ログインしてください。");-->
-<!--        }-->
-<!--        /*]]>*/-->
-<!--    </script>-->
 </head>
 <header class="text-brack py-3">
     <div class="container">
@@ -138,8 +131,8 @@
                             </script>
                         </div>
 
-                            <div class="confirm-total-total-price">合計金額&colon;<span id="totalPrice"
-                                                                                        th:text="${totalPrice}">dummy</span>円</div>
+                            <div class="confirm-total-total-price">合計金額&colon;<span id="totalPrice" th:text="${session.totalPrice}">dummy</span>
+                                円</div>
                         </div>
 
                         <div class="confirm-button">

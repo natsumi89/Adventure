@@ -53,19 +53,30 @@ public class OrderConfirmationController {
             cartDetailsList = (List<ShoppingCartsDetail>) session.getAttribute("cartDetailsList");
             if (cartDetailsList == null) {
                 cartDetailsList = new ArrayList<>();
-                session.setAttribute("cartDetailsList", cartDetailsList);  // 初期化後にセッションに保存
+                session.setAttribute("cartDetailsList", cartDetailsList);
             }
         }
 
         System.out.println("Cart Details List: " + cartDetailsList);
 
         model.addAttribute("cartDetailsList", cartDetailsList);
+
         int totalPrice = calcTotalPrice(cartDetailsList);
-        session.setAttribute("total_price", totalPrice); // totalPriceをsessionにセット
+
+        if (userId != null) {
+            List<Stamps> existingStamps = stampRepository.findStampsByUserId(userId);
+            if (!existingStamps.isEmpty() && existingStamps.get(0).getStamps() % 10 == 1) {
+                double discountedPrice = 0.9 * totalPrice;
+                totalPrice = (int) discountedPrice;
+            }
+        }
+        session.setAttribute("totalPrice", totalPrice);
         model.addAttribute("totalPrice", totalPrice);
+        System.out.println("合駅金額" + totalPrice);
 
         return "order-confirmation";
     }
+
 
     @PostMapping("/order/to-order-complete")
     public String toOrderComplete(@Valid OrdersForm ordersForm, BindingResult result,
@@ -73,7 +84,7 @@ public class OrderConfirmationController {
 
         List<ShoppingCartsDetail> cartDetailsList;
         Integer userId = (Integer) session.getAttribute("userId");
-        Integer totalPrice = (Integer) session.getAttribute("total_price");
+        Integer totalPrice = (Integer) session.getAttribute("totalPrice");
 
         if (userId != null) {
             cartDetailsList = shoppingCartsService.findShoppingCartsDetailByUserId(userId);
@@ -81,7 +92,7 @@ public class OrderConfirmationController {
             cartDetailsList = (List<ShoppingCartsDetail>) session.getAttribute("cartDetailsList");
             if (cartDetailsList == null) {
                 cartDetailsList = new ArrayList<>();
-                session.setAttribute("cartDetailsList", cartDetailsList);  // 初期化後にセッションに保存
+                session.setAttribute("cartDetailsList", cartDetailsList);
             }
         }
 
@@ -98,7 +109,7 @@ public class OrderConfirmationController {
 
         Orders orders = new Orders();
         orders.setUserId((Integer) session.getAttribute("userId"));
-        orders.setTotalPrice(totalPrice);
+        orders.setTotalPrice((Integer) session.getAttribute("totalPrice"));
         orders.setTelephone(ordersForm.getTelephone());
         orders.setZipCode(ordersForm.getZipCode());
         orders.setAddress(ordersForm.getAddress());

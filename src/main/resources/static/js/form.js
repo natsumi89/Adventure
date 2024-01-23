@@ -23,13 +23,13 @@ $(function () {
     });
 })
 
- const today = new Date();
- function dateFormat(today, format){
-    format = format.replace("YYYY", today.getFullYear());
-    format = format.replace("MM", ("0"+(today.getMonth() + 1)).slice(-2));
-    format = format.replace("DD", ("0"+ today.getDate()).slice(-2));
-    return format;
- }
-	 const data = dateFormat(today,'YYYY-MM-DD');
-	 const field = document.getElementById('birth');
-	 field.setAttribute("max", data);
+// const today = new Date();
+// function dateFormat(today, format){
+//    format = format.replace("YYYY", today.getFullYear());
+//    format = format.replace("MM", ("0"+(today.getMonth() + 1)).slice(-2));
+//    format = format.replace("DD", ("0"+ today.getDate()).slice(-2));
+//    return format;
+// }
+//	 const data = dateFormat(today,'YYYY-MM-DD');
+//	 const field = document.getElementById('birth');
+//	 field.setAttribute("max", data);

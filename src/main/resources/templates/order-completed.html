@@ -7,14 +7,8 @@
     <title>注文完了</title>
     <link rel="icon" th:href="@{/img/favicon.ico}">
     <link rel="stylesheet" th:href="@{/css/style.css}">
-<!--    <script th:inline="javascript">-->
-<!--        /*<![CDATA[*/-->
-<!--        function notifySessionTimeout() {-->
-<!--            alert("セッションがタイムアウトしました。再ログインしてください。");-->
-<!--        }-->
-<!--        /*]]>*/-->
-<!--    </script>-->
 </head>
+<body>
 <header class="text-brack py-3">
     <div class="container">
         <a th:href="@{/top/back}">
@@ -22,19 +16,13 @@
         </a>
     </div>
 </header>
-<body>
-<div clas="order-completed">
+<div class="order-completed">
     <div class="order-completed-content">
-    <p>ご購入ありがとうございました。</p>
+        <p class="thank-you-message">ご購入ありがとうございました。</p>
     </div>
-<div class="order-completed-back-to-page">
-    <a th:href="@{/top/back}">戻る</a>
+    <div class="order-completed-back-to-page">
+        <a th:href="@{/top/back}">戻る</a>
+    </div>
 </div>
-</div>
-<!--<script>-->
-<!--    document.addEventListener("DOMContentLoaded", function () {-->
-<!--        notifySessionTimeout();-->
-<!--    });-->
-<!--</script>-->
 </body>
 </html>
