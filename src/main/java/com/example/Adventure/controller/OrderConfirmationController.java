@@ -3,8 +3,10 @@ package com.example.Adventure.controller;
 import com.example.Adventure.domain.OrderDetails;
 import com.example.Adventure.domain.Orders;
 import com.example.Adventure.domain.ShoppingCartsDetail;
+import com.example.Adventure.domain.Stamps;
 import com.example.Adventure.form.OrdersForm;
 import com.example.Adventure.repository.OrderRepository;
+import com.example.Adventure.repository.StampRepository;
 import com.example.Adventure.repository.UsersRepository;
 import com.example.Adventure.service.OrderConfirmationService;
 import com.example.Adventure.service.ProductsService;
@@ -37,6 +39,8 @@ public class OrderConfirmationController {
     private ShoppingCartsService shoppingCartsService;
     @Autowired
     private OrderConfirmationService orderConfirmationService;
+    @Autowired
+    private StampRepository stampRepository;
 
     @GetMapping("/order/order-confirmation")
     public String orderConfirmation(OrdersForm ordersForm, Model model) {
@@ -116,9 +120,35 @@ public class OrderConfirmationController {
             orderDetails.setQuantity(cartDetail.getQuantity());
             orderDetails.setSubTotalPrice(cartDetail.getPrice() * cartDetail.getQuantity());
 
-            // OrderDetailsを保存
             orderRepository.saveOrderDetails(orderDetails);
         }
+
+        Stamps stamp = new Stamps();
+        stamp.setUserId(userId);
+        stamp.setOrderId(orderId);
+        stamp.setStampDate(new Date());
+
+        List<Stamps> existingStamps = stampRepository.findStampsByUserId(userId);
+        if (!existingStamps.isEmpty()) {
+            Stamps lastStamp = existingStamps.get(existingStamps.size() - 1);
+            stamp.setStamps(lastStamp.getStamps());
+            stamp.setCardNumber(lastStamp.getCardNumber());
+        } else {
+            stamp.setStamps(0);
+            stamp.setCardNumber(0);
+        }
+
+        stamp.stampPressed();
+        if (stamp != null) {
+            model.addAttribute("myStamp", stamp);
+        }
+
+        System.out.println("Model Attributes: " + model.asMap());
+
+        System.out.println("Stamps after pressing: " + stamp.getStamps());
+        System.out.println("Card Number after pressing: " + stamp.getCardNumber());
+
+        stampRepository.saveStamp(stamp);
 
         // 注文が確定されたらショッピングカートを空にする
         if (userId != null) {

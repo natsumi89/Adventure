@@ -20,7 +20,6 @@ public class StampRepository {
     @Autowired
     private NamedParameterJdbcTemplate template;
 
-    // StampRepositoryのSTAMPS_ROW_MAPPERを修正
     public static final RowMapper<Stamps> STAMPS_ROW_MAPPER = (rs, i) -> {
         Stamps stamps = new Stamps();
         stamps.setStampId(rs.getInt("stamp_id"));
@@ -33,7 +32,7 @@ public class StampRepository {
     };
 
     public void saveStamp(Stamps stamp) {
-        String sql = "INSERT INTO stamps (user_id, region_id, stamp_date) VALUES(:userId, :regionId, :stampDate)";
+        String sql = "INSERT INTO stamps (user_id, region_id, stamp_date, stamps, card_number, order_id) VALUES(:userId, :regionId, :stampDate, :stamps, :cardNumber, :orderId)";
         SqlParameterSource param = new BeanPropertySqlParameterSource(stamp);
         template.update(sql, param);
     }
