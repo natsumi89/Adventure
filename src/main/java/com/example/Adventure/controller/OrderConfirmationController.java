@@ -65,18 +65,23 @@ public class OrderConfirmationController {
 
         if (userId != null) {
             List<Stamps> existingStamps = stampRepository.findStampsByUserId(userId);
-            if (!existingStamps.isEmpty() && existingStamps.get(0).getStamps() % 10 == 1) {
-                double discountedPrice = 0.9 * totalPrice;
-                totalPrice = (int) discountedPrice;
+            if (!existingStamps.isEmpty()) {
+                Stamps lastStamp = existingStamps.get(existingStamps.size() - 1);
+                int totalStamps = lastStamp.getStamps() + cartDetailsList.size(); // 新しいスタンプを含めた総スタンプ数
+
+                if (totalStamps >= 10 && totalStamps % 10 == 0) {
+                    double discountedPrice = 0.9 * totalPrice;
+                    totalPrice = (int) discountedPrice;
+                }
             }
         }
+
         session.setAttribute("totalPrice", totalPrice);
         model.addAttribute("totalPrice", totalPrice);
-        System.out.println("合駅金額" + totalPrice);
+        System.out.println("合計金額" + totalPrice);
 
         return "order-confirmation";
     }
-
 
     @PostMapping("/order/to-order-complete")
     public String toOrderComplete(@Valid OrdersForm ordersForm, BindingResult result,
