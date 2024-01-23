@@ -9,7 +9,7 @@
 <body>
 <div class="stamp-top">
 <p>スタンプカード</p>
-</div>
+
 
 <div th:if="${myStamp != null}">
 
@@ -23,10 +23,11 @@
                 </div>
             </div>
 
-        <div class="back-button">
-            <a th:href="@{/top/back}" method="get">戻る</a>
-        </div>
     </div>
+    <div class="back-button">
+        <a th:href="@{/top/back}" method="get">戻る</a>
+    </div>
+</div>
 </div>
 
 </body>

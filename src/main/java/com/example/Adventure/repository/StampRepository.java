@@ -20,7 +20,6 @@ public class StampRepository {
     @Autowired
     private NamedParameterJdbcTemplate template;
 
-    // StampRepositoryのSTAMPS_ROW_MAPPERを修正
     public static final RowMapper<Stamps> STAMPS_ROW_MAPPER = (rs, i) -> {
         Stamps stamps = new Stamps();
         stamps.setStampId(rs.getInt("stamp_id"));

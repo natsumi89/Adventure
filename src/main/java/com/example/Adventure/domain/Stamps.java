@@ -6,15 +6,14 @@ public class Stamps {
     private Integer stampId;
     private Integer userId;
     private Integer regionId;
-//    private Date stampDate;
     private Integer stamps;
     private Integer cardNumber;
     private Date stampDate = new Date();
     private Integer orderId;
 
     public Stamps() {
-        this.stamps = 0; // 初期値は0
-        this.cardNumber = 0; // 初期値は0
+        this.stamps = 0;
+        this.cardNumber = 0;
     }
     public void stampPressed() {
         this.stamps++;
@@ -62,6 +61,7 @@ public class Stamps {
     public Date getStampDate() {
         return stampDate;
     }
+
 
     public void setStampDate(Date stampDate) {
         this.stampDate = stampDate;

@@ -588,7 +588,7 @@ font-size:20px;
                            background-color: #fff;
                            border-radius: 10px;
                            padding: 20px;
-                           box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                           box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
                            text-align: center;
                            transition: box-shadow 0.3s;
                        }

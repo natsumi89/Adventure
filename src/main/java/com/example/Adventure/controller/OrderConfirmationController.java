@@ -120,7 +120,6 @@ public class OrderConfirmationController {
             orderDetails.setQuantity(cartDetail.getQuantity());
             orderDetails.setSubTotalPrice(cartDetail.getPrice() * cartDetail.getQuantity());
 
-            // OrderDetailsを保存
             orderRepository.saveOrderDetails(orderDetails);
         }
 

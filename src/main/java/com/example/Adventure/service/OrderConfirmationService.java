@@ -107,7 +107,6 @@ public class OrderConfirmationService {
                     .mapToLong(stamp -> stamp.getStamps() != null ? stamp.getStamps() : 0)
                     .sum();
 
-            // Apply Discountをログに出力
             boolean applyDiscount = totalStamps >= 10;  // 10個以上のスタンプがたまったら割引を適用
             System.out.println("Total Stamps: " + totalStamps);
             System.out.println("Apply Discount: " + applyDiscount);
