@@ -67,7 +67,7 @@ public class OrderConfirmationController {
             List<Stamps> existingStamps = stampRepository.findStampsByUserId(userId);
             if (!existingStamps.isEmpty()) {
                 Stamps lastStamp = existingStamps.get(existingStamps.size() - 1);
-                int totalStamps = lastStamp.getStamps() + cartDetailsList.size(); // 新しいスタンプを含めた総スタンプ数
+                int totalStamps = lastStamp.getStamps() + 1;
 
                 if (totalStamps >= 10 && totalStamps % 10 == 0) {
                     double discountedPrice = 0.9 * totalPrice;

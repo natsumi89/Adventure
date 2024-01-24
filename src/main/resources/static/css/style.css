@@ -583,78 +583,69 @@ font-size:20px;
     }
 }
 
-
-                       .stamp-card {
-                           background-color: #fff;
-                           border-radius: 10px;
-                           padding: 20px;
-                           box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-                           text-align: center;
-                           transition: box-shadow 0.3s;
+.stamp-card {
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      transition: box-shadow 0.3s;
                        }
 
-                       .stamp-card:hover {
-                           box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* ホバー時の影の強調 */
+.stamp-card:hover {
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* ホバー時の影の強調 */
                        }
 
-                       .stamp-card p {
-                           font-size: 20px;
-                           margin-bottom: 15px;
-                           color: #333;
+.stamp-card p {
+     font-size: 20px;
+     margin-bottom: 15px;
+     color: #333;
                        }
 
-                       .stamp-grid {
-                           display: grid;
-                           grid-template-columns: repeat(5, 1fr);
-                           grid-gap: 10px;
-                           border: 2px solid #ddd;
-                           border-radius: 5px;
-                           padding: 10px;
-                           margin-top:90px;
+.stamp-grid {
+     display: grid;
+     grid-template-columns: repeat(5, 1fr);
+     grid-gap: 10px;
+     border: 2px solid #ddd;
+     border-radius: 5px;
+     padding: 10px;
+     margin-top:90px;
                        }
 
-                       .stamp-grid div {
-                           border: 1px solid #ddd;
-                           border-radius: 5px;
-                           overflow: hidden;
+.stamp-grid div {
+     border: 1px solid #ddd;
+     border-radius: 5px;
+     overflow: hidden;
                        }
 
-                       .stamp-grid img {
-                           width: 100%;
-                           height: auto;
-                       }
+.stamp-grid img {
+     width: 100%;
+     height: auto;
+        }
 
-                       .back-button {
-                           margin-top: 20px;
-                           text-align: center;
-                       }
+.back-button {
+     margin-top: 20px;
+     text-align: center;
+                      }
 
-                       .back-button a {
-                           display: inline-block;
-                           padding: 10px 20px;
-                           background-color: #008CBA;
-                           color: white;
-                           border-radius: 5px;
-                           text-decoration: none;
-                           transition: background-color 0.3s;
-                       }
-
-                       .back-button a:hover {
-                           background-color: #005F79;
-                       }
-.order-completed {
+.back-button {
+    margin-top: 20px;
     text-align: center;
-    border-radius: 15px;
-    padding: 40px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-    width: 70%;
-}
+         }
 
-.order-completed p {
-    font-size: 2.5em;
-    margin-bottom: 20px;
-    color: #008080;
-    text-shadow: 2px 2px 4px #87CEFA;
+.back-button a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #008CBA;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+                       }
+
+.back-button a:hover {
+    background-color: #005F79;
+                       }
 }
 
 .order-completed-back-to-page a {
