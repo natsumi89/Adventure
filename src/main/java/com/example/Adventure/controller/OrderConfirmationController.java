@@ -72,8 +72,10 @@ public class OrderConfirmationController {
                 if (totalStamps >= 10 && totalStamps % 10 == 0) {
                     double discountedPrice = 0.9 * totalPrice;
                     totalPrice = (int) discountedPrice;
+                    model.addAttribute("discountApplied", true);
                 }
             }
+            session.setAttribute("existingStamps",existingStamps);
         }
 
         session.setAttribute("totalPrice", totalPrice);
