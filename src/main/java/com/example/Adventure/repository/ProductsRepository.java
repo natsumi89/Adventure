@@ -90,17 +90,18 @@ public class ProductsRepository {
     }
 
     public List<Products> findTopProducts(int limit) {
-        String sql = "SELECT p.product_id, p.region_id, p.producer_id, p.product_name, p.description, p.price, p.image_url, r.region_name " +
+        String sql = "SELECT p.product_id, p.region_id, p.producer_id, p.product_name, p.description, p.price, p.image_url, r.region_name, COALESCE(od.purchase_count, 0) as purchase_count " +
                 "FROM products p " +
                 "JOIN regions r ON p.region_id = r.region_id " +
-                "JOIN (SELECT product_id, SUM(quantity) as purchase_count FROM order_details GROUP BY product_id) od " +
+                "LEFT JOIN (SELECT product_id, SUM(quantity) as purchase_count FROM order_details GROUP BY product_id) od " +
                 "ON p.product_id = od.product_id " +
-                "ORDER BY od.purchase_count DESC " +
+                "ORDER BY COALESCE(od.purchase_count, 0) DESC, p.product_id " + // 注文数で降順、同じ場合は商品IDで昇順
                 "LIMIT :limit";
 
         MapSqlParameterSource params = new MapSqlParameterSource().addValue("limit", limit);
 
         return template.query(sql, params, PRODUCTS_ROW_MAPPER);
     }
+
 
 }

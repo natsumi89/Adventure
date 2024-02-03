@@ -135,7 +135,7 @@ public class OrderConfirmationService {
 //                stampRepository.saveStamp(discountStamp);
 //            }
 //        }
-//    }
+
     public void saveOrderDetails(OrderDetails orderDetails) {
         System.out.println("Received OrderDetails - Order ID: " + orderDetails.getOrderId() + ", Product ID: " + orderDetails.getProductId());
         orderConfirmationRepository.saveOrderDetails(orderDetails);

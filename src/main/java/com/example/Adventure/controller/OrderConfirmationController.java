@@ -138,6 +138,10 @@ public class OrderConfirmationController {
             orderDetails.setQuantity(cartDetail.getQuantity());
             orderDetails.setSubTotalPrice(cartDetail.getPrice() * cartDetail.getQuantity());
 
+            // getTotalPurchaseCountByProductIdメソッドを呼び出してpurchaseCountに設定
+            int totalPurchaseCount = orderRepository.getTotalPurchaseCountByProductId(cartDetail.getProductId());
+            orderDetails.setPurchaseCount(totalPurchaseCount + 1);
+
             orderRepository.saveOrderDetails(orderDetails);
         }
 
