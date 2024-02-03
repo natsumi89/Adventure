@@ -72,8 +72,10 @@ public class OrderConfirmationController {
                 if (totalStamps >= 10 && totalStamps % 10 == 0) {
                     double discountedPrice = 0.9 * totalPrice;
                     totalPrice = (int) discountedPrice;
+                    model.addAttribute("discountApplied", true);
                 }
             }
+            session.setAttribute("existingStamps",existingStamps);
         }
 
         session.setAttribute("totalPrice", totalPrice);
@@ -135,6 +137,10 @@ public class OrderConfirmationController {
             orderDetails.setProductId(cartDetail.getProductId());
             orderDetails.setQuantity(cartDetail.getQuantity());
             orderDetails.setSubTotalPrice(cartDetail.getPrice() * cartDetail.getQuantity());
+
+            // getTotalPurchaseCountByProductIdメソッドを呼び出してpurchaseCountに設定
+            int totalPurchaseCount = orderRepository.getTotalPurchaseCountByProductId(cartDetail.getProductId());
+            orderDetails.setPurchaseCount(totalPurchaseCount + 1);
 
             orderRepository.saveOrderDetails(orderDetails);
         }

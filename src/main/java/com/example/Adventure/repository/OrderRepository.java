@@ -89,15 +89,23 @@ public class OrderRepository {
     public void saveOrderDetails(OrderDetails orderDetails) {
         try {
             String insertSql = "INSERT INTO order_details (order_id, product_id, quantity, subtotal_price, purchase_count) " +
-                    "VALUES (:orderId, :productId, :quantity, :subTotalPrice, 1)";
+                    "VALUES (:orderId, :productId, :quantity, :subTotalPrice, :purchaseCount)";
 
             String updateSql = "UPDATE order_details " +
-                    "SET quantity = quantity + :quantity, " +
+                    "SET quantity = quantity + :quantity - 1, " +
                     "subtotal_price = :subTotalPrice, " +
-                    "purchase_count = purchase_count + 1 " +
+                    "purchase_count = purchase_count + :purchaseCount " +
                     "WHERE order_id = :orderId AND product_id = :productId";
 
-            SqlParameterSource param = new BeanPropertySqlParameterSource(orderDetails);
+            // 正しい数量を設定
+            int correctQuantity = orderDetails.getQuantity();
+
+            SqlParameterSource param = new MapSqlParameterSource()
+                    .addValue("orderId", orderDetails.getOrderId())
+                    .addValue("productId", orderDetails.getProductId())
+                    .addValue("quantity", correctQuantity)
+                    .addValue("subTotalPrice", orderDetails.getSubTotalPrice())
+                    .addValue("purchaseCount", orderDetails.getPurchaseCount()); // purchaseCountはオブジェクトから取得
 
             // まず挿入を試みる
             template.update(insertSql, param);
@@ -113,6 +121,11 @@ public class OrderRepository {
         }
     }
 
+    public int getTotalPurchaseCountByProductId(int productId) {
+        String sql = "SELECT COALESCE(SUM(purchase_count), 0) FROM order_details WHERE product_id = :productId";
+        SqlParameterSource param = new MapSqlParameterSource().addValue("productId", productId);
+        return template.queryForObject(sql, param, Integer.class);
+    }
     public Integer saveAndGetOrderId(Orders orders) {
         String sql = "INSERT INTO orders (user_id, total_price, order_date, status, address, zip_code, telephone, payment_method) " +
                 "VALUES (:userId, :totalPrice, :orderDate, :status, :address, :zipCode, :telephone, :paymentMethod)";

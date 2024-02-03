@@ -4,10 +4,9 @@ public class OrderDetails {
     private Integer orderDetailId;
     private Integer orderId;
     private Integer productId;
+    private Integer purchaseCount;
     private Integer quantity;
     private Integer subTotalPrice;
-
-    private Integer purchaseCount;
 
     public Integer getOrderDetailId() {
         return orderDetailId;
@@ -33,14 +32,6 @@ public class OrderDetails {
         this.productId = productId;
     }
 
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
     public Integer getSubTotalPrice() {
         return subTotalPrice;
     }
@@ -55,5 +46,13 @@ public class OrderDetails {
 
     public void setPurchaseCount(Integer purchaseCount) {
         this.purchaseCount = purchaseCount;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 }

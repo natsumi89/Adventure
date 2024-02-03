@@ -8,8 +8,17 @@
 </head>
 <body>
 <div class="stamp-top">
-<p>スタンプカード</p>
+<h2>スタンプカード</h2>
+    <br>
 
+    <p>1回の注文で1スタンプ押印します。<br></p>
+<p>10個貯まると自動で次のスタンプカードに移り、次回注文が10%割引になります。</p>
+
+    <div th:if="${session.lastName == null}">
+        <p>ログインするとお客様のスタンプカード情報が確認できます。</p>
+        <a th:href="@{/login}" method="get"
+           class="btn btn-secondary btn-sm btn-blue">ログイン</a>
+    </div>
 
 <div th:if="${myStamp != null}">
 

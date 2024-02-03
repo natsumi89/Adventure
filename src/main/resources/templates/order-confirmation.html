@@ -133,6 +133,9 @@
 
                             <div class="confirm-total-total-price">合計金額&colon;<span id="totalPrice" th:text="${session.totalPrice}">dummy</span>
                                 円</div>
+                            <div th:if="${discountApplied}" class="apply-discount-pop">
+                                <p><strong>合計金額から10%OFF!</strong>(スタンプカード割引適用済み)</p>
+                            </div>
                         </div>
 
                         <div class="confirm-button">
